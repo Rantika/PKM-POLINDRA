@@ -194,8 +194,6 @@ class DatabaseSeeder extends Seeder
                 'prody_id'      => $data['TI']->id,
                 'name'          => 'Annisa Khusnul Laily',
                 'phone_number'  => '087777777777',
-                'year'          => '2022',
-                'is_active'     => true,
             ]);
 
             Proposal::create([

@@ -29,13 +29,19 @@
 
         $statusColor = 'danger';
     }
+
     if ($proposal->status == 1){
         $status = 'Revisi';
         $statusColor = 'warning';
     }
     if ($proposal->status == 2){
-        $status = 'Selesai';
-        $statusColor = 'primary';
+        if ($proposal->approved == 1) {
+            $status = "Tunggu Konfirmasi";
+            $statusColor = "warning";
+        } else {
+            $status = 'Selesai';
+            $statusColor = 'primary';
+        }
     }
     if ($proposal->status == 3){
         $status = 'Lolos Didanai';
@@ -118,6 +124,7 @@
                             <div class="tab-pane fade show active profile-overview" id="profile-overview">
                                 <form action="{{$proposal->status == 0 ? route('student.upload-proposal') : route('student.upload-proposal-done')}}" method="post" enctype="multipart/form-data">
                                     @csrf
+                                    <input type="hidden" name="proposal_id" value="{{ $proposal->id }}">
                                     <h5 class="card-title">{{$proposal->title}}</h5>
                                     <p class="small fst-italic">{{$proposal->description ?? 'Belum ada deskripsi'}}</p>
 
@@ -158,14 +165,18 @@
                                     <div class="row">
                                         <div class="col-lg-3 col-md-4 label">Upload Proposal Revisi</div>
                                         <div class="col-lg-9 col-md-8">
-                                            @if($proposal->status == 1)
-                                                <input name="file" type="file" class="form-control" id="floatingFoto" placeholder="Proposal">
-                                                <label>Max Size : 5MB</label>
+                                            @if($proposal->status == 2 && $proposal->approved == 1) 
+                                            <div class="alert alert-danger">
+                                                <small class="text-danger">
+                                                    Data Sedang Dalam Pengecekan
+                                                </small>
+                                            </div>
                                             @else
-                                                <a href="{{$proposal->file_done}}" target="_blank">
-                                                    <span class="badge border-primary border-1 text-primary">{{explode('/', $proposal->file_done)[1]}}</span>
-                                                </a>
+                                            <input name="file" type="file" class="form-control" id="floatingFoto" placeholder="Proposal">
+                                            <label>Max Size : 5MB</label>
+
                                             @endif
+                                            
                                         </div>
                                     </div>
                                     @endif
@@ -178,7 +189,7 @@
                                             </span>
                                         </div>
                                     </div>
-
+                                
                                     <div class="text-center {{$proposal->status == 2 ? 'd-none' : ''}}">
                                         <button type="submit" class="btn btn-primary">Simpan</button>
                                     </div>

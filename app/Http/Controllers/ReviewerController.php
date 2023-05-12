@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Lecturer;
 use App\Models\Prody;
+use App\Models\Student;
 use App\Models\Reviewer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -13,7 +14,7 @@ class ReviewerController extends Controller
     public function index()
     {
         $data['lecturers'] = Lecturer::get();
-        $data['prodies'] = Prody::get();
+        $data['mahasiswa'] = Student::get();
         $data['reviewers'] = Reviewer::with(['lecturer', 'prody'])->get();
 
         return view('admin.data-akun.reviewer', $data);

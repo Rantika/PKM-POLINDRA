@@ -213,6 +213,7 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
+        'LaravelFileViewer' => Vish4395\LaravelFileViewer\LaravelFileViewerFacade::class,
     ])->toArray(),
 
 ];

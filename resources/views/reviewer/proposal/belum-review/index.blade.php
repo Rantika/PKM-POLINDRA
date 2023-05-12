@@ -57,13 +57,23 @@
                             </thead>
                             <tbody>
                                 <?php $nomor = 1; ?>
-                                @foreach($data_proposal as $data)
+                                @forelse($data_proposal as $data)
                                 <tr>
                                     <td class="text-center">{{$nomor++}}</td>
                                     <td class="text-center">{{$data->title}}</td>
                                     <td class="text-center">{{$data->deskripsi}}</td>
                                 </tr>
-                                @endforeach
+                                @empty
+                                <tr>
+                                    <td colspan="3" class="text-center">
+                                        <strong>
+                                            <i>
+                                                Data Belum Ada
+                                            </i>
+                                        </strong>
+                                    </td>
+                                </tr>
+                                @endforelse
                             </tbody>
 
                         </table>

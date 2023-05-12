@@ -98,12 +98,12 @@
                             <div class="col-md-12">
                                 <div class="form-floating">
                                     <select class="form-select" name="prody_id">
-                                        <option value="">-- Pilih prodi default Reviewer --</option>
-                                        @foreach($prodies as $data)
+                                        <option value="">-- Pilih Mahasiswa default Reviewer --</option>
+                                        @foreach($mahasiswa as $data)
                                             <option value="{{$data->id}}">{{$data->name}}</option>
                                         @endforeach
                                     </select>
-                                    <label for="jurusan">Prodi (Opsional)</label>
+                                    <label for="jurusan">Mahasiswa</label>
                                 </div>
                             </div>
                         </div>
@@ -144,7 +144,7 @@
                                 <div class="form-floating">
                                     <select class="form-select" name="prody_id" id="prody_id">
                                         <option value="">-- Pilih prodi default Reviewer --</option>
-                                        @foreach($prodies as $data)
+                                        @foreach($mahasiswa as $data)
                                             <option value="{{$data->id}}">{{$data->name}}</option>
                                         @endforeach
                                     </select>

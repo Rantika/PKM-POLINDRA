@@ -23,8 +23,8 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->string('file')->nullable();
             $table->string('file_review')->nullable();
-            $table->string('file_done')->nullable();
             $table->string('status');
+            $table->tinyInteger("approved")->default(0);
             $table->string('year');
             $table->boolean('is_confirmed');
             $table->string('username_simbelmawa')->nullable();

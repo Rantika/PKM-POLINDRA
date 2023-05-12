@@ -66,4 +66,7 @@ class User extends Authenticatable
     public function komentar(){
         return $this->hasMany(Komentar::class);
     }
+    public function tim(){
+        return $this->belongsTo('App\Models\Tim','id','user_id');
+    }
 }

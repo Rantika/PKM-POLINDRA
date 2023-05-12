@@ -8,6 +8,7 @@ use App\Models\komen_proposal;
 use App\Models\Lecturer;
 use App\Models\Proposal;
 use App\Models\Reviewer;
+use App\Models\Revisi;
 use App\Models\Student;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -98,8 +99,13 @@ class RoleStudentController extends Controller
 
             $data = Proposal::with('student')->where('student_id', Auth::user()->student->id)->first();
             $data->update([
-                'status'        => 2, // 2 :
-                'file_done'     => $request->file ? 'proposal/Hasil AKhir-'.date('ymdhis') . '_' . $data->scheme->name . '_' . $request->title .'.'. $request->file->extension() : null,
+                'status'        => 2,
+                'approved'      => 1
+            ]);
+            
+            Revisi::where("id", $request->proposal_id)->create([
+                "proposal_id" => $request->proposal_id,
+                "file" => 'proposal/Hasil AKhir-'.date('ymdhis') . '_' . $data->scheme->name . '_' . $request->title .'.'. $request->file->extension()
             ]);
 
             if ($request->hasFile('file')) {

@@ -17,6 +17,7 @@ class RoleReviewerController extends Controller
     public function proposal()
     {
         $data['proposals'] = Proposal::with(['student', 'reviewer', 'scheme'])->where('reviewer_id', Auth::user()->lecturer->reviewer->id)->get();
+        
         return view('reviewer.proposal.index', $data);
     }
     public function belum_review($id)
@@ -25,6 +26,17 @@ class RoleReviewerController extends Controller
         $data['data_proposal'] = komen_proposal::where('proposal_id',$id)->get();
         return view('reviewer.proposal.belum-review.index',$data);
     }
+
+    public function setujui(Request $request)
+    {
+        Proposal::where("id", $request->proposal_id)->update([
+            "status" => 3,
+            "approved" => 0 
+        ]);
+
+        return back();
+    }
+    
     public function getProposal($id)
     {
         $data = Proposal::with('comment')->find($id); // find : untuk mengambil data dari database dengan data primary key
@@ -55,6 +67,37 @@ class RoleReviewerController extends Controller
         Proposal::where("id", $id)->update([
             "status" => 1
         ]);
+    }
+
+    public function proses_belum_review(Request $request)
+    {
+        $proposal = Proposal::where("id", $request->proposal_id)->first();
+
+        komen_proposal::create([
+            "proposal_id" => $request->proposal_id,
+            "user_id" => Auth::user()->id,
+            "title" => $request->title,
+            "deskripsi" => $request->deskripsi
+        ]);
+
+        if ($proposal->status == 0) {
+            if ($proposal->approved == 0) {
+                $approved = 0;
+            } 
+        } else {
+            if ($proposal->approved == 0) {
+                $approved = 1;
+            } else {
+                $approved = 0;
+            }
+        }
+
+        Proposal::where("id", $request->proposal_id)->update([
+            "status" => 1,
+            "approved" => $approved
+        ]);
+
+        return back();
     }
 
     public function upload(Request $request, $id)

@@ -76,32 +76,10 @@
                             <input class="input--style-4" type="text" name="title">
                         </div>
                         <div class="input-group">
-                            <label class="label">Skema</label>
-                            <div class="p-t-10">
-                                @foreach($schemes as $data)
-                                <label class="radio-container m-r-45">{{$data->short}}
-                                    <input type="radio" name="scheme_id" value="{{$data->id}}">
-                                    <span class="checkmark"></span>
-                                </label>
-                                @endforeach
-                            </div>
-                        </div>
-                        <div class="input-group">
                             <label class="label">Jurusan</label>
                             <div class="rs-select2 js-select-simple select--no-search">
                                 <select name="prody_id" class="form-control">
                                     @foreach($prodies as $data)
-                                        <option value="{{$data->id}}">{{$data->name}}</option>
-                                    @endforeach
-                                </select>
-                                <div class="select-dropdown"></div>
-                            </div>
-                        </div>
-                        <div class="input-group">
-                            <label class="label">Dosen Pembimbing</label>
-                            <div class="rs-select2 js-select-simple select--no-search">
-                                <select name="lecturer_id" class="form-control">
-                                    @foreach($lecturers as $data)
                                         <option value="{{$data->id}}">{{$data->name}}</option>
                                     @endforeach
                                 </select>

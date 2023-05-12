@@ -10,7 +10,12 @@
             </a>
         </li>
         <!-- ======= End Dashboard ======= -->
-
+        <li class="nav-item">
+            <a class="nav-link {{sideBarRoute('student.tim.index')}}" href="{{route('student.tim.index')}}">
+                <i class="bi bi-calendar4"></i>
+                <span>Anggota Tim</span>
+            </a>
+        </li>
         <!-- ======= Bimbingan ======= -->
         <li class="nav-item">
             <a class="nav-link {{sideBarRoute('student.bimbingan.index')}}" href="{{route('student.bimbingan.index')}}">

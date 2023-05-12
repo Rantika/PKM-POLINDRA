@@ -11,8 +11,12 @@
         <h1>Periode</h1>
         <nav>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#"></a></li>
-                <li class="breadcrumb-item active"><a href="\dashboard">/</a></li>
+                <li class="breadcrumb-item">
+                    <a href="{{ url('/dashboard') }}">Dashboard</a>
+                </li>
+                <li class="breadcrumb-item active">
+                    Setting Periode
+                </li>
             </ol>
         </nav>
     </div><!-- End Page Title -->

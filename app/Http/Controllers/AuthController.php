@@ -10,6 +10,7 @@ use App\Models\Student;
 use App\Models\Lecturer;
 use App\Models\Proposal;
 use App\Models\Reviewer;
+use App\Models\Tim;
 use App\Models\ViewConf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -71,33 +72,19 @@ class AuthController extends Controller
                 'name'          => $request->name,
                 'nim'          => $request->nim,
                 'phone_number'  => $request->phone_number,
-                'year'          => date('Y'),
-                'is_active'     => true,
             ]);
 
-            $reviewer = Reviewer::where('prody_id', $request->prody_id)->first();
-
-            $proposal = Proposal::create([
-                'student_id'    => $student->id,
-                'lecturer_id'   => $request->lecturer_id,
-                'reviewer_id'   => $reviewer->id ?? null, // null :
-                'scheme_id'     => $request->scheme_id,
-                'title'         => $request->title,
-                'status'        => 0,
-                'year'          => date('Y'),
-                'is_confirmed'  => false,
+            $tim = Tim::create([
+                "user_id" => $user->id
             ]);
-
-            Lecturer::find($request->lecturer_id)->update([
-                'is_dosbing'    => true
-            ]);
-
+            
             $param = [
                 'id'            => User::where('role', 'admin')->first()->id,
                 'for'           => 'admin',
                 'type'          => 0,
                 'description'   => $student->name,
             ];
+            
             NotificationController::create($param);
 
             DB::commit();

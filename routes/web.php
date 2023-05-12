@@ -24,6 +24,7 @@ use App\Http\Controllers\KirimEmailController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\ViewConfController;
 use App\Http\Controllers\ForumController;
+use App\Http\Controllers\TimController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,6 +32,10 @@ use Illuminate\Support\Facades\Route;
 |                           Landing Page
 |--------------------------------------------------------------------------
 */
+
+Route::get("/coba-review", [DashboardController::class, "review"]);
+Route::get("/coba-review/{file}", [DashboardController::class, "post_review"]);
+
 Route::get('/', [LandingPageController::class, 'index'])->name('home');
 Route::get('/news/detail/{id?}', [LandingPageController::class, 'detail'])->name('home.detail');
 
@@ -230,12 +235,12 @@ Route::get('/reviewer', [LecturerDashboard::class, 'indexReviewer'])->name('revi
 Route::prefix('reviewer')->middleware(['role:lecturer,reviewer'])->controller(RoleReviewerController::class)->group( function () {
     Route::get('/proposal', 'proposal')->name('reviewer.proposal');
     Route::get('/proposal/{id?}', 'confirm')->name('reviewer.confirm');
-
+    Route::put("/proposal/setujui", 'setujui');
     Route::get('/proposal/get-proposal/{id?}', 'getProposal')->name('reviewer.get-proposal');
     Route::post('/proposal/upload-proposal/{id?}', 'upload')->name('reviewer.upload-proposal');
 
     Route::get('/proposal/belum-review/{id}', 'belum_review');
-    Route::post('/proposal/belum-review','proses_belumreview');
+    Route::post('/proposal/belum-review','proses_belum_review');
     Route::get("/proposal/belum-review/{id}/update-status", 'update_status');
 });
 
@@ -245,15 +250,27 @@ Route::prefix('reviewer')->middleware(['role:lecturer,reviewer'])->controller(Ro
 |--------------------------------------------------------------------------
 */
 Route::get('/team', [StudentDashboard::class, 'index'])->name('student.index');
+Route::post("/team", [StudentDashboard::class, "post"])->name("student.store-tim");
 
 Route::prefix('team')->middleware(['role:student'])->controller(RoleStudentController::class)->group( function () {
     Route::get('/proposal', 'proposal')->name('student.proposal');
     Route::post('/proposal', 'uploadProposal')->name('student.upload-proposal');
     Route::post('/proposal-done', 'uploadProposalDone')->name('student.upload-proposal-done');
-
+    
+            
     Route::post('/profile/update', 'update')->name('student.profile.update');
     Route::post('/profile/change-password', 'changePassword')->name('student.profile.change-password');
+
 });
+Route::prefix('tim/anggota-tim')->middleware(['role:student'])->controller(TimController::class)->group( function(){
+    Route::get('/','index')->name('student.tim.index');
+    Route::post('/store', 'store')->name('student.tim.store');
+    Route::get('/{id?}', 'show')->name('student.tim.show');
+    Route::post('/update/{id?}', 'update')->name('student.tim.update');
+    Route::get('/delete/{id?}', 'delete')->name('student.tim.delete');
+
+});
+
 
 Route::prefix('team/bimbingan')->middleware(['role:student'])->controller(BimbinganStudentController::class)->group( function () {
     Route::get('/', 'index')->name('student.bimbingan.index');
