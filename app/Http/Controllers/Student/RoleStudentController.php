@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Student;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\NotificationController;
+use App\Models\Dosbing;
 use App\Models\komen_proposal;
 use App\Models\Lecturer;
 use App\Models\Proposal;
@@ -22,19 +23,24 @@ class RoleStudentController extends Controller
 
     public function proposal()
     {
-        $data['proposal'] = Proposal::with(['student', 'reviewer.lecturer', 'lecturer', 'scheme', 'comment'])
-                            ->where('student_id', Auth::user()->student->id)
-                            ->first();
+        $cek = Dosbing::where("student_id", Auth::user()->id)->first();
 
-        $data["komen"] = komen_proposal::where("proposal_id", $data["proposal"]["id"])->get();
+        if ($cek->status == 0 || $cek->status == 2) {
+            return redirect("/team");
+        } else {
+            $data['proposal'] = Proposal::where('student_id', Auth::user()->id)
+                                ->first();
 
-        return view('tim.proposal.index', $data);
+            $data["komen"] = komen_proposal::where("proposal_id", $data["proposal"]["id"])->get();
+    
+            return view('tim.proposal.index', $data);
+        }
     }
 
     public function uploadProposal(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'file' => 'file|max:5024', // 5MB
+            'file' => 'file|max:20096', // 10MB,
         ]);
 
         if ($validator->fails()) {
@@ -44,22 +50,24 @@ class RoleStudentController extends Controller
         try {
             DB::beginTransaction();
 
-            $data = Proposal::with('student')->where('student_id', Auth::user()->student->id)->first();
-            $data->update([
-                'file'   => $request->file ? 'proposal/'.date('ymdhis') . '_' . $data->scheme->name . '_' . $request->title .'.'. $request->file->extension() : null,
-            ]);
+            $data = Proposal::with('student')->where('student_id', Auth::user()->id)->first();
 
+            $data->update([
+                'file'   => $request->file ? 'proposal/'.date('ymdhis') . '_' . $data->scheme->name . '_' . $data->title .'.'. $request->file->extension() : null,
+            ]);
+            
             if ($request->hasFile('file')) {
                 $file = $request->file('file');
                 $file->move(public_path('proposal'), $data->file);
 
                 // Create Notif untuk dosbing
                 $param = [
-                    'id'            => (Lecturer::with('user')->find($data->lecturer_id))->user->id,
+                    'id'            => Lecturer::with("user")->find($data->lecturer_id)->user->id,
                     'for'           => 'lecturer',
                     'type'          => 1,
-                    'description'   => $data->student->name,
+                    'description'   => $data->mahasiswa->name,
                 ];
+
                 NotificationController::create($param);
 
                 // Create Notif untuk Reviewer
@@ -68,7 +76,7 @@ class RoleStudentController extends Controller
                         'id'            => Reviewer::find($data->reviewer_id)->lecturer->user->id,
                         'for'           => 'reviewer',
                         'type'          => 0,
-                        'description'   => $data->student->name,
+                        'description'   => $data->mahasiswa->name,
                     ];
                     NotificationController::create($param);
                 }

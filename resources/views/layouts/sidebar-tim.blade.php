@@ -16,13 +16,6 @@
                 <span>Anggota Tim</span>
             </a>
         </li>
-        <!-- ======= Bimbingan ======= -->
-        <li class="nav-item">
-            <a class="nav-link {{sideBarRoute('student.bimbingan.index')}}" href="{{route('student.bimbingan.index')}}">
-                <i class="bi bi-calendar4"></i>
-                <span>Bimbingan</span>
-            </a>
-        </li>
         <!-- ======= End Bimbingan ======= -->
 
         <!-- ======= Proposal PKM ======= -->

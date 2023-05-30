@@ -6,26 +6,28 @@ use App\Models\Lecturer;
 use App\Models\Prody;
 use App\Models\Student;
 use App\Models\Reviewer;
+use App\Models\Dosbing;
+use App\Models\Tim;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class ReviewerController extends Controller
+class DosbingController extends Controller
 {
     public function index()
     {
         $data['lecturers'] = Lecturer::get();
-        $data['mahasiswa'] = Student::where("user_id", "!=", NULL)->get();
-        $data['reviewers'] = Reviewer::with(['lecturer', 'prody'])->get();
+        $data["tim"] = Tim::get();
+        $data['dosbing'] = Dosbing::get();
 
-        return view('admin.data-akun.reviewer', $data);
+        return view('admin.data-akun.ploting_dosbing', $data);
     }
 
     public function store(Request $request)
     {
         try {
             DB::beginTransaction();
-            $data = Reviewer::create([
-                'lecturer_id'   => $request->lecturer_id,
+            $data = Dosbing::create([
+                'dosbing_id'   => $request->dosbing_id,
                 'student_id'    => $request->student_id
             ]);
 

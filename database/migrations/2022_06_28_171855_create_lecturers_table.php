@@ -22,8 +22,6 @@ return new class extends Migration
             $table->string('phone_number')->nullable();
             $table->string('photo')->nullable();
             $table->boolean('is_active');
-            $table->boolean('is_reviewer');
-            $table->boolean('is_dosbing');
             $table->string('username_simbelmawa')->nullable();
             $table->string('password_simbelmawa')->nullable();
             $table->timestamps();

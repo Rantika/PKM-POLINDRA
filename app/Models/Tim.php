@@ -13,5 +13,15 @@ class Tim extends Model
     protected $table='tim';
 
     protected $guarded = [];
+
+    public function user()
+    {
+        return $this->belongsTo("App\Models\Student", "user_id", "user_id");
+    }
+
+    public function proposal()
+    {
+        return $this->belongsTo("App\Models\Proposal", "user_id", "student_id");
+    }
 }
 

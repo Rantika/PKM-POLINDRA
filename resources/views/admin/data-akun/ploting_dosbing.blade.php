@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title') Plotting - Reviewer @endsection
+@section('title') Plotting - Dosbing @endsection
 
 @section('css')
 {{-- Jika ada tambahan CSS khusus di page ini, tambahkan di sini --}}
@@ -9,7 +9,7 @@
 <!-- ======= Page Title ======= -->
 @section('breadcumb')
 <div class="pagetitle">
-    <h1>Plotting Reviewer</h1>
+    <h1>Plotting Dosbing</h1>
     <nav>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="#"></a></li>
@@ -42,12 +42,12 @@
                                 <th class="text-center">Prodi</th>
                                 <th class="text-center">Jurusan</th>
                                 <th class="text-center">No Hp</th>
-                                <th class="text-center">Reviewer</th>
+                                <th class="text-center">Dosbing</th>
                                 <th class="text-center">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($reviewers as $data)
+                            @foreach($dosbing as $data)
                             <tr>
                                 <td class="text-center">{{$loop->iteration}}</td>
                                 <td>{{$data->student->name}}</td>
@@ -85,20 +85,33 @@
 <div class="modal fade" id="modalDialogScrollable" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
-            <form action="{{route('meta.reviewer.store')}}" method="post" enctype="multipart/form-data">
+            <form action="{{route('meta.dosbing.store')}}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-header">
-                    <h5 class="modal-title">Tambah Plotting Reviewer</h5>
+                    <h5 class="modal-title">Tambah Plotting Dosen Pembimbing</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="row g-3">
                         <div class="col-md-12">
                             <div class="form-floating">
-                                <select class="form-select" name="lecturer_id">
+                                <select class="form-select" name="dosbing_id">
                                     <option value="">- Pilih Dosen -</option>
+
                                     @foreach($lecturers as $data)
+                                    @php
+                                    $cek = DB::table("reviewers")
+                                    ->where("lecturer_id", $data->id)
+                                    ->where("deleted_at", NULL)
+                                    ->first();
+                                    @endphp
+
+                                    @if($cek)
+
+                                    @else
+
                                     <option value="{{$data->id}}">{{$data->name}}</option>
+                                    @endif
                                     @endforeach
                                 </select>
                                 <label for="jurusan">Dosen</label>
@@ -108,15 +121,19 @@
                             <div class="form-floating">
                                 <select class="form-select" name="student_id">
                                     <option value="">-- Pilih Mahasiswa --</option>
-                                    @foreach($mahasiswa as $data)
+                                    @foreach($tim as $item)
                                     @php
-                                    $cek = DB::table("reviewers")->where("student_id", $data->id)->where("deleted_at", NULL)->first();
+                                    $cek_data = DB::table("dosbing")
+                                    ->where("student_id", $item->user->id)
+                                    ->where("deleted_at", NULL)
+                                    ->first();
                                     @endphp
-
-                                    @if($cek)
+                                    @if($cek_data)
 
                                     @else
-                                    <option value="{{$data->id}}">{{$data->name}} - {{ $data->prody->name }} </option>
+                                    <option value="{{ $item->user->id }}">
+                                        {{ $item->user->name }} - {{ $item->nama_tim }}
+                                    </option>
                                     @endif
                                     @endforeach
                                 </select>
@@ -136,7 +153,7 @@
 <!-- ======= End Tambah ======= -->
 
 <!-- ======= Edit ======= -->
-@foreach($reviewers as $edit)
+@foreach($dosbing as $edit)
 <div class="modal fade" id="modalDialogUpdate-{{ $edit->id }}" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
@@ -153,11 +170,11 @@
                                 <select class="form-select" name="lecturer_id">
                                     <option value="">- Pilih Dosen -</option>
                                     @foreach($lecturers as $data)
-                                        @if($edit->lecturer_id == $data->id)
-                                        <option value="{{$data->id}}" selected>{{$data->name}}</option>
-                                        @else
-                                        <option value="{{$data->id}}">{{$data->name}}</option>
-                                        @endif
+                                    @if($edit->lecturer_id == $data->id)
+                                    <option value="{{$data->id}}" selected>{{$data->name}}</option>
+                                    @else
+                                    <option value="{{$data->id}}">{{$data->name}}</option>
+                                    @endif
                                     @endforeach
                                 </select>
                                 <label for="jurusan">Dosen</label>
@@ -167,18 +184,8 @@
                             <div class="form-floating">
                                 <select class="form-select" name="student_id">
                                     <option value="">-- Pilih Mahasiswa default Reviewer --</option>
-                                    @foreach($mahasiswa as $data)
-                                    @php
-                                    $cek = DB::table("reviewers")->where("student_id", $data->id)->first();
-                                    @endphp
-
-                                    @if($cek)
-                                        @if($edit->student_id == $data->id)
-                                        <option value="{{ $data->id }}" selected>{{ $data->name }} - {{ $data->prody->name }} </option>
-                                        @endif
-                                    @else
-                                    <option value="{{$data->id}}">{{$data->name}} - {{ $data->prody->name }} </option>
-                                    @endif
+                                    @foreach($tim as $data)
+                                    <option value="">Mahasiswa</option>
                                     @endforeach
                                 </select>
                                 <label for="jurusan">Mahasiswa</label>

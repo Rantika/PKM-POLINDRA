@@ -13,13 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('bimbingans', function (Blueprint $table) {
+        Schema::create('dosbing', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('lecturer_id');
-            $table->string('date');
-            $table->text('description');
-            $table->boolean('is_confirmed');
+            $table->unsignedBigInteger('dosbing_id');
+            $table->unsignedBigInteger('student_id');
+            $table->smallInteger("status")->default(0);
             $table->timestamps();
             $table->softDeletes();
         });
@@ -32,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('bimbingans');
+        Schema::dropIfExists('dosbing');
     }
 };

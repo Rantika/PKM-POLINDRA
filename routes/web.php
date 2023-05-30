@@ -18,13 +18,14 @@ use App\Http\Controllers\ProdyController;
 use App\Http\Controllers\ProposalController;
 use App\Http\Controllers\ReviewerController;
 use App\Http\Controllers\SchemeController;
-use App\Http\Controllers\Student\BimbinganStudentController;
 use App\Http\Controllers\Student\RoleStudentController;
 use App\Http\Controllers\KirimEmailController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\ViewConfController;
 use App\Http\Controllers\ForumController;
 use App\Http\Controllers\TimController;
+use App\Http\Controllers\DosbingController;
+use App\Http\Controllers\Lecturer\AccController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -119,7 +120,16 @@ Route::prefix('meta')->middleware(['role:admin'])->group( function () { // prefi
         Route::post('/store', 'store')->name('meta.reviewer.store');
         Route::get('/{id?}', 'show')->name('meta.reviewer.show');
         Route::post('/update/{id?}', 'update')->name('meta.reviewer.update');
-        Route::get('/delete/{id?}', 'delete')->name('meta.reviewer.delete');
+        Route::delete('/delete/{id?}', 'delete')->name('meta.reviewer.delete');
+    });
+
+    Route::prefix('dosbing')->controller(DosbingController::class)->group(function () {
+        Route::get('/', 'index')->name('meta.dosbing.index');
+        Route::get('/create', 'create')->name('meta.dosbing.create');
+        Route::post('/store', 'store')->name('meta.dosbing.store');
+        Route::get('/{id?}', 'show')->name('meta.dosbing.show');
+        Route::post('/update/{id?}', 'update')->name('meta.dosbing.update');
+        Route::delete('/delete/{id?}', 'delete')->name('meta.dosbing.delete');
     });
 });
 
@@ -225,6 +235,11 @@ Route::prefix('lecturer')->middleware(['role:lecturer,reviewer'])->controller(Ro
     Route::get('/bimbingan/get/{user_id?}', 'showBimbingan')->name('lecturer.show-bimbingan');
 });
 
+Route::prefix("lecturer")->middleware(["role:lecturer"])->controller(AccController::class)->group(function() {
+    Route::get("/acc", "index")->name("lecturer.acc");
+    Route::put("/acc/{id}", "update")->name("lecturer.update");
+});
+
 /*
 |--------------------------------------------------------------------------
 |                           Reviewer Routes
@@ -269,15 +284,6 @@ Route::prefix('tim/anggota-tim')->middleware(['role:student'])->controller(TimCo
     Route::post('/update/{id?}', 'update')->name('student.tim.update');
     Route::get('/delete/{id?}', 'delete')->name('student.tim.delete');
 
-});
-
-
-Route::prefix('team/bimbingan')->middleware(['role:student'])->controller(BimbinganStudentController::class)->group( function () {
-    Route::get('/', 'index')->name('student.bimbingan.index');
-    Route::post('/store', 'store')->name('student.bimbingan.store');
-    Route::get('/{id?}', 'show')->name('student.bimbingan.show');
-    Route::post('/update/{id?}', 'update')->name('student.bimbingan.update');
-    Route::get('/delete/{id?}', 'delete')->name('student.bimbingan.delete');
 });
 
 Route::get('/team/profile', function () {

@@ -26,4 +26,14 @@ class Proposal extends Model
     public function comment(){
         return $this->hasOne(Comment::class);
     }
+
+    public function mahasiswa()
+    {
+        return $this->belongsTo("App\Models\Student", "student_id", "user_id");
+    }
+
+    public function dosbing()
+    {
+        return $this->belongsTo("App\Models\Dosbing", "id", "id");
+    }
 }

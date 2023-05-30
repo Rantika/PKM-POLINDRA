@@ -49,6 +49,14 @@
                     </a>
                 </li>
                 <!-- ======= End Plotting Reviewer ======= -->
+
+                 <!-- ======= Plotting Dosbing ======= -->
+                 <li>
+                    <a href="{{route('meta.dosbing.index')}}" class="{{sideBarRoute('meta.dosbing.index')}}">
+                        <i class="bi bi-circle"></i><span>Plotting Dosbing</span>
+                    </a>
+                </li>
+                <!-- ======= End Plotting Reviewer ======= -->
             </ul>
         </li>
         <!-- ======= End Master Data ======= -->

@@ -4,15 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Reviewer extends Model
+class Dosbing extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
     protected $guarded = [];
+    protected $table = 'dosbing';
 
     public function lecturer(){
-        return $this->belongsTo(Lecturer::class);
+        return $this->belongsTo("App\Models\Lecturer", "dosbing_id", "id");
     }
 
     public function prody(){

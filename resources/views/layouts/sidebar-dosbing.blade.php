@@ -3,7 +3,7 @@
 
     <ul class="sidebar-nav" id="sidebar-nav">
         <!-- ======= Sidebar Dosbing ======= -->
-        @if(Auth::user()->lecturer->is_dosbing)
+        @if(Auth::user()->lecturer)
         <li class="nav-heading">Dosen Pembimbing</li>
 
         <!-- ======= Dashboard ======= -->
@@ -17,35 +17,42 @@
 
         <!-- ======= Proposal PKM ======= -->
         <li class="nav-item">
+            <a href="{{ route('lecturer.acc') }}" class="nav-link {{ sideBarRoute('lectuter.acc') }} ">
+                <i class="bi bi-book"></i>
+                <span>Bimbingan</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
             <a class="nav-link {{sideBarRoute('lecturer.proposal')}}" href="{{route('lecturer.proposal')}}">
                 <i class="bi bi-book"></i>
                 <span>Proposal PKM</span>
             </a>
         </li>
         <!-- ======= End Proposal PKM ======= -->
-  <!-- ======= Forum ======= -->
-  <li class="nav-item">
-                    <a class="nav-link collapsed {{sideBarRoute('forum.index')}}" href="{{route('forum.index')}}" >
-                        <i class="bi bi-book"></i>
-                        <span>Forum</span>
-                    </a>
-                </li>
-                <!-- ======= Forum ======= -->
+        <!-- ======= Forum ======= -->
+        <li class="nav-item">
+            <a class="nav-link collapsed {{sideBarRoute('forum.index')}}" href="{{route('forum.index')}}">
+                <i class="bi bi-book"></i>
+                <span>Forum</span>
+            </a>
+        </li>
+        <!-- ======= Forum ======= -->
         <!-- ======= Simbelmawa ======= -->
-            @if(Auth::user()->lecturer->username_simbelmawa)
-            <li class="nav-item">
-                <a class="nav-link {{sideBarRoute('lecturer.simbelmawa')}}" href="{{route('lecturer.simbelmawa')}}">
-                    <i class="bi bi-person-badge"></i>
-                    <span>Akun Simbelmawa</span>
-                </a>
-            </li>
-            @endif
+        @if(Auth::user()->lecturer)
+        <li class="nav-item">
+            <a class="nav-link {{sideBarRoute('lecturer.simbelmawa')}}" href="{{route('lecturer.simbelmawa')}}">
+                <i class="bi bi-person-badge"></i>
+                <span>Akun Simbelmawa</span>
+            </a>
+        </li>
+        @endif
         <!-- ======= End Simbelmawa ======= -->
         @endif
         <!-- ======= End Sidebar Dosbing ======= -->
 
         <!-- ======= Sidebar Reviewer ======= -->
-        @if(Auth::user()->lecturer->is_reviewer)
+        @if(Auth::user()->lecturer)
         <li class="nav-heading">Reviewer</li>
 
         <!-- ======= Dasboard ======= -->

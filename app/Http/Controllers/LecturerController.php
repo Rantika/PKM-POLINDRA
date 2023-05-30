@@ -45,8 +45,6 @@ class LecturerController extends Controller
                 'phone_number'  => $request->phone_number,
                 'photo'         => $request->file ? 'lecturer_file/'.$request->name . '-' . date('Ymd').'.'. $request->file->extension() : null,
                 'is_active'     => true,
-                'is_reviewer'   => false,
-                'is_dosbing'    => false,
             ]);
 
             if ($request->hasFile('file')) {

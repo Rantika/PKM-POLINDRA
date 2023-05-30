@@ -72,10 +72,6 @@
                             <input class="input--style-4" type="text" name="phone_number">
                         </div>
                         <div class="input-group">
-                            <label class="label">Judul</label>
-                            <input class="input--style-4" type="text" name="title">
-                        </div>
-                        <div class="input-group">
                             <label class="label">Jurusan</label>
                             <div class="rs-select2 js-select-simple select--no-search">
                                 <select name="prody_id" class="form-control">

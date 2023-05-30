@@ -65,16 +65,16 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        @foreach($proposals->where('status', 0)->all() as $data)
+                                        @foreach($proposals->where('is_confirmed', 0)->all() as $data)
                                             <tr>
                                                 <td class="text-center">{{$loop->iteration}}</td>
-                                                <td>{{$data->student->name}}</td>
+                                                <td>{{$data->mahasiswa->name}}</td>
                                                 <td>{{$data->title}}</td>
                                                 <td>{{$data->scheme->name}}</td>
                                                 <td>{{optional($data->reviewer)->lecturer->name ?? '-'}}</td>
                                                 <td class="text-center">
-                                                    <button class="btn btn-sm btn-primary confirm" data-id="{{$data->student->user->id}}" title="Data Bimbingan" data-bs-toggle="modal" data-bs-target="#modalDialogScrollable">
-                                                        <i class="bi bi-eye"></i> Bimbingan
+                                                    <button class="btn btn-sm btn-primary confirm" data-id="{{$data->id}}" title="Data Bimbingan" data-bs-toggle="modal" data-bs-target="#modalDialogScrollable">
+                                                        <i class="bi bi-download"></i> Download Proposal
                                                     </button>
                                                     <a href="{{route('lecturer.confirm', $data->id)}}" class="btn btn-sm btn-{{$data->is_confirmed ? 'success' : 'warning'}}" title="Approve Proposal">
                                                         <i class="bi bi-eye"></i> {{$data->is_confirmed ? 'Approved' : 'Approve'}}
@@ -182,24 +182,6 @@
                                         <i class="bi bi-download" style="font-size: 25px"></i> Download
                                     </a>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="card">
-                            <div class="card-body profile-card pt-4">
-                                <h5>Hasil Bimbingan</h5>
-                                <table class="table table-hover">
-                                    <thead>
-                                        <th>No</th>
-                                        <th>Tanggal</th>
-                                        <th>Bimbingan</th>
-                                        <th>Aksi</th>
-                                    </thead>
-                                    <tbody id="bimbingan">
-
-                                    </tbody>
-                                </table>
                             </div>
                         </div>
                     </div>
@@ -372,34 +354,11 @@
                         if(response.proposal.file) {
                             $('#proposal-download').removeClass('d-none')
                             $('#proposal-download').attr('href', `{{asset('/')}}` + (response.proposal.file ?? '#'))
-                        }else
+                        }else {
                             $('#proposal-download').addClass('d-none')
-
-                        if (response.bimbingan.length === 0){
-                            $('#bimbingan').append(`
-                                <tr>
-                                  <td colspan="3" class="text-center">Tidak ada data!</td>
-                                <tr>
-                            `)
                         }
 
-                        let i = 1;
-                        response.bimbingan.map(function (data) {
-                            $('#bimbingan').append(`
-                                <tr>
-                                  <td>${i}</td>
-                                  <td>${data.date}</td>
-                                  <td>${data.description}</td>
-                                  <td>
-                                      <button type="button" class="btn btn-${data.is_confirmed ? 'success' : 'warning'} confirm-bimbingan" data-id="${data.id}"> ${data.is_confirmed ? 'Terkonfirmasi' : 'Konfirmasi'}</button>
-                                  </td>
-                                <tr>
-                            `)
-                            i++;
-                        });
-
                         fadeOut()
-                        $("#modalDialogScrollable").modal('show');
                     }
                 })
             })

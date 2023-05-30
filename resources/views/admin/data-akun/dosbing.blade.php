@@ -58,8 +58,12 @@
                                     <td>{{$data->prody->group->name}}</td>
                                     <td>{{$data->phone_number ?? '-'}}</td>
                                     <td class="text-center">
-                                    <span class="badge bg-{{$data->is_reviewer ? 'success' : 'warning'}}">
-                                        <i class="bi bi-{{$data->is_reviewer ? 'check' : 'x'}}-circle me-1"></i> {{$data->is_reviewer ? 'Ya' : 'Tidak'}}
+                                        @php
+                                            $cek = DB::table("reviewers")->where("lecturer_id", $data->id)->where("deleted_at", NULL)->first();
+                                        @endphp
+
+                                    <span class="badge bg-{{$cek ? 'success' : 'warning'}}">
+                                        <i class="bi bi-{{$cek ? 'check' : 'x'}}-circle me-1"></i> {{$cek ? 'Ya' : 'Tidak'}}
                                     </span>
                                     </td>
                                     <td class="text-center">
@@ -74,7 +78,9 @@
                                     </td>
                                     <td class="text-center">
                                         <button class="btn btn-sm btn-{{$data->username_simbelmawa ? 'success' : 'warning'}} lolos" type="button" data-id="{{$data->id}}" title="{{$data->username_simbelmawa ? 'Update' : 'Input'}} Akun Simbelmawa"><i class="bi bi-person-fill"></i></button>
-                                        <button class="btn btn-sm btn-info edit" type="button" data-id="{{$data->id}}" title="Edit"><i class="bi bi-pencil-square"></i></button>
+                                        <button class="btn btn-sm btn-info edit" type="button" title="Edit" data-bs-toggle="modal" data-bs-target="#modalDialogEdit-{{ $data->id }}">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </button>
                                         {{-- <button class="btn btn-sm btn-danger delete" type="button" data-id="{{$data->id}}" title="Delete"><i class="bi bi-trash"></i></button> --}}
                                     </td>
                                 </tr>
@@ -122,6 +128,16 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-floating">
+                                    <select name="prody_id" class="form-control" id="prody_id">
+                                        <option value="">- Pilih -</option>
+                                        @foreach($prodies as $item)
+                                        <option value="{{ $item->id }}">{{$item->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-floating">
                                     <input type="text" name="nip" class="form-control" placeholder="NIP">
                                     <label for="nip">NIP</label>
                                 </div>
@@ -130,16 +146,6 @@
                                 <div class="form-floating">
                                     <input type="text" name="phone_number" class="form-control" id="phoneNumber" placeholder="No Handphone">
                                     <label for="phoneNumber">No Handphone</label>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-floating">
-                                    <select class="form-select" name="prody_id">
-                                        @foreach($prodies as $data)
-                                            <option value="{{$data->id}}">{{$data->name}}</option>
-                                        @endforeach
-                                    </select>
-                                    <label for="jurusan">Prodi</label>
                                 </div>
                             </div>
                             <div class="col-md-12">
@@ -162,62 +168,66 @@
     <!-- ======= End Tambah ======= -->
 
     <!-- ======= Edit ======= -->
-    <div class="modal fade" id="modalDialogUpdate" tabindex="-1">
+    @foreach($lecturers as $data)
+    <div class="modal fade" id="modalDialogEdit-{{ $data->id }}" tabindex="-1">
         <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
             <div class="modal-content">
-                <form id="form-update" action="#" method="post" enctype="multipart/form-data">
+                <form action="{{ route('account.lecturer.update', ['id' => $data->id] ) }}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-header">
                         <h5 class="modal-title">Edit Akun Dosen</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <div class="row g-3">
-                            <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-12 pb-3">
                                 <div class="form-floating">
-                                    <input type="text" name="name" class="form-control" id="name" placeholder="Nama">
+                                    <input type="text" name="name" class="form-control" id="name" placeholder="Nama" value="{{ $data->name }}">
                                     <label for="name">Nama</label>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-12 pb-3">
                                 <div class="form-floating">
-                                    <input type="email" name="email" class="form-control" id="email" placeholder="Email">
+                                    <input type="email" name="email" class="form-control" id="email" placeholder="Email" value="{{ $data->user->email }}" readonly>
                                     <label for="email">Email</label>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-12 pb-3">
                                 <div class="form-floating">
-                                    <input type="password" name="password" class="form-control" id="password" placeholder="Password">
-                                    <label for="password">Password</label>
+                                    <select name="prody_id" class="form-control" id="prody_id">
+                                        <option value="">- Pilih -</option>
+                                        @foreach($prodies as $item)
+                                            @if($data->prody_id == $item->id)
+                                            <option value="{{ $item->id }}" selected>{{$item->name}}</option>
+                                            @else
+                                            <option value="{{ $item->id }}">{{$item->name}}</option>
+                                            @endif
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-md-12 pb-3">
                                 <div class="form-floating">
-                                    <input type="text" name="nip" class="form-control" id="nip" placeholder="NIP">
+                                    <input type="text" name="nip" class="form-control" id="nip" placeholder="NIP" value="{{ $data->nip }}">
                                     <label for="nip">NIP</label>
                                 </div>
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-md-12 pb-3">
                                 <div class="form-floating">
-                                    <input type="text" name="phone_number" class="form-control" id="phone_number" placeholder="No Handphone">
+                                    <input type="text" name="phone_number" class="form-control" id="phone_number" placeholder="No Handphone" value="{{ $data->phone_number }}">
                                     <label for="phone_number">No Handphone</label>
                                 </div>
                             </div>
-                            <div class="col-md-12">
-                                <div class="form-floating">
-                                    <select id="prody" class="form-select" name="prody_id">
-                                        @foreach($prodies as $data)
-                                            <option value="{{$data->id}}">{{$data->name}}</option>
-                                        @endforeach
-                                    </select>
-                                    <label for="jurusan">Prodi</label>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
+                            <div class="col-md-12 ">
                                 <div class="form-floating">
                                     <select id="status" class="form-select" name="status">
-                                        <option value="1">Aktif</option>
+                                        @if($data->is_active == 1)
+                                        <option value="1" selected>Aktif</option>
                                         <option value="0">Non-Aktif</option>
+                                        @else
+                                        <option value="1">Aktif</option>
+                                        <option value="0" selected>Non-Aktif</option>
+                                        @endif
                                     </select>
                                     <label for="jurusan">Status</label>
                                 </div>
@@ -239,6 +249,7 @@
             </div>
         </div>
     </div>
+    @endforeach
     <!-- ======= End Edit ======= -->
 
     <!-- ======= Akun Simbelmawa ======= -->
@@ -284,27 +295,6 @@
     <script>
         $(document).ready(function () {
             $('.datatable').DataTable();
-
-            $(document).on('click', '.edit', function () {
-                fadeIn()
-                let id = $(this).data('id')
-
-                $.ajax({
-                    url: `{{route('account.lecturer.show')}}/${id}`,
-                    success: function (response) {
-                        $('#form-update').attr('action', `{{route('account.lecturer.update')}}/${response.id}`)
-                        $('#name').val(response.name)
-                        $('#email').val(response.user.email)
-                        $('#nip').val(response.nip)
-                        $('#phone_number').val(response.phone_number)
-                        $('#prody').val(response.prody_id).change()
-                        $('#status').val(response.is_active).change()
-
-                        $("#modalDialogUpdate").modal('show');
-                        fadeOut()
-                    }
-                })
-            })
 
             $(document).on('click', '.delete', function () {
                 let id = $(this).data('id');

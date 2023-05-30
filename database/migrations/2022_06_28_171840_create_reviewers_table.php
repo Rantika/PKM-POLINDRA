@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('reviewers', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('lecturer_id');
-            $table->unsignedBigInteger('prody_id')->nullable();
+            $table->unsignedBigInteger('student_id');
             $table->timestamps();
             $table->softDeletes();
         });

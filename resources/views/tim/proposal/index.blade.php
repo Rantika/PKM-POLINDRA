@@ -56,7 +56,13 @@
                 <div class="card">
                     <div class="card-body profile-card d-flex align-items-center">
                         <div class="card-body profile-card pt-4 d-flex flex-column">
-                            <center><img src="{{asset($proposal->lecturer->photo)}}" width="300px" height="120px" alt="Profile" class="rounded-circle" ></center>
+                            <center>
+                                @if(empty($proposal->lecturer->photo))
+                                <img src="{{ url('/image/profil.png') }}" width="300px" height="120px" class="rounded-circle">
+                                @else
+                                <img src="{{asset($proposal->lecturer->photo)}}" width="300px" height="120px" alt="Profile" class="rounded-circle" >
+                                @endif
+                            </center>
                             <div class="social-links mt-2" style="text-align: center"><h2>{{$proposal->lecturer->name}}</h2></div>
                             <div class="social-links mt-1" style="text-align: center"><h2>{{$proposal->lecturer->nip}}</h2></div>
                             <div class="social-links mt-1" style="text-align: center"><h3>{{$proposal->lecturer->prody->name}}</h3></div>
@@ -97,12 +103,6 @@
                             @if($proposal->status != 0)
                                 <li class="nav-item">
                                     <button class="nav-link" data-bs-toggle="tab" data-bs-target="#komentar">Catatan Proposal</button>
-                                </li>
-                            @endif
-
-                            @if($proposal->student->username_simbelmawa)
-                                <li class="nav-item">
-                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#simbelmawa">Akun Simbelmawa</button>
                                 </li>
                             @endif
 
@@ -189,10 +189,15 @@
                                             </span>
                                         </div>
                                     </div>
-                                
+
+                                    @if($proposal->dosbing->status == 0 || $proposal->dosbing->status == 2)
+
+                                    @else
                                     <div class="text-center {{$proposal->status == 2 ? 'd-none' : ''}}">
                                         <button type="submit" class="btn btn-primary">Simpan</button>
                                     </div>
+
+                                    @endif
                                 </form>
                             </div>
                             <!-- ======= End Overview Tabs ======= -->
@@ -210,24 +215,6 @@
                             @endforeach
                             </div>
                             <!-- ======= End Komentas Proposal Tabs ======= -->
-
-                            <!-- ======= Simbelmawa Tabs ======= -->
-                            <div class="tab-pane fade simbelmawa pt-3" id="simbelmawa">
-                                <div class="row mb-3">
-                                    <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Usename Simbelmawa</label>
-                                    <div class="col-md-8 col-lg-9">
-                                        <input class="form-control" value="{{$proposal->student->username_simbelmawa}}" disabled>
-                                    </div>
-                                </div>
-
-                                <div class="row mb-3">
-                                    <label class="col-md-4 col-lg-3 col-form-label">Password Simbelmawa</label>
-                                    <div class="col-md-8 col-lg-9">
-                                        <input class="form-control" value="{{$proposal->student->password_simbelmawa}}" disabled>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- ======= End Simbelmawa Tabs ======= -->
 
                             <!-- ======= Profile Edit Tabs ======= -->
                             <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
@@ -251,35 +238,35 @@
                                     <div class="row mb-3">
                                         <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Pengusul</label>
                                         <div class="col-md-8 col-lg-9">
-                                            <input name="fullName" type="text" class="form-control" id="fullName" value="{{$proposal->student->name}}" disabled>
+                                            <input name="fullName" type="text" class="form-control" id="fullName" value="{{$proposal->mahasiswa->name}}" disabled>
                                         </div>
                                     </div>
 
                                     <div class="row mb-3">
                                         <label for="about" class="col-md-4 col-lg-3 col-form-label">NIM</label>
                                         <div class="col-md-8 col-lg-9">
-                                            <input name="nim" type="text" class="form-control" id="nim" value="{{$proposal->student->code}}" disabled>
+                                            <input name="nim" type="text" class="form-control" id="nim" value="{{$proposal->mahasiswa->nim}}" disabled>
                                         </div>
                                     </div>
 
                                     <div class="row mb-3">
                                         <label for="Job" class="col-md-4 col-lg-3 col-form-label">Jurusan</label>
                                         <div class="col-md-8 col-lg-9">
-                                            <input name="job" type="text" class="form-control" id="Job" value="{{$proposal->student->prody->name}}" disabled>
+                                            <input name="job" type="text" class="form-control" id="Job" value="{{$proposal->mahasiswa->prody->name}}" disabled>
                                         </div>
                                     </div>
 
                                     <div class="row mb-3">
                                         <label for="Country" class="col-md-4 col-lg-3 col-form-label">No Hp</label>
                                         <div class="col-md-8 col-lg-9">
-                                            <input name="phone_number" type="text" class="form-control" id="Country" value="{{$proposal->student->phone_number}}">
+                                            <input name="phone_number" type="text" class="form-control" id="Country" value="{{$proposal->mahasiswa->phone_number}}">
                                         </div>
                                     </div>
 
                                     <div class="row mb-3">
                                         <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
                                         <div class="col-md-8 col-lg-9">
-                                            <input name="email" type="email" class="form-control" id="Email" value="{{$proposal->student->user->email}}">
+                                            <input name="email" type="email" class="form-control" id="Email" value="{{$proposal->mahasiswa->user->emails}}">
                                         </div>
                                     </div>
 

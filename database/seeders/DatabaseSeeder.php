@@ -183,27 +183,7 @@ class DatabaseSeeder extends Seeder
                 'name'          => 'Munengsih Sari Bunga',
                 'phone_number'  => '087777777777',
                 'is_active'     => true,
-                'is_reviewer'   => false,
-                'is_dosbing'    => true,
-            ]);
-
-            $student = Student::updateOrCreate(
-            ['nim'          => '1903000'],
-            [
-                'user_id'       => $data['student']->id,
-                'prody_id'      => $data['TI']->id,
-                'name'          => 'Annisa Khusnul Laily',
-                'phone_number'  => '087777777777',
-            ]);
-
-            Proposal::create([
-                'student_id'    => $student->id,
-                'lecturer_id'   => $lecturer->id,
-                'scheme_id'     => $data['PKM-K']->id,
-                'title'         => 'Pengolahan Buah nanas dengan apel',
-                'status'        => 0,
-                'year'          => '2022',
-                'is_confirmed'  => false,
+              
             ]);
 
             DB::commit();
