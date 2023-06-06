@@ -17,12 +17,9 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $data['proposal'] = Proposal::with(['student', 'reviewer.lecturer', 'lecturer', 'scheme', 'comment'])
-            ->where('student_id', Auth::user()->student->id)
-            ->first();
-
         if (empty(Auth::user()->tim->id)) {
         } else {
+            $data["proposal"] = Proposal::where("student_id", Auth::user()->id)->first();
             $data["tim_student"] = TimStudent::where("tim_id", Auth::user()->tim->id)->get();
         }
         $data["tim"] = Tim::where("user_id", Auth::user()->id)->first();

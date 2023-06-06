@@ -32,7 +32,10 @@
 										<li>
 											<img src="{{ asset('image/profil.png')}}" width="50px" height="50px" alt="Avatar" class="img-circle pull-left avatar">
 											<b>
-                                                <a href="/forum/{{$frm->id}}/view">{{$frm->user->student->name}}</a> 
+                                            <?php if ($frm !== null && $frm->user !== null && $frm->user->student !== null): ?>
+                                                    <a href="/forum/<?php echo $frm->id; ?>/view"><?php echo $frm->user->student->name; ?></a>
+                                                <?php endif; ?>
+
                                                
                                                 <span class="timestamp" style="color:#808080">{{$frm->created_at->diffForHumans()}}</span>
                                             </b>

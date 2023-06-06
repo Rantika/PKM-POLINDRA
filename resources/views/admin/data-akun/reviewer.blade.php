@@ -1,3 +1,7 @@
+@php
+    use App\Models\Proposal;
+@endphp
+
 @extends('layouts.main')
 
 @section('title') Plotting - Reviewer @endsection
@@ -109,15 +113,16 @@
                                 <select class="form-select" name="student_id">
                                     <option value="">-- Pilih Mahasiswa --</option>
                                     @foreach($mahasiswa as $data)
-                                    @php
-                                    $cek = DB::table("reviewers")->where("student_id", $data->id)->where("deleted_at", NULL)->first();
-                                    @endphp
+                                        @php
+                                            $cek = Proposal::where("student_id", $data["student_id"])->where("reviewer_id", NULL)->first();
+                                        @endphp
+                                        @if($cek)
+                                        <option value="{{ $data->student->id }}">
+                                            {{ $data->student->name }} - {{ $data->student->prody->name }}
+                                        </option>
 
-                                    @if($cek)
-
-                                    @else
-                                    <option value="{{$data->id}}">{{$data->name}} - {{ $data->prody->name }} </option>
-                                    @endif
+                                        @else
+                                        @endif
                                     @endforeach
                                 </select>
                                 <label for="jurusan">Mahasiswa</label>
@@ -168,17 +173,23 @@
                                 <select class="form-select" name="student_id">
                                     <option value="">-- Pilih Mahasiswa default Reviewer --</option>
                                     @foreach($mahasiswa as $data)
-                                    @php
-                                    $cek = DB::table("reviewers")->where("student_id", $data->id)->first();
-                                    @endphp
+                                        @if($data["id"] == $edit["student_id"])
+                                        <option value="{{ $data->student->id }}" selected>
+                                            {{ $data->student->name }} - {{ $data->student->prody->name }}
+                                        </option>
+                                        @else
+                                            @php
+                                                $cek_data = Proposal::where("student_id", $data["student_id"])->where("reviewer_id", NULL)->first();
+                                            @endphp
 
-                                    @if($cek)
-                                        @if($edit->student_id == $data->id)
-                                        <option value="{{ $data->id }}" selected>{{ $data->name }} - {{ $data->prody->name }} </option>
+                                            @if($cek_data)
+                                            <option value="{{ $data->student->id }}">
+                                            {{ $data->student->name }} - {{ $data->student->prody->name }}
+                                            </option>
+                                            @else
+
+                                            @endif
                                         @endif
-                                    @else
-                                    <option value="{{$data->id}}">{{$data->name}} - {{ $data->prody->name }} </option>
-                                    @endif
                                     @endforeach
                                 </select>
                                 <label for="jurusan">Mahasiswa</label>

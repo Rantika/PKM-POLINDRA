@@ -17,13 +17,16 @@ class Student extends Model
     public function prody(){
         return $this->belongsTo(Prody::class);
     }
-    public function proposal(){
-        return $this->hasOne(Proposal::class);
-    }
+
     public function bimbingan(){
         return $this->hasMany(Bimbingan::class);
     }
     public function forum(){
         return $this->hasMany(Forum::class);
+    }
+
+    public function proposal()
+    {
+        return $this->belongsTo("App\Models\Proposal", "user_id", "student_id");
     }
 }

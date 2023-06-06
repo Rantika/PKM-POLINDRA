@@ -25,15 +25,19 @@ class RoleStudentController extends Controller
     {
         $cek = Dosbing::where("student_id", Auth::user()->id)->first();
 
-        if ($cek->status == 0 || $cek->status == 2) {
+        if (empty($cek)) {
             return redirect("/team");
         } else {
-            $data['proposal'] = Proposal::where('student_id', Auth::user()->id)
-                                ->first();
-
-            $data["komen"] = komen_proposal::where("proposal_id", $data["proposal"]["id"])->get();
+            if ($cek->status == 0 || $cek->status == 2) {
+                return redirect("/team");
+            } else {
+                $data['proposal'] = Proposal::where('student_id', Auth::user()->id)
+                                    ->first();
     
-            return view('tim.proposal.index', $data);
+                $data["komen"] = komen_proposal::where("proposal_id", $data["proposal"]["id"])->get();
+        
+                return view('tim.proposal.index', $data);
+            }
         }
     }
 

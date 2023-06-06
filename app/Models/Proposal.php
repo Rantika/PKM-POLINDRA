@@ -34,6 +34,6 @@ class Proposal extends Model
 
     public function dosbing()
     {
-        return $this->belongsTo("App\Models\Dosbing", "id", "id");
+        return $this->belongsTo("App\Models\Dosbing", "lecturer_id", "dosbing_id");
     }
 }

@@ -131,10 +131,11 @@ h1, h2, h3, h4, h5, h6 {
   padding: 5px 15px 7px 15px;
   margin-left: 5px;
   font-size: 14px;
-  color: #fff;
+  color: #264E6B;
   white-space: nowrap;
   transition: 0.3s;
   border-radius: 50px;
+  opacity: 1;
 }
 
 .navbar a i, .navbar a:focus i {
@@ -144,7 +145,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .navbar a:hover, .navbar .active, .navbar .active:focus, .navbar li:hover > a {
-  background: #ea0e11;
+  background: #23B6E4;
 }
 
 .navbar .dropdown ul {
@@ -555,6 +556,35 @@ h1, h2, h3, h4, h5, h6 {
     transform: translate(85px, 0%);
   }
 }
+/* Informasi Kegiatan */
+.informasi{
+  font-size:55px;
+  background: #264E6B;
+  position: center;
+  width: 350px;
+  height: 80px;
+  padding-top:10;
+  padding-bottom:10px;
+  padding-left:10px; 
+  text-align: center;
+  color:#D9D9D8
+ 
+  
+}
+
+.time{
+
+  font-size:55px;
+  background: #23B6E4;
+  position: center;
+  width: 350px;
+  height: 180px;
+  padding-top:10;
+  padding-bottom:10px;
+  padding-left:10px; 
+  text-align: center;
+  color:#D9D9D8;
+}
 
 /*--------------------------------------------------------------
 # Sections General
@@ -890,8 +920,8 @@ section {
 # Footer
 --------------------------------------------------------------*/
 #footer {
-  background: #010080;
-  color: #fff;
+  background: #23B6E4;
+  color: #264E6B;
   font-size: 14px;
   text-align: center;
   padding: 30px 0;
@@ -899,7 +929,7 @@ section {
 #footer h3 {
   font-size: 36px;
   font-weight: 700;
-  color: #fff;
+  color: #264E6B;
   position: relative;
   font-family: "Poppins", sans-serif;
   padding: 0;
@@ -917,8 +947,8 @@ section {
 #footer .social-links a {
   font-size: 18px;
   display: inline-block;
-  background: #ea0e11;
-  color: #fff;
+  background: #fff;
+  color: #264E6B;
   line-height: 1;
   padding: 8px 0;
   margin-right: 4px;
@@ -929,8 +959,8 @@ section {
   transition: 0.3s;
 }
 #footer .social-links a:hover {
-  background: #bd5102;
-  color: #fff;
+  background: #264E6B;
+  color:#264E6B;
   text-decoration: none;
 }
 #footer .copyright {

@@ -16,14 +16,13 @@ class EnsureUserHasRole
      * @param $role
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
-    public function handle(Request $request, Closure $next, $role)
+    public function handle(Request $request, Closure $next, $guard = NULL)
     {
-        if (Auth::check()){
-            if (Auth::user()->role === $role)
-                return $next($request);
+        if (Auth::guard($guard)->check()) {
+            return $next($request);
         }
 
-        return redirect('/login');
+        return redirect("/login");
     }
 }
 

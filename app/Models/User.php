@@ -48,7 +48,7 @@ class User extends Authenticatable
     }
 
     public function lecturer(){
-        return $this->hasOne(Lecturer::class);
+        return $this->belongsTo("App\Models\Lecturer", "id", "user_id");
     }
 
     public function student(){
@@ -68,5 +68,15 @@ class User extends Authenticatable
     }
     public function tim(){
         return $this->belongsTo('App\Models\Tim','id','user_id');
+    }
+
+    public function usersrole()
+    {
+        return $this->belongsTo("App\Models\UsersRole", "id", "user_id");
+    }
+
+    public function hak_akses()
+    {
+        return $this->belongsTo("App\Models\UsersRole", "id_hak_akses", "id");
     }
 }

@@ -61,14 +61,18 @@
                                         @php
                                             $cek = DB::table("reviewers")->where("lecturer_id", $data->id)->where("deleted_at", NULL)->first();
                                         @endphp
+                                        
+                                        @php
+                                            $cek_dosbing = DB::table("dosbing")->where("dosbing_id", $data->id)->count();
+                                        @endphp
 
                                     <span class="badge bg-{{$cek ? 'success' : 'warning'}}">
                                         <i class="bi bi-{{$cek ? 'check' : 'x'}}-circle me-1"></i> {{$cek ? 'Ya' : 'Tidak'}}
                                     </span>
                                     </td>
                                     <td class="text-center">
-                                    <span class="badge bg-{{$data->is_dosbing ? 'success' : 'warning'}}">
-                                        <i class="bi bi-{{$data->is_dosbing ? 'check' : 'x'}}-circle me-1"></i> {{$data->is_dosbing ? 'Ya' : 'Tidak'}}
+                                    <span class="badge bg-{{$cek_dosbing == 1 ? 'success' : 'warning'}}">
+                                        <i class="bi bi-{{$cek_dosbing == 1 ? 'check' : 'x'}}-circle me-1"></i> {{ $cek_dosbing == 1 ? 'Ya' : 'Tidak'}}
                                     </span>
                                     </td>
                                     <td class="text-center">

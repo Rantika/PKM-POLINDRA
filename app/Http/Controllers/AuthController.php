@@ -11,6 +11,7 @@ use App\Models\Lecturer;
 use App\Models\Proposal;
 use App\Models\Reviewer;
 use App\Models\Tim;
+use App\Models\UsersRole;
 use App\Models\ViewConf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -26,17 +27,23 @@ class AuthController extends Controller
 
     public function authenticate(Request $request)
     {
-        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])){ // attempt :
-            if (Auth::user()->role === 'admin') return redirect()->route('dashboard');
+
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])){
             
+            User::where("id", Auth::user()->id)->update([
+                "id_hak_akses" => Auth::user()->usersrole->id
+            ]);
+
+            if (Auth::user()->usersrole->role == "Admin") return redirect()->route("dashboard");
             $activePeriod = Period::where('is_active', true)->first();
             if(!$activePeriod){
                 return redirect()->back()->with('error', 'Tidak bisa login karena periode PKM telah selesai/Tidak ada periode PKM yang berlangsung!');
             }
 
-            if (Auth::user()->role === 'reviewer') return redirect()->route('reviewer.index');
-            if (Auth::user()->role === 'lecturer') return redirect()->route('lecturer.index');
-            if (Auth::user()->role === 'student') return redirect()->route('student.index');
+            if (Auth::user()->usersrole->role == "Dosen Pembimbing") return redirect()->route("lecturer.index");
+            if (Auth::user()->usersrole->role == "Student") return redirect()->route("student.index");
+            if (Auth::user()->usersrole->role == "Lecturer") return redirect()->route("lecturer.index");
+            
         }else{
             return redirect()->back()->with('error', 'Email atau Password yang anda masukkan salah!');
         }
@@ -63,7 +70,6 @@ class AuthController extends Controller
             $user = User::create([
                 'email'     => $request->email,
                 'password'  => bcrypt($request->password),
-                'role'      => 'student',
             ]);
 
             $student = Student::create([
@@ -74,12 +80,17 @@ class AuthController extends Controller
                 'phone_number'  => $request->phone_number,
             ]);
 
+            $role = UsersRole::create([
+                "user_id" => $user->id,
+                "role" => "Student"
+            ]);
+                
             $tim = Tim::create([
                 "user_id" => $user->id
             ]);
             
             $param = [
-                'id'            => User::where('role', 'admin')->first()->id,
+                'id'            => $role->id,
                 'for'           => 'admin',
                 'type'          => 0,
                 'description'   => $student->name,

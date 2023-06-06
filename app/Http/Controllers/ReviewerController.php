@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Dosbing;
 use App\Models\Lecturer;
 use App\Models\Prody;
+use App\Models\Proposal;
 use App\Models\Student;
 use App\Models\Reviewer;
+use App\Models\UsersRole;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -14,7 +17,7 @@ class ReviewerController extends Controller
     public function index()
     {
         $data['lecturers'] = Lecturer::get();
-        $data['mahasiswa'] = Student::where("user_id", "!=", NULL)->get();
+        $data['mahasiswa'] = Dosbing::where("status", 1)->get();
         $data['reviewers'] = Reviewer::with(['lecturer', 'prody'])->get();
 
         return view('admin.data-akun.reviewer', $data);
@@ -27,6 +30,19 @@ class ReviewerController extends Controller
             $data = Reviewer::create([
                 'lecturer_id'   => $request->lecturer_id,
                 'student_id'    => $request->student_id
+            ]);
+            
+            $cek = UsersRole::where("user_id", $data->lecturer->user->id)->count();
+
+            if ($cek == 0) {
+                UsersRole::create([
+                    "user_id" => $data->lecturer->user->id,
+                    "role" => "Reviewer"
+                ]);
+            }
+
+            Proposal::where("id", $request->student_id)->update([
+                "reviewer_id" => $data["id"]
             ]);
 
             DB::commit();

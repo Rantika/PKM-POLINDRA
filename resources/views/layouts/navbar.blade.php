@@ -33,14 +33,36 @@
                 <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
                     <img src="{{asset('assets/img/user-icon.png')}}" alt="Profile" class="rounded-circle">
                     <span class="d-none d-md-block dropdown-toggle ps-2">
-                        {{Auth::user()->{Auth::user()->role}->name}}
+                        @if(Auth::user()->usersrole->role == "Admin")
+                            {{ Auth::user()->admin->name }}
+                        @elseif(Auth::user()->usersrole->role == "Dosen Pembimbing")
+                            {{ Auth::user()->lecturer->name }}
+                        @elseif(Auth::user()->usersrole->role == "Student")
+                            {{ Auth::user()->student->name }}
+                        @endif
                     </span>
                 </a>
 
                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                     <li class="dropdown-header">
-                        <h6>{{Auth::user()->{Auth::user()->role}->name}}</h6>
-                        <span>{{optional(Auth::user()->{Auth::user()->role}->prody)->name ?? 'Admin'}}</span>
+                        <h6>
+                        @if(Auth::user()->usersrole->role == "Admin")
+                            {{ Auth::user()->admin->name }}
+                        @elseif(Auth::user()->usersrole->role == "Dosen Pembimbing")
+                            {{ Auth::user()->lecturer->name }}
+                        @elseif(Auth::user()->usersrole->role == "Student")
+                            {{ Auth::user()->student->name }}
+                        @endif
+                        </h6>
+                        <span>
+                        @if(Auth::user()->usersrole->role == "Admin")
+                            {{ Auth::user()->usersrole->role }}
+                        @elseif(Auth::user()->usersrole->role == "Dosen Pembimbing")
+                            {{ Auth::user()->usersrole->role }}
+                        @elseif(Auth::user()->usersrole->role == "Student")
+                            {{ Auth::user()->usersrole->role }}
+                        @endif
+                        </span>
                     </li>
                     <li>
                         <hr class="dropdown-divider">

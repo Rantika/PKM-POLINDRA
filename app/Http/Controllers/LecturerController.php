@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Lecturer;
 use App\Models\Prody;
 use App\Models\User;
+use App\Models\UsersRole;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -34,7 +35,6 @@ class LecturerController extends Controller
             $user = User::create([
                 'email'     => $request->email,
                 'password'  => bcrypt($request->password),
-                'role'      => 'lecturer',
             ]);
 
             $data = Lecturer::create([
@@ -45,6 +45,11 @@ class LecturerController extends Controller
                 'phone_number'  => $request->phone_number,
                 'photo'         => $request->file ? 'lecturer_file/'.$request->name . '-' . date('Ymd').'.'. $request->file->extension() : null,
                 'is_active'     => true,
+            ]);
+
+            UsersRole::create([
+                "user_id" => $user["id"],
+                "role" => "Dosen Pembimbing"
             ]);
 
             if ($request->hasFile('file')) {

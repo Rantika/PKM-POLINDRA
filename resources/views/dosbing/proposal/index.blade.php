@@ -103,16 +103,16 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($proposals->where('status', 1)->all() as $data)
+                                    @foreach($proposals->where('status', 0)->where('is_confirmed', 1)->all() as $data)
                                         <tr>
                                             <td class="text-center">{{$loop->iteration}}</td>
-                                            <td>{{$data->student->name}}</td>
+                                            <td>{{$data->mahasiswa->name}}</td>
                                             <td>{{$data->title}}</td>
                                             <td>{{$data->scheme->name}}</td>
                                             <td>{{optional($data->reviewer)->lecturer->name ?? '-'}}</td>
                                             <td class="text-center">
                                                 <button class="btn btn-sm btn-info review" data-id="{{$data->id}}" title="Lihat Detail" data-bs-toggle="modal" data-bs-target="#modalRevisi">
-                                                    <i class="bi bi-eye"></i> Lihat
+                                                    <i class="bi bi-eye"></i>   
                                                 </button>
                                             </td>
                                         </tr>
@@ -401,12 +401,7 @@
                             $('#review-file').html('Tidak ada Proposal review')
                         }
 
-                        $('#cover').html(response.comment.cover)
-                        $('#kata_pengantar').html(response.comment.kata_pengantar)
-                        $('#bab_1').html(response.comment.bab_1)
-                        $('#bab_2').html(response.comment.bab_2)
-                        $('#bab_3').html(response.comment.bab_3)
-                        $('#daftar_pustaka').html(response.comment.daftar_pustaka)
+                       console.log("Ada");
 
                         fadeOut()
                         $("#modalRevisi").modal('show');

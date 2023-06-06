@@ -47,22 +47,24 @@
                                 @foreach($proposals as $data)
                                 <tr>
                                     <td class="text-center">{{$loop->iteration}}.</td>
-                                    <td>{{ $data->mahasiswa->name }}</td>
-                                    <td>{{ $data->title }}</td>
-                                    <td class="text-center">{{ $data->scheme->name }}</td>
+                                    <td>{{ $data->student->name }}</td>
+                                    <td>{{ $data->student->proposal->title }}</td>
+                                    <td class="text-center">{{ $data->student->proposal->scheme->name }}</td>
                                     <td class="text-center">
-                                        @if($data->dosbing->status == 0)
-                                            <button disabled class="btn btn-warning btn-sm">
-                                                Belum Ada Status
+                                        @if($data->status == 1)
+                                            <button class="btn btn-success btn-sm">
+                                                ACC
                                             </button>
-                                        @elseif($data->dosbing->status == 1)
-                                        <button disabled class="btn btn-success btn-sm">
-                                            ACC
-                                        </button>
-                                        @elseif($data->dosbing->status == 2)
-                                        <button disabled class="btn btn-danger btn-sm">
-                                            Tolak
-                                        </button>
+                                        @elseif($data->status == 0)
+                                            <button class="btn btn-warning btn-sm">
+                                                <i class="fa fa-clock"></i> Belum Ada Status
+                                            </button>
+                                        @elseif($data->status == 2)
+                                            <button class="btn btn-danger btn-sm">
+                                                Di Tolak
+                                            </button>
+                                        @else
+                                            -
                                         @endif
                                     </td>
                                     <td class="text-center">
@@ -89,15 +91,27 @@
                 <h5 class="modal-title" id="exampleModalLabel">Ubah Status</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="{{ route('lecturer.update', ['id' => $data->dosbing->id] ) }}" method="POST">
+            <form action="{{ route('lecturer.update', ['id' => $data->id] ) }}" method="POST">
                 {{ csrf_field() }}
                 @method("PUT")
                 <div class="modal-body">
                     <label for="status"> Status </label>
                     <select name="status" class="form-control" id="status">
+                        @if($data->status == 0)
                         <option value="">- Pilih -</option>
                         <option value="1">Setuju</option>
                         <option value="2">Tidak Setuju</option>
+                        @elseif($data->status == 1)
+                        <option value="">- Pilih -</option>
+                        <option value="1" selected>Setuju</option>
+                        <option value="2">Tidak Setuju</option>
+                        @elseif($data->status == 2)
+                        <option value="">- Pilih -</option>
+                        <option value="1">Setuju</option>
+                        <option value="2" selected>Tidak Setuju</option>
+                        @else
+
+                        @endif
                     </select>
                 </div>
                 <div class="modal-footer">

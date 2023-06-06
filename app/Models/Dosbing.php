@@ -24,6 +24,6 @@ class Dosbing extends Model
     }
 
     public function student(){
-        return $this->belongsTo(Student::class);
+        return $this->belongsTo("App\Models\Student", "student_id", "user_id");
     }
 }

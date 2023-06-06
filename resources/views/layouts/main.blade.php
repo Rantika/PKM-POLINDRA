@@ -46,15 +46,7 @@
   <!-- ======= End Header ======= -->
 
   <!-- ======= Sidebar ======= -->
-  @if(Auth::user()->role === 'admin')
-      @include('layouts.sidebar')
-  @elseif(Auth::user()->role === 'student')
-      @include('layouts.sidebar-tim')
-  @elseif(Auth::user()->role === 'reviewer')
-      @include('layouts.sidebar-reviewer')
-  @elseif(Auth::user()->role === 'lecturer')
-      @include('layouts.sidebar-dosbing')
-  @endif
+      @include("layouts.sidebar")
   <!-- ======= End Sidebar ======= -->
 
   <!-- ======= Main ======= -->
@@ -214,6 +206,29 @@
   </script>
   @yield('js')
 
+      <script>
+        $(document).ready(function() {
+            $("#rubah").change(function() {
+                let id = $(this).val();
+                if (id != "") {
+                    $.ajax({
+                        url: "{{ url('/pilih_akses/') }}/" + id,
+                        type: "POST",
+                        data: {
+                            '_token' : "{{ csrf_token() }}",
+                        },
+                        success: function(data) {
+                            console.log(data)
+                            if (data == 1) {
+                                location.reload();
+                            }
+                        }
+                    })
+                }
+            })
+        });
+      </script>
+  
 </body>
 
 </html>
