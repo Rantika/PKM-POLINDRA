@@ -25,6 +25,8 @@ class ReviewerController extends Controller
 
     public function store(Request $request)
     {
+        $student = Student::where("id", $request->student_id)->first();
+
         try {
             DB::beginTransaction();
             $data = Reviewer::create([
@@ -32,7 +34,7 @@ class ReviewerController extends Controller
                 'student_id'    => $request->student_id
             ]);
             
-            $cek = UsersRole::where("user_id", $data->lecturer->user->id)->count();
+            $cek = UsersRole::where("user_id", $data->lecturer->user->id)->where("role", "Reviewer")->count();
 
             if ($cek == 0) {
                 UsersRole::create([
@@ -41,8 +43,8 @@ class ReviewerController extends Controller
                 ]);
             }
 
-            Proposal::where("id", $request->student_id)->update([
-                "reviewer_id" => $data["id"]
+            Proposal::where("student_id", $student->user_id)->update([
+                "reviewer_id" => $request->lecturer_id
             ]);
 
             DB::commit();

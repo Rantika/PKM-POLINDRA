@@ -126,17 +126,17 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{route('setting.period.index')}}" class="{{sideBarRoute('setting.period.index')}}">
+                    <a href="{{route('setting.pengaturan.index')}}" class="{{sideBarRoute('setting.pengaturan.index')}}">
                         <i class="bi bi-circle"></i><span>Waktu Upload</span>
                     </a>
                 </li>
                 <li>
-                    <a href="{{route('setting.period.index')}}" class="{{sideBarRoute('setting.period.index')}}">
+                    <a href="{{route('setting.waktu-review.index')}}" class="{{sideBarRoute('setting.waktu-review.index')}}">
                         <i class="bi bi-circle"></i><span>Waktu Review</span>
                     </a>
                 </li>
                 <li>
-                    <a href="{{route('setting.period.index')}}" class="{{sideBarRoute('setting.period.index')}}">
+                    <a href="{{route('setting.upload-revisi.index')}}" class="{{sideBarRoute('setting.upload-revisi.index')}}">
                         <i class="bi bi-circle"></i><span>Setting Upload Revisi</span>
                     </a>
                 </li>

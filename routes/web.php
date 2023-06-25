@@ -28,6 +28,9 @@ use App\Http\Controllers\TimController;
 use App\Http\Controllers\DosbingController;
 use App\Http\Controllers\WaktuUploadController;
 use App\Http\Controllers\Lecturer\AccController;
+use App\Http\Controllers\Setting\SettingController;
+use App\Http\Controllers\Setting\WaktuReviewController;
+use App\Http\Controllers\Setting\UploadRevisiController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -59,14 +62,14 @@ Route::post('/forum/{forum}/view', [ForumController::class, 'postkomentar'])->na
 
 Route::get("/kirimemail", [KirimEmailController::class, "index"]);
 
-Route::controller(AuthController::class)->group(function () {
-    Route::get('/login', 'login')->name('login');
-    Route::post('/orders', 'authenticate')->name('login.process');
-    
-    Route::get('/register', 'register')->name('register');
-    Route::post('/register', 'creating')->name('register.process');
-    
-    Route::get('/logout', 'logout')->name('logout');
+Route::group(["middleware" => ["guest"]], function() {
+    Route::controller(AuthController::class)->group(function () {
+        Route::get('/login', 'login')->name('login');
+        Route::post('/orders', 'authenticate')->name('login.process');
+        
+        Route::get('/register', 'register')->name('register');
+        Route::post('/register', 'creating')->name('register.process'); 
+    });
 });
 
 /*
@@ -143,9 +146,34 @@ Route::prefix('setting')->middleware(['role'])->group( function () {
         Route::post('/store-logo', 'storeLogo')->name('setting.view.store-logo');
         Route::get('/{id?}', 'show')->name('setting.view.show');
         Route::get('/delete/{id?}', 'delete')->name('setting.view.delete');
-        
+        Route::get('/delete/{id?}', 'delete')->name('setting.view.delete');
     });
-    Route::get('/waktu-upload}', [WaktuUploadController::class, 'get'])->name('waktu-upload');
+    Route::prefix('pengaturan')->controller(SettingController::class)->group(function(){
+        Route::get('/', 'index')->name('setting.pengaturan.index');
+        Route::get('/create','create')->name('setting.pengaturan.create');
+        Route::post('/store', 'store')->name('setting.pengaturan.store');
+        Route::get('/{id', 'show')->name('setting.pengaturan.show');
+        Route::post('/update/{id?}', 'update')->name('setting.pengaturan.update');
+        Route::delete('delete/{id}', 'delete')->name('setting.pengaturan.delete');
+    });
+
+    Route::prefix('waktu-review')->controller(WaktuReviewController::class)->group(function(){
+        Route::get('/', 'index')->name('setting.waktu-review.index');
+        Route::get('/create','create')->name('setting.waktu-review.create');
+        Route::post('/store', 'store')->name('setting.waktu-review.store');
+        Route::get('/{id', 'show')->name('setting.waktu-review.show');
+        Route::post('/update/{id?}', 'update')->name('setting.waktu-review.update');
+        Route::delete('delete/{id}', 'delete')->name('setting.waktu-review.delete');
+    });
+
+    Route::prefix('upload-revisi')->controller(UploadRevisiController::class)->group(function(){
+        Route::get('/', 'index')->name('setting.upload-revisi.index');
+        Route::get('/create','create')->name('setting.upload-revisi.create');
+        Route::post('/store', 'store')->name('setting.upload-revisi.store');
+        Route::get('/{id', 'show')->name('setting.upload-revisi.show');
+        Route::post('/update/{id?}', 'update')->name('setting.upload-revisi.update');
+        Route::delete('delete/{id}', 'delete')->name('setting.upload-revisi.delete');
+    });
     
     Route::prefix('period')->controller(PeriodController::class)->group(function () {
         Route::get('/', 'index')->name('setting.period.index');
@@ -156,6 +184,8 @@ Route::prefix('setting')->middleware(['role'])->group( function () {
         Route::post('/update-status/{id?}', 'updateStatus')->name('setting.period.update-status');
         Route::get('/delete/{id?}', 'delete')->name('setting.period.delete');
     });
+
+
 });
 
 
@@ -193,7 +223,7 @@ Route::prefix('account')->middleware(['role'])->group( function () {
 });
 
 
-Route::prefix('team-data')->middleware(['role:admin'])->controller(ProposalController::class)->group( function () {
+Route::prefix('team-data')->middleware(['role'])->controller(ProposalController::class)->group( function () {
     Route::get('/', 'index')->name('proposal.index');
     Route::get('/create', 'create')->name('proposal.create');
     Route::post('/store', 'store')->name('proposal.store');
@@ -205,7 +235,7 @@ Route::prefix('team-data')->middleware(['role:admin'])->controller(ProposalContr
     Route::get('/get-bimbingan/{user_id?}', 'showBimbingan')->name('proposal.show-bimbingan');
 });
 
-Route::prefix('information')->middleware(['role:admin'])->controller(InformationController::class)->group( function () {
+Route::prefix('information')->middleware(['role'])->controller(InformationController::class)->group( function () {
     Route::get('/', 'index')->name('information.index');
     Route::get('/create', 'create')->name('information.create');
     Route::post('/store', 'store')->name('information.store');
@@ -214,7 +244,7 @@ Route::prefix('information')->middleware(['role:admin'])->controller(Information
     Route::get('/delete/{id?}', 'delete')->name('information.delete');
 });
 
-Route::prefix('news')->middleware(['role:admin'])->controller(NewsController::class)->group( function () {
+Route::prefix('news')->middleware(['role'])->controller(NewsController::class)->group( function () {
     Route::get('/', 'index')->name('news.index');
     Route::get('/create', 'create')->name('news.create');
     Route::post('/store', 'store')->name('news.store');
@@ -239,12 +269,12 @@ Route::group(["middleware" => ["role"]], function() {
         Route::get('/simbelmawa-account', 'getSimbelmawa')->name('lecturer.simbelmawa');
         Route::get('/bimbingan/get/{user_id?}', 'showBimbingan')->name('lecturer.show-bimbingan');
     });
-
+    
     Route::prefix("lecturer")->controller(AccController::class)->group(function() {
         Route::get("/acc", "index")->name("lecturer.acc");
         Route::put("/acc/{id}", "update")->name("lecturer.update");
     });
-
+    
     Route::prefix("reviewer")->controller(RoleReviewerController::class)->group(function() {
         Route::get('/proposal', 'proposal')->name('reviewer.proposal');
         Route::get('/proposal/{id?}', 'confirm')->name('reviewer.confirm');
@@ -252,15 +282,19 @@ Route::group(["middleware" => ["role"]], function() {
         Route::get('/proposal/get-proposal/{id?}', 'getProposal')->name('reviewer.get-proposal');
         Route::post('/proposal/upload-proposal/{id?}', 'upload')->name('reviewer.upload-proposal');
         
-        Route::get('/proposal/belum-review/{id}', 'belum_review');
+        Route::get('/proposal/{id}/komentar', 'komentar');
         Route::post('/proposal/belum-review','proses_belum_review');
         Route::get("/proposal/belum-review/{id}/update-status", 'update_status');
     });
-
+    
     Route::prefix("team")->controller(RoleStudentController::class)->group(function() {
         Route::get('/proposal', 'proposal')->name('student.proposal');
-    Route::post('/proposal', 'uploadProposal')->name('student.upload-proposal');
-    Route::post('/proposal-done', 'uploadProposalDone')->name('student.upload-proposal-done');
+        Route::post('/proposal', 'uploadProposal')->name('student.upload-proposal');
+        Route::post('/proposal-done', 'uploadProposalDone')->name('student.upload-proposal-done');
+    });
+
+    Route::controller(AuthController::class)->group(function() {
+        Route::get('/logout', 'logout')->name('logout');
     });
 });
 
@@ -290,7 +324,7 @@ Route::prefix('team')->middleware(['role:student'])->controller(RoleStudentContr
     Route::post('/profile/change-password', 'changePassword')->name('student.profile.change-password');
     
 });
-Route::prefix('tim/anggota-tim')->middleware(['role:student'])->controller(TimController::class)->group( function(){
+Route::prefix('tim/anggota-tim')->middleware(['role'])->controller(TimController::class)->group( function(){
     Route::get('/','index')->name('student.tim.index');
     Route::post('/store', 'store')->name('student.tim.store');
     Route::get('/{id?}', 'show')->name('student.tim.show');

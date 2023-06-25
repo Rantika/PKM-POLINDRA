@@ -71,8 +71,8 @@
                                     </span>
                                     </td>
                                     <td class="text-center">
-                                    <span class="badge bg-{{$cek_dosbing == 1 ? 'success' : 'warning'}}">
-                                        <i class="bi bi-{{$cek_dosbing == 1 ? 'check' : 'x'}}-circle me-1"></i> {{ $cek_dosbing == 1 ? 'Ya' : 'Tidak'}}
+                                    <span class="badge bg-{{$cek_dosbing > 0 ? 'success' : 'warning'}}">
+                                        <i class="bi bi-{{$cek_dosbing > 0 ? 'check' : 'x'}}-circle me-1"></i> {{ $cek_dosbing > 0 ? 'Ya' : 'Tidak'}}
                                     </span>
                                     </td>
                                     <td class="text-center">

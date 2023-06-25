@@ -16,14 +16,15 @@ class RoleReviewerController extends Controller
 {
     public function proposal()
     {
-        $data['proposals'] = Proposal::with(['student', 'reviewer', 'scheme'])->where('reviewer_id', Auth::user()->lecturer->reviewer->id)->get();
+        $data['proposals'] = Proposal::where('reviewer_id', Auth::user()->lecturer->id)->get();
         
         return view('reviewer.proposal.index', $data);
     }
-    public function belum_review($id)
+    public function komentar($id)
     {
         $data['proposals'] = Proposal::where('id',$id)->first();
         $data['data_proposal'] = komen_proposal::where('proposal_id',$id)->get();
+        
         return view('reviewer.proposal.belum-review.index',$data);
     }
 

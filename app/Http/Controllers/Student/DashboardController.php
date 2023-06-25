@@ -19,8 +19,16 @@ class DashboardController extends Controller
     {
         if (empty(Auth::user()->tim->id)) {
         } else {
+            $data["cekstatus"] = Dosbing::where("student_id", Auth::user()->id)->first();
             $data["proposal"] = Proposal::where("student_id", Auth::user()->id)->first();
             $data["tim_student"] = TimStudent::where("tim_id", Auth::user()->tim->id)->get();
+        }
+        $data["cek_tim"] = TimStudent::where("tim_id", Auth::user()->tim->id)->get();
+
+        if ($data["cek_tim"]->count() == 0) {
+            $data["is_team"] = 0;
+        } else {
+            $data["is_team"] = 1;
         }
         $data["tim"] = Tim::where("user_id", Auth::user()->id)->first();
         $data["dosbing"] = Lecturer::get();
@@ -52,7 +60,7 @@ class DashboardController extends Controller
                 "nama_tim" => $request->nama_tim
             ]);
         } else {
-            Dosbing::where("id", Auth::user()->tim->proposal->dosbing->id)->update([
+            Dosbing::where("student_id", Auth::user()->id)->update([
                 "status" => 0,
                 "dosbing_id" => $request->dosbing_id
             ]);

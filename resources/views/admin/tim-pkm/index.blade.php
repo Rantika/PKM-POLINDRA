@@ -25,7 +25,7 @@
     <section class="section">
         <div class="row">
             <div class="col-lg-12">
-
+                
                 <div class="card">
                     <div class="card-body pt-4">
                         {{-- <button type="button" class="btn btn-sm btn-primary my-4" data-bs-toggle="modal" data-bs-target="#modalDialogScrollable">

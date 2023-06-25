@@ -20,7 +20,15 @@ class RedirectIfAuthenticated
     public function handle(Request $request, Closure $next, $guard = NULL)
     {
         if (Auth::guard($guard)->check()) {
-            return redirect("/dashboard");
+            if (Auth::user()->hak_akses->role == "Admin") {
+                return redirect("/dashboard");
+            } else if(Auth::user()->hak_akses->role == "Dosen Pembimbing") {
+                return redirect("/lecturer");
+            } else if(Auth::user()->hak_akses->role == "Student") {
+                return redirect("/team");
+            } else if(Auth::user()->hak_akses->role == "Reviewer") {
+                return redirect("/reviewer");
+            }
         }
 
         return $next($request);

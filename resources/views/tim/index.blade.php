@@ -171,19 +171,9 @@
                                     <select name="dosbing_id" class="form-control" id="dosbing_id">
                                         <option value="">- Pilih -</option>
                                         @foreach($dosbing as $data)
-                                        @php
-                                        $cek = DB::table("reviewers")
-                                        ->where("lecturer_id", $data->id)
-                                        ->where("deleted_at", NULL)
-                                        ->first()
-                                        @endphp
-                                        @if($cek)
-
-                                        @else
                                         <option value="{{ $data->id }}">
                                             {{ $data->name }}
                                         </option>
-                                        @endif
                                         @endforeach
                                     </select>
                                     @else
@@ -191,48 +181,28 @@
                                     <select name="dosbing_id" class="form-control" id="dosbing_id">
                                         <option value="">- Pilih -</option>
                                         @foreach($dosbing as $data)
-                                        @php
-                                        $cek = DB::table("reviewers")
-                                        ->where("lecturer_id", $data->id)
-                                        ->where("deleted_at", NULL)
-                                        ->first()
-                                        @endphp
-                                        @if($cek)
-
-                                        @else
                                         <option value="{{ $data->id }}">
                                             {{ $data->name }}
                                         </option>
-                                        @endif
                                         @endforeach
                                     </select>
                                     @else
-                                    @if($tim->proposal->dosbing->status == 2)
+                                    @if($cekstatus->status == 2)
                                     <select name="dosbing_id" class="form-control" id="dosbing_id" required>
                                         <option value="">- Pilih -</option>
                                         @foreach($dosbing as $data)
-                                        @php
-                                        $cek = DB::table("reviewers")
-                                        ->where("lecturer_id", $data->id)
-                                        ->where("deleted_at", NULL)
-                                        ->first()
-                                        @endphp
-                                        @if($cek)
-
-                                        @else
-                                        @if($data->id == $tim->proposal->dosbing->dosbing_id)
-
-                                        @else
-                                        <option value="{{ $data->id }}">
-                                            {{ $data->name }}
-                                        </option>
-                                        @endif
-                                        @endif
+                                            @if($data->id == $cekstatus->dosbing_id)
+                                            
+                                            @else
+                                            <option value="{{ $data->id }}">
+                                                {{ $data->name }}
+                                            </option>
+                                        
+                                            @endif
                                         @endforeach
                                     </select>
                                     @else
-                                    <input type="text" class="form-control" name="dosbing_id" value="{{ $tim->proposal->lecturer->name }}" disabled>
-
+                                    <input type="text" class="form-control" name="dosbing_id" value="{{ $cekstatus->lecturer->name }}" disabled>
                                     @endif
                                     @endif
                                     @endif
@@ -241,19 +211,27 @@
                         </div>
                     </div>
                     <div class="card-footer">
-
                         @if(empty($tim))
 
                         @else
-                        @if($tim["nama_tim"] == null)
-                        <button type="reset" class="btn btn-danger btn-sm">
+                            @if($is_team == 0)
+                            <div class="alert alert-danger text-center">
+                                <strong>
+                                    <i>
+                                        Silahkan Daftarkan Nama Anggota TIM Anda Terlebih Dahulu
+                                    </i>
+                                </strong>
+                            </div>
+                            @else
+                                @if(empty($cekstatus))
+                                <button type="reset" class="btn btn-danger btn-sm">
                             <i class="bi bi-trash"></i> Batal
                         </button>
                         <button type="submit" class="btn btn-primary btn-sm">
                             <i class="bi bi-save"></i> Simpan
                         </button>
-                        @else
-                        @if($tim->proposal->dosbing->status == 0)
+                                @else
+                                @if($cekstatus->status == 0)
                         <a class="btn btn-success" style="width: 100%;">
                             <strong>
                                 Status :
@@ -262,7 +240,7 @@
                                 </i>
                             </strong>
                         </a>
-                        @elseif($tim->proposal->dosbing->status == 1)
+                        @elseif($cekstatus->status == 1)
                         <button disabled class="btn btn-success" style="width: 100%;">
                             <strong>
                                 Status :
@@ -271,7 +249,7 @@
                                 </i>
                             </strong>
                         </button>
-                        @elseif($tim->proposal->dosbing->status == 2)
+                        @elseif($cekstatus->status == 2)
                         <button disabled class="btn btn-danger" style="width: 100%;">
                             <strong>
                                 Status :
@@ -287,7 +265,8 @@
                             </strong>
                         </button>
                         @endif
-                        @endif
+                                @endif
+                            @endif
                         @endif
                     </div>
                 </form>

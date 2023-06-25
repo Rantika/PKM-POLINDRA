@@ -16,9 +16,6 @@ class TimController extends Controller
     {
         $data['tim'] = TimStudent::where('tim_id',Auth::user()->tim->id)->get();
         $data['prody'] = Prody::get();
-        if (empty(Auth::user()->tim->nama_tim)) {
-            return redirect('team');
-        }
         return view('tim.anggota.index', $data);
     }
 

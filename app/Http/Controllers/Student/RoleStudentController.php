@@ -10,8 +10,10 @@ use App\Models\Lecturer;
 use App\Models\Proposal;
 use App\Models\Reviewer;
 use App\Models\Revisi;
+use App\Models\Settings;
 use App\Models\Student;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -33,10 +35,46 @@ class RoleStudentController extends Controller
             } else {
                 $data['proposal'] = Proposal::where('student_id', Auth::user()->id)
                                     ->first();
-    
+                $data["cekstatus"] = Dosbing::where("student_id", Auth::user()->id)->first();
+
                 $data["komen"] = komen_proposal::where("proposal_id", $data["proposal"]["id"])->get();
-        
-                return view('tim.proposal.index', $data);
+                
+                // Upload
+                $upload = Settings::where('kategori', 'Upload')->first();
+
+                $mulai = Carbon::createFromFormat('Y-m-d H:i:s', $upload["mulai"]);
+                $format = $mulai->isoFormat('dddd, D MMMM YYYY HH:mm:ss');
+                $data["mulai"] = $format;
+
+                $selesai = Carbon::createFromFormat('Y-m-d H:i:s', $upload["selesai"]);
+                $format = $selesai->isoFormat('dddd, D MMMM YYYY HH:mm:ss');
+                $data["selesai_upload"] = $format;
+                
+                // Review
+                $review = Settings::where("kategori", "Review")->first();
+                
+                $mulai_review = Carbon::createFromFormat('Y-m-d H:i:s', $review["mulai"]);
+                $format_review = $mulai_review->isoFormat('dddd, D MMMM YYYY HH:mm:ss');
+                $data["mulai_review"] = $format_review;
+
+                $selesai_review = Carbon::createFromFormat('Y-m-d H:i:s', $review["selesai"]);
+                $format_review = $selesai_review->isoFormat('dddd, D MMMM YYYY HH:mm:ss');
+                $data["selesai_review"] = $format_review;
+
+                // Revisi
+                $revisi = Settings::where("kategori", "Revisi")->first();
+
+                $mulai_revisi = Carbon::createFromFormat('Y-m-d H:i:s', $revisi["mulai"]);
+                $format_revisi = $mulai_revisi->isoFormat('dddd, D MMMM YYYY HH:mm:ss');
+                $data["mulai_revisi"] = $format_revisi;
+
+                $selesai_revisi = Carbon::createFromFormat('Y-m-d H:i:s', $revisi["selesai"]);
+                $format_revisi = $selesai_revisi->isoFormat('dddd, D MMMM YYYY HH:mm:ss');
+                $data["selesai_revisi"] = $format_revisi;
+
+                $sekarang = strtotime(date("Y-m-d H:i:s"));
+                
+                return view('tim.proposal.index', $data, compact("upload","review","revisi"));
             }
         }
     }
