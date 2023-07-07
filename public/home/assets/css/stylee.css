@@ -7,12 +7,12 @@ body {
 }
 
 a {
-  color: #ea0e11;
+  color: #264E6B;
   text-decoration: none;
 }
 
 a:hover {
-  color: #ea0e11;
+  color: #264E6B;
   text-decoration: none;
 }
 
@@ -30,7 +30,7 @@ h1, h2, h3, h4, h5, h6 {
   right: 15px;
   bottom: 15px;
   z-index: 996;
-  background: #ea0e11;
+  background: #264E6B;
   width: 40px;
   height: 40px;
   border-radius: 50px;
@@ -44,7 +44,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .back-to-top:hover {
-  background: #ea0e11;
+  background: #264E6B;
   color: #fff;
 }
 
@@ -144,7 +144,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .navbar a:hover, .navbar .active, .navbar .active:focus, .navbar li:hover > a {
-  background: #ea0e11;
+  background: #264E6B;
 }
 
 .navbar .dropdown ul {
@@ -917,7 +917,7 @@ section {
 #footer .social-links a {
   font-size: 18px;
   display: inline-block;
-  background: #ea0e11;
+  background: #264E6B;
   color: #fff;
   line-height: 1;
   padding: 8px 0;

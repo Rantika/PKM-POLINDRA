@@ -10,8 +10,8 @@
   <meta content="" name="keywords">
 
   <!-- Favicons -->
-  <link href="{{ asset($configs->where('name', 'logo')->first() == null ? 'home/assets/img/logo.png' : $configs->where('name', 'logo')->first()->file) }}" rel="icon">
-  <link href="{{ asset($configs->where('name', 'logo')->first() == null ? 'home/assets/img/logo.png' : $configs->where('name', 'logo')->first()->file) }}">
+  <link href="{{ asset($configs->where('name', 'logo')->first() == null ? 'home/assets/img/kampus-merdeka.png' : $configs->where('name', 'logo')->first()->file) }}" rel="icon">
+  <link href="{{ asset($configs->where('name', 'logo')->first() == null ? 'home/assets/img/.png' : $configs->where('name', 'logo')->first()->file) }}">
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
@@ -28,49 +28,60 @@
   <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" type="text/css">
 
   <!-- Template Main CSS File -->
-  <link href="{{asset('home/assets/css/style.css')}}" rel="stylesheet">
+  <link href="{{asset('home/assets/css/stylee.css')}}" rel="stylesheet">
   <link href="{{asset('assets/datatables/datatables.min.css')}}" rel="stylesheet">
+  <style type="text/css">
+    
+  </style>  
 </head>
 
 <body>
 
   <!-- ======= Header ======= -->
-  <header id="header" class="fixed-top d-flex align-items-center ">
+  <header id="header" class="fixed-top d-flex align-items-center " style="background-color: #23B6E4">
     <div class="container d-flex align-items-center justify-content-between">
 
         <div class="logo d-flex justify-content-center align-items-center">
             <img src="{{ asset($configs->where('name', 'logo')->first() == null ? 'home/assets/img/logo.png' : $configs->where('name', 'logo')->first()->file) }}" alt="">
-            <h1 class="ms-2"><a>PKM | POLINDRA</a></h1>
+            <h1 class="ms-2"><a>PKM|POLINDRA</a></h1>
         </div>
 
         <nav id="navbar" class="navbar">
          <ul>
           <li><a class="nav-link scrollto " href="#hero">Beranda</a></li>
           <li><a class="nav-link scrollto" href="#info">Informasi Kegiatan</a></li>
-          <li><a class="nav-link scrollto" href="#template">Template Proposal PKM</a></li>
-          <li><a class="nav-link scrollto" href="#berkas">Berkas Proposal PKM</a></li>
-          <li><a class="nav-link scrollto " href="#berita">Berita Kegiatan</a></li>
+          <li><a class="nav-link scrollto" href="#template">Jenis PKM</a></li>
+          <li><a class="nav-link scrollto" href="#berita">Tahap Pendaftaran</a></li>
+          <li><a class="nav-link scrollto" href="#berkas">Mahasiswa</a></li>
           <li><a class="nav-link scrollto" href="#about">Tentang Kami</a></li>
           <li><a class="nav-link scrollto" href="{{route('login')}}">Login</a></li>
          </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
         </nav>
-
+        
     </div>
+
   </header>
+  <hr>
   <!-- ======= End Header ======= -->
 
   {{-- ======= Beranda Section ======= --}}
-  <section id="hero" class=" d-flex flex-column justify-content-end align-items-center">
+  <section id="hero" class=" d-flex flex-column justify-content-end align-items-center" style="background-color: #D9D9D9;">
     <div class="col-md-6 mt-5 gambar">
-        <img src="{{ asset('home/assets/img/gedung.png')}}" alt="" class="animate__animated animate__fadeInDown gambarpolindra">
+        <img src="{{ asset('home/assets/img/logo-pkm.png')}}" alt="" class="animate__animated animate__fadeInDown gambarpolindra">
         <div class="isi">
             <div class="row mt-5 isi2" >
                 <div class="col-md-6 mt-5">
                     {{-- <h2 class="animate__animated animate__fadeInDown">{{ $view_setting->name }}</h2>
                     <p class="mx-0 w-100 animate__animated animate__fadeInDown">{{ $view_setting->description }}</p> --}}
-                    <h2 class="animate__animated animate__fadeInDown">{{ $configs->where('name', 'name')->first() == null ? 'Pojok Kemahasiswaan' : $configs->where('name', 'name')->first()->value }} <br> Politeknik Negeri Indramayu</h2>
-                    <p class="mx-0 w-100 animate__animated animate__fadeInDown">{{ $configs->where('name', 'name')->first() == null ? 'Pojok Kemahasiswaan' : $configs->where('name', 'name')->first()->value }} Politeknik Negeri Indramayu merupakan sebuah aplikasi mengenai kegiatan Program Kreativitas Mahasiswa (PKM). PKM merupakan salah satu program yang dijalankan oleh Direktorat Penelitian dan Pengabdian kepada Masyarakat (Ditlitabmas) Direktorat Jenderal Pendidikan Tinggi (Ditjen DIKTI) Kemdikbud untuk meningkatkan mutu peserta didik (mahasiswa) di perguruan tinggi.</p>
+                    <h2 class="animate__animated animate__fadeInDown" style="color:#fff">{{ $configs->where('name', 'name')->first() == null ? 'Apa itu PKM?' : $configs->where('name', 'name')->first()->value }} <br></h2>
+                    <p class="mx-0 w-100 animate__animated animate__fadeInDown" style="color:#ffff">{{ $configs->where('name', 'name')->first() == null ? 'Program Kreatifitas Mahasiswa' : $configs->where('name', 'name')->first()->value }}  Program Kreativitas Mahasiswa adalah kegiatan untuk
+                        meningkatkan mutu peserta didik (mahasiswa) di
+                        perguruan tinggi agar kelak dapat menjadi anggota
+                        masyarakat yang memiliki kemampuan akademik dan
+                        profesional yang dapat menerapkan,mengembangkan, dan
+                        menyebarluaskan ilmu pengetahuan, teknologi atau
+                        kesenian serta memperkaya budaya nasional.</p>
                 </div>
             </div>
         </div>
@@ -80,22 +91,21 @@
 
   <!-- ======= Main Section ======= -->
   <main id="main">
-
     <!-- ======= Informasi Kegiatan Section ======= -->
-    @if(count($informations) > 0)
-    <section class="about-lists" id="info">
+        @if(count($informations) > 0)
+    <section class="about-lists" id="info" style="background-color: #264E6B;">
         <div class="container">
 
             <div class="section-title" data-aos="fade-up">
-                <h2>Informasi Kegiatan</h2>
-                <p>Timeline Kegiatan</p>
+                <h2 style="color: #ffff;">Informasi Kegiatan</h2>
+                <p style="color: #ffff;">Timeline Kegiatan</p>
             </div>
 
-            <div class="row no-gutters">
+            <div class="row no-gutters" >
                 @foreach($informations as $data)
                 <div class="col-lg-4 col-md-6 content-item mt-3" data-aos="zoom-in">
-                    <h4>{{$data->name}}</h4>
-                    <p>{{$data->open_time}} - {{$data->close_time}}</p>
+                    <h4 style="color: #ffff;">{{$data->name}}</h4>
+                    <p style="color: #ffff;">{{$data->open_time}} - {{$data->close_time}}</p>
                 </div>
                 @endforeach
             </div>
@@ -105,47 +115,135 @@
     @endif
     <!-- ======= End Informasi Kegiatan Section ======= -->
 
-    <!-- ======= Template Proposal PKM Section ======= -->
-    @if(count($schemes) > 0)
-    <section id="template" class="services">
-        <div class="container">
-
-            <div class="section-title" data-aos="zoom-out">
-               <h2>Dokumen PKM</h2>
-               <p>Template Proposal PKM</p>
+    <!-- ======= Jenis Proposal PKM Section ======= -->
+    @if(count($news) > 0)
+    <section id="template" class="services" style="background-color: #ffff">
+    <div class="container py-5">
+                <div class="mb-5">
+                    <h4 class="text-center text-black"  >
+                        JENIS PKM YANG DI LOMBAKAN
+                    </h4>
+                    <p class="text-center text-black">Terdapat Beberaa Bidang</p>
+                </div>
+                <div class="row">
+                @foreach($news as $data)
+                    <div class="col-md-6 col-lg-3 mb-4" >
+                        <div class="card">
+                            <div class="card-body text-center"style="background-color: #D9D9D9" >
+                                <img src="{{asset($data->photo)}}" height="65" alt="" class="mb-2" />
+                                <h5 class="mb-0">{{$data->title}}</h5>
+                                <p class="mb-0"> {!! $data->description ? substr($data->description, 0, 50).'' : '-' !!}</p>
+                                <a href="{{route('home.detail', $data->id)}}" class="preview-link" title="{{$data->title}}"><i class=""></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
             </div>
+    </section>
+    @endif
 
-            <div class="row" style="text-align: justify">
-                @php
-                $icons = ['bi-briefcase', 'bi-book', 'bi-card-checklist', 'bi-binoculars', 'bi-globe', 'bi-clock'];
-                $colors = ['#ff689b', '#e9bf06', '#3fcdc7', '#41cf2e', '#d6ff22', '#4680ff'];
-                @endphp
-                @foreach($schemes as $data)
-                <div class="col-lg-4 col-md-4 mt-3">
-                    <div class="icon-box" data-aos="zoom-in-left" data-aos-delay='100'>
-                        <div class="icon"><i class="bi {{$icons[rand(0,5)]}}" style="color: {{$colors[rand(0,5)]}};"></i></div>
-                        <h4 class="title"><a href="#">{{$data->short}}</a></h4>
-                        <p class="description">{{$data->description}}</p>
-                        <div class="text-center mt-5">
-                            <a href="{{$data->file ? asset($data->file) : '#services'}}" target="{{$data->file ? '_blank' : '_self'}}" class="btn btn-{{$data->file ? 'primary' : 'warning'}}" style="position: absolute;bottom: 25px;left: 35%;">{{$data->file ? 'Download' : 'Coming Soon'}}</a>
+     <!-- ======= Tahapan pkm ======= -->
+    
+     <section  id="berita" style="background-color: #264E6B">
+     <div class="container py-5 my-5">
+                <h4 class="text-center mb-5" style="color: #ffff;">TAHAPAN PENDAFTARAN</h4>
+
+                <div class="row">
+                    <div class="col-md-4 mb-4">
+                        <div class="">
+                            <div class="text-center">
+                                <img src="/image/gambar-sosialiasi.png" height="140" alt="" class="mb-2" />
+                                <h5 class="mb-0" style="color: #ffff;" >1.Sosialiasi</h5>
+
+                                <p class="mb-0" style="color: #ffff;">
+                                    Sosialisasi yang dilakukan oleh TIM PKM
+                                    Polindra
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="">
+                            <div class="text-center">
+                                <img src="/image/gambar-pengajuan-judul.png" height="140" alt=""
+                                    class="mb-2" />
+                                <h5 class="mb-0" style="color: #ffff;">2.Pengajuan Judul</h5>
+
+                                <p class="mb-0" style="color: #ffff;">
+                                    Pengajuan Judul Proposal Yang dilakuakan
+                                    oleh Mahasiswa
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="">
+                            <div class="text-center">
+                                <img src="/image/gambar-penilaian-judul.png" height="140" alt=""
+                                    class="mb-2" />
+                                <h5 class="mb-0" style="color: #ffff;">3.Penilaian Judul</h5>
+
+                                <p class="mb-0" style="color: #ffff;">
+                                    Penilaian Judul Proposal Yang dilakuakan
+                                    oleh Dosen Pembimbing dan Tim PKM
+                                    Polindra
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="">
+                            <div class="text-center">
+                                <img src="/image/gambar-pengajuan-proposal.png" height="140" alt=""
+                                    class="mb-2" />
+                                <h5 class="mb-0" style="color: #ffff;">4.Pengajuan Proposal</h5>
+
+                                <p class="mb-0" style="color: #ffff;">
+                                    Apabila Judul Disetujui Mahasiswa daoat
+                                    mengajukan Proposal PKM
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="">
+                            <div class="text-center">
+                                <img src="/image/gambar-penilaian-judul.png" height="140" alt=""
+                                    class="mb-2" />
+                                <h5 class="mb-0" style="color: #ffff;">5.Penilaian Proposal</h5>
+
+                                <p class="mb-0" style="color: #ffff;">
+                                    Penilaian Proposal Yang dilakukan Dosen
+                                    Pembimbing dan Tim PKM Polindra
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="">
+                            <div class="text-center">
+                                <img src="/image/proposal-disetujui.png" height="140" alt="" class="mb-2" />
+                                <h5 class="mb-0" style="color: #ffff;">
+                                    6.Propsal PKM Disetujui
+                                </h5>
+                            </div>
                         </div>
                     </div>
                 </div>
-                @endforeach
             </div>
-
-        </div>
     </section>
-    @endif
-    <!-- ======= End Template Proposal PKM Section ======= -->
+   
+  
+    <!-- ======= Akhir Tahapan PKM ======= -->
 
     <!-- ======= Berkas Proposal PKM Section ======= -->
-    <section id="berkas" class="services">
+    <section id="berkas" class="services" style="background-color: #D9D9D9;">
         <div class="container">
 
             <div class="section-title" data-aos="zoom-out">
-               <h2>Dokumen PKM</h2>
-               <p>Berkas Proposal PKM</p>
+               <h2>Ikut serta Mahasiswa </h2>
+               <p>Mahasiswa yang mengikuti kegiatan PKM</p>
             </div>
 
             <div class="card">
@@ -163,7 +261,6 @@
                             <th class="text-center">Jurusan</th>
                             <th class="text-center">Judul</th>
                             <th class="text-center">Skema</th>
-                           
                         </tr>
                     </thead>
                     <tbody>
@@ -179,44 +276,9 @@
         </div>
     </section>
     <!-- ======= End Template Proposal PKM Section ======= -->
-
-    <!-- ======= Berita Kegiatan Section ======= -->
-    @if(count($news) > 0)
-    <section id="berita" class="portfolio">
-        <div class="container">
-
-            <div class="section-title" data-aos="zoom-out">
-                <h2>Berita Kegiatan</h2>
-                <p>Berita kegiatan Program Kreativitas Mahasiswa (PKM) di Politeknik Negeri Indramayu</p>
-            </div>
-
-            <ul id="portfolio-flters" class="d-flex justify-content-end d-none" data-aos="fade-up">
-                <li data-filter="*" class="filter-active">All</li>
-                <li data-filter=".filter-app">App</li>
-                <li data-filter=".filter-card">Card</li>
-                <li data-filter=".filter-web">Web</li>
-            </ul>
-
-            <div class="row portfolio-container" data-aos="fade-up">
-                @foreach($news as $data)
-                <div class="col-lg-4 col-md-6 portfolio-item filter-app">
-                    <div class="portfolio-img"><img src="{{asset($data->photo)}}" class="img-fluid" alt=""></div>
-                    <div class="portfolio-info">
-                        <h4>{{$data->title}}</h4>
-                        {!! $data->description ? substr($data->description, 0, 50).' ...' : '-' !!}
-                        <a href="{{route('home.detail', $data->id)}}" class="preview-link" title="{{$data->title}}"><i class="bx bx-detail"></i></a>
-                    </div>
-                </div>
-                @endforeach
-            </div>
-
-        </div>
-    </section>
-    @endif
-    <!-- ======= End Berita Kegiatan Section ======= -->
-
     <!-- ======= Tentang Kami Section ======= -->
-    <section id="about" class="features">
+   
+    <section id="about" class="features" style="background-color: #ffff;">
         <div class="container">
 
             <div class="section-title pb-0" data-aos="zoom-out">
@@ -228,7 +290,7 @@
                 <div class="tab-pane active show" id="tab-1">
                     <div class="row">
                         <div class="col-lg-7 order-2 order-lg-1 mt-3 mt-lg-0" >
-                            <p style="text-align: justify">
+                            <p style="text-align: justify" >
                                 {{ $configs->where('name', 'name')->first() == null ? 'Pojok Kemahasiswaan' : $configs->where('name', 'name')->first()->value }} merupakan sebuah aplikasi mengenai kegiatan Program Kreativitas Mahasiswa (PKM). PKM merupakan salah satu program yang dijalankan oleh Direktorat Penelitian dan Pengabdian kepada Masyarakat (Ditlitabmas) Direktorat Jenderal Pendidikan Tinggi (Ditjen DIKTI) Kemdikbud untuk meningkatkan mutu peserta didik (mahasiswa) di perguruan tinggi.
                             </p>
                             <p style="text-align: justify">
@@ -260,7 +322,7 @@
     <!-- ======= End Main Section ======= -->
 
   <!-- ======= Footer ======= -->
-  <footer id="footer">
+  <footer id="footer" style="background-color: #23B6E4;">
     <div class="container">
         <h4>{{ $configs->where('name', 'name')->first() == null ? 'Pojok Kemahasiswaan' : $configs->where('name', 'name')->first()->value }} Politeknik Negeri Indramayu</h4>
         <div class="social-links">
@@ -303,7 +365,7 @@
             {data: 'jurusan_mahasiswa', name: 'jurusan_mahasiswa'},
             {data: 'title', name: 'title'},
             {data: 'skema', name: 'skema'},
-         
+            
             // {"width": "12%", data: 'aksi', name: 'aksi', orderable: false, searchable: false},
         ],
         "lengthMenu": [10, 20, 50, 100],

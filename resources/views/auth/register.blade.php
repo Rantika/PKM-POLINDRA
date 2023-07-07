@@ -27,7 +27,7 @@
 </head>
 
 <body>
-    <div class="page-wrapper bg-gra-02 p-t-130 p-b-100 font-poppins" style="background-color: #010080">
+    <div class="page-wrapper bg-gra-02 p-t-130 p-b-100 font-poppins" style="background-color: #23B6E4">
         <div class="wrapper wrapper--w680">
             <div class="card card-4">
                 <div class="card-body">
@@ -36,7 +36,7 @@
                             {{session()->get('error')}}
                         </div>
                     @endif
-                    <h2 class="title" style="text-align: center">Form Registrasi</h2>
+                    <h2 class="title" style="text-align: center"> Registrasi</h2>
                     <form method="POST" action="{{route('register.process')}}">
                         @csrf
                         <div class="row row-space">
@@ -83,7 +83,7 @@
                             </div>
                         </div>
                         <div class="p-t-15" style="display: flex;align-items: center;justify-content: space-between;">
-                            <button class="btn btn--radius-2 btn--blue" type="submit" style="text-align: center;">Submit</button>
+                            <button class="btn btn--radius-2 btn--blue" type="submit" style="text-align: center; background-color: #23B6E4">Submit</button>
                             <label style="align-items: inherit;align-content: center;">
                                 Sudah Punya akun? &nbsp;<a href="{{route('login')}}" style="color: darkslategray;">Login</a>
                             </label>
