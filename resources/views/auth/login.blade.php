@@ -30,7 +30,7 @@
 <body>
 
 	<div class="limiter">
-		<div class="container-login100" style="background-color: #010080">
+		<div class="container-login100" style="background-color: #23B6E4">
 			<div class="wrap-login100 p-l-110 p-r-110 p-t-62 p-b-33">
                 @if(session()->has("error"))
                 <div class="alert alert-danger" role="alert">
@@ -39,12 +39,17 @@
                 @endif
 				<form class="login100-form validate-form flex-sb flex-w" action="{{route('login.process')}}" method="post">
                     @csrf
-					<span class="login100-form-title p-b-20">
-						Form Login
+					<span class="login100-form-title p-b-20" style="font-size: 25px;">
+							Program Kreatifitas Mahasiswa
                         <br>
 					</span>
                     <span class="login100-form-title p-b-5">
                         <img class="mb-3 logo-image" src="{{ asset($configs->where('name', 'logo')->first() == null ? 'home/assets/img/logo.png' : $configs->where('name', 'logo')->first()->file) }}" alt="logo" width="150" height="150">
+						<hr>
+						<span style="font-size: 25px; color:#D9D9D9">
+							Politeknik Negeri Indramayu
+                        <br>
+					</span>
                     </span>
 					<div class="p-t-5 p-b-9 mt-3">
 						<span class="txt1">
@@ -66,8 +71,8 @@
 						<span class="focus-input100"></span>
 					</div>
 
-					<div class="container-login100-form-btn m-t-17">
-                        <button type="submit" class="login100-form-btn">
+					<div class="container-login100-form-btn m-t-17" >
+                        <button type="submit" class="login100-form-btn" style="color: #ffff; background-color:#23B6E4">
                             Login
                         </button>
 					</div>

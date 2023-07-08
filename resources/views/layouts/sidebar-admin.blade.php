@@ -105,7 +105,7 @@
         <li class="nav-item">
             <a class="nav-link {{sideBarRoute('news.index')}}" href="{{route('news.index')}}">
                 <i class="bi bi-collection-play"></i>
-                <span>Berita Kegiatan PKM</span>
+                <span>Jenis Kegiatan PKM</span>
             </a>
         </li>
         <!-- ======= End Berita Kegiatan PKM ======= -->

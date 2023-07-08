@@ -29,7 +29,7 @@
   <link href="{{asset('assets/css/loading.css')}}" rel="stylesheet">
 
   <!-- Template Main CSS File -->
-  <link href="{{asset('assets/css/style.css')}}" rel="stylesheet">
+  <link href="{{asset('assets/css/stylee.css')}}" rel="stylesheet">
   <style>
       .img-table{
          border-radius: 5px;

@@ -37,8 +37,8 @@
                             <thead>
                             <tr>
                                 <th class="text-center">No</th>
-                                <th>Judul</th>
-                                <th>Deskripsi</th>
+                                <th>Singkatan PKM</th>
+                                <th>Jenis PKM</th>
                                 <th class="text-center">Foto</th>
                                 <th class="text-center">Aksi</th>
                             </tr>
@@ -48,7 +48,7 @@
                                 <tr>
                                     <td class="text-center">{{$loop->iteration}}</td>
                                     <td>{{$data->title}}</td>
-                                    <td>{!! $data->description ? substr($data->description, 0, 50).' ...' : '-' !!}</td>
+                                    <td>{!! $data->description ? substr($data->description, 0, 50).'' : '-' !!}</td>
                                     <td class="text-center">
                                         <a href="{{asset($data->photo ?? 'assets/img/product-1.jpg')}}" target="_blank">
                                             <img class="img-table" src="{{asset($data->photo ?? 'assets/img/product-1.jpg')}}">
@@ -77,7 +77,7 @@
                 <form action="{{route('news.store')}}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-header">
-                        <h5 class="modal-title">Tambah Berita Kegiatan PKM</h5>
+                        <h5 class="modal-title">Tambah Jenis PKM</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -85,7 +85,7 @@
                             <div class="col-md-12">
                                 <div class="form-floating">
                                     <input name="title" type="text" class="form-control" id="floatingName" placeholder="Kegiatan">
-                                    <label for="floatingName">Judul</label>
+                                    <label for="floatingName">Singkatan PKM</label>
                                 </div>
                             </div>
                             <div class="col-md-12">
@@ -96,7 +96,7 @@
                                 </div>
                             </div>
                             <div class="col-md-12">
-                                <label for="floatingDeskripsi">Konten</label>
+                                <label for="floatingDeskripsi">Jenis PKM</label>
                                 <div class="form-inline">
                                     <textarea name="description" class="tinymce-editor">
 
