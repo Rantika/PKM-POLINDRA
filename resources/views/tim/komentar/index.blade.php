@@ -52,24 +52,6 @@
                     </p>
                 </div>
                 <div class="card-footer">
-                    <button class="btn btn-danger btn-sm mb-3" id="btnkomentar">
-                        Komentar
-                    </button>
-
-                    <form style="display: none" id="viewkomentar" action="{{ url('/reviewer/proposal/'.$proposals["id"].'/komentar') }}" method="POST">
-                        {{ csrf_field() }}
-                        <div class="form-group">
-                            <input type="hidden" name="proposal_id" value="{{ $proposals["id"] }}">
-                            <input type="hidden" name="parent" value="0">
-                            <textarea name="komentar" id="komentar" class="form-control" rows="5" placeholder="Masukkan Komentar"></textarea>
-                            <hr>
-                            <button type="submit" class="btn btn-primary btn-sm">
-                                <i class="bi bi-plus"></i> Tambah 
-                            </button>
-                        </div>
-                    </form>
-                    
-                    <br>
 
                     @foreach ($proposals->komentar()->where("parent", 0)->orderBy("created_at", "DESC")->get() as $item)
                     <div class="row">
@@ -112,7 +94,7 @@
 
                             @endforeach
 
-                            <form style="margin-bottom: 30px;" action="{{ url('/reviewer/proposal/'.$proposals["id"].'/komentar') }}" method="POST">
+                            <form style="margin-bottom: 30px;" action="{{ url('/team/proposal/'.$proposals["id"].'/komentar') }}" method="POST">
                                 {{ csrf_field() }}
                                 <div class="form-group">
                                     <input type="hidden" name="proposal_id" value="{{ $item["proposal_id"] }}">

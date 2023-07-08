@@ -22,4 +22,9 @@ class Komentar extends Model
     {
         return $this->hasMany("App\Models\Komentar", "parent", "id");
     }
+
+    public function user()
+    {
+        return $this->belongsTo("App\Models\User", "user_id", "id");
+    }
 }

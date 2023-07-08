@@ -41,4 +41,9 @@ class Proposal extends Model
     {
         return $this->hasMany("App\Models\Komentar", "proposal_id", "id");
     }
+
+    public function mahasiswa_parent()
+    {
+        return $this->belongsTo("App\Models\User", "student_id", "id");
+    }
 }

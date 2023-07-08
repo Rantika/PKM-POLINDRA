@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\NotificationController;
 use App\Models\Dosbing;
 use App\Models\komen_proposal;
+use App\Models\Komentar;
 use App\Models\Lecturer;
 use App\Models\Proposal;
 use App\Models\Reviewer;
@@ -245,5 +246,24 @@ class RoleStudentController extends Controller
             'position' => 'password',
             'success' => 'Berhasil Mengupdate Password!'
         ]);
+    }
+
+    public function komentar_proposal()
+    {
+        $data["proposals"] = Proposal::where("student_id", Auth::user()->id)->first();
+
+        return view("tim.komentar.index", $data);
+    }
+
+    public function balas_komentar(Request $request, $id_proposal)
+    {
+        Komentar::create([
+            "user_id" => Auth::user()->id,
+            "proposal_id" => $id_proposal,
+            "komentar" => $request["komentar"],
+            "parent" => $request["parent"]
+        ]);
+
+        return back();
     }
 }
