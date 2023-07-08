@@ -68,9 +68,13 @@
                                         @endif
                                     </td>
                                     <td class="text-center">
+                                        @if ($data->status == 0)
                                         <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal-{{ $data->id }}">
                                             <i class="bi bi-pencil"></i> Ubah Status
                                         </button>
+                                        @else
+                                            -
+                                        @endif
                                     </td>
                                 </tr>
                                 @endforeach
@@ -122,5 +126,15 @@
     </div>
 </div>
 @endforeach
+
+@endsection
+
+@section("js")
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.datatable').DataTable();
+    });
+</script>
 
 @endsection

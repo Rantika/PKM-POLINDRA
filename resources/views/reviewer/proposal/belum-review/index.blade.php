@@ -52,23 +52,96 @@
                     </p>
                 </div>
                 <div class="card-footer">
-                    
-                    <form action="" method="POST">
+                    <button class="btn btn-danger btn-sm mb-3" id="btnkomentar">
+                        Komentar
+                    </button>
+
+                    <form style="display: none" id="viewkomentar" action="{{ url('/reviewer/proposal/'.$proposals["id"].'/komentar') }}" method="POST">
                         {{ csrf_field() }}
                         <div class="form-group">
-                            <label for="nama"> Pesan </label>
-                            <br><br>
-                            <textarea name="pesan" class="form-control" rows="5" placeholder="Masukkan Komentar"></textarea>
+                            <input type="hidden" name="proposal_id" value="{{ $proposals["id"] }}">
+                            <input type="hidden" name="parent" value="0">
+                            <textarea name="komentar" id="komentar" class="form-control" rows="5" placeholder="Masukkan Komentar"></textarea>
                             <hr>
                             <button type="submit" class="btn btn-primary btn-sm">
                                 <i class="bi bi-plus"></i> Tambah 
                             </button>
                         </div>
                     </form>
+                    
+                    <br>
+
+                    @foreach ($proposals->komentar()->where("parent", 0)->orderBy("created_at", "DESC")->get() as $item)
+                    <div class="row">
+                        <div class="col-md-1">
+                            <img src="{{ url('/image/profil.png') }}" style="width: 50px; height: 50px; border-radius: 50px;">
+                        </div>
+                        <div class="col-md-11">
+                            <strong>
+                                {{ $item["lecturer"]["name"] }}
+                            </strong>
+                            <br>
+                            <span style="color: red">
+                                {{ $item->created_at->diffForHumans() }}
+                            </span>
+                            <br>
+                            <p style="text-align: justify; color: black;">
+                                {{ $item->komentar }}
+                            </p>
+
+                            @foreach ($item->childs()->orderBy("created_at", "DESC")->get() as $child)
+                                
+                            <div class="row">
+                                <div class="col-md-1">
+                                    <img src="{{ url('/image/profil.png') }}" style="width: 50px; height: 50px; border-radius: 50px;">
+                                </div>
+                                <div class="col-md-11">
+                                    <strong>
+                                        {{ $child["lecturer"]["name"] }}
+                                    </strong>
+                                    <br>
+                                    <span style="color: red">
+                                        {{ $child->created_at->diffForHumans() }}
+                                    </span>
+                                    <br>
+                                    <p style="text-align: justify; color: black;">
+                                        {{ $child->komentar }}
+                                    </p>
+                                </div>
+                            </div>
+
+                            @endforeach
+
+                            <form style="margin-bottom: 30px;" action="{{ url('/reviewer/proposal/'.$proposals["id"].'/komentar') }}" method="POST">
+                                {{ csrf_field() }}
+                                <div class="form-group">
+                                    <input type="hidden" name="proposal_id" value="{{ $item["proposal_id"] }}">
+                                    <input type="hidden" name="parent" value="{{ $item["id"] }}">
+                                    <textarea name="komentar" id="komentar" class="form-control" rows="5" placeholder="Balas Komentar"></textarea>
+                                    <hr>
+                                    <button type="submit" class="btn btn-primary btn-sm">
+                                        <i class="bi bi-plus"></i> Tambah 
+                                    </button>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                    @endforeach
                 </div>
             </div>
         </div>
     </div>
 </section>
 
+@endsection
+
+@section('js')
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#btnkomentar").click(function() {
+                $("#viewkomentar").toggle("slide");
+            })
+        });
+    </script>
 @endsection

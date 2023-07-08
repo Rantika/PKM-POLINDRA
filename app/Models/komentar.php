@@ -2,25 +2,24 @@
 
 namespace App\Models;
 
-
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class komentar extends Model
+class Komentar extends Model
 {
-    protected $guarded=['id'];
     use HasFactory;
-    protected $table='komentar';
 
-    public function user(){
-        return $this->belongsTo(User::class);
+    protected $table = "komentar";
+
+    protected $guarded = [''];
+
+    public function lecturer()
+    {
+        return $this->belongsTo("App\Models\Lecturer", "user_id", "id");
     }
 
-    public function forum(){
-        return $this->belongsTo(Forum::class);
-    }
-
-    public function childs(){
-        return $this->hasMany(Komentar::class, 'parent');
+    public function childs()
+    {
+        return $this->hasMany("App\Models\Komentar", "parent", "id");
     }
 }

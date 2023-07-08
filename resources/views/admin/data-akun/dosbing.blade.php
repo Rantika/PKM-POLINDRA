@@ -63,7 +63,7 @@
                                         @endphp
                                         
                                         @php
-                                            $cek_dosbing = DB::table("dosbing")->where("dosbing_id", $data->id)->count();
+                                            $cek_dosbing = DB::table("dosbing")->where("dosbing_id", $data->id)->where("status", "1")->count();
                                         @endphp
 
                                     <span class="badge bg-{{$cek ? 'success' : 'warning'}}">

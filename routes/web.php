@@ -283,6 +283,7 @@ Route::group(["middleware" => ["role"]], function() {
         Route::post('/proposal/upload-proposal/{id?}', 'upload')->name('reviewer.upload-proposal');
         
         Route::get('/proposal/{id}/komentar', 'komentar');
+        Route::post("/proposal/{id}/komentar", 'post_komentar');
         Route::post('/proposal/belum-review','proses_belum_review');
         Route::get("/proposal/belum-review/{id}/update-status", 'update_status');
     });

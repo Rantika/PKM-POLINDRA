@@ -15,10 +15,10 @@ return new class extends Migration
     {
         Schema::create('komentar', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('forum_id');
-            $table->text('konten');
-            $table->integer('parent');
+            $table->integer("user_id");
+            $table->integer("proposal_id");
+            $table->string("komentar");
+            $table->integer("parent");
             $table->timestamps();
         });
     }

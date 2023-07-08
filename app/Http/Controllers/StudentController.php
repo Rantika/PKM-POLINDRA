@@ -14,7 +14,7 @@ class StudentController extends Controller
     {
         $data['prodies'] = Prody::get();
         $data['students'] = Student::get();
-        return view('admin.data-akun.tim', $data);
+        //return view('admin.data-akun.tim', $data);
     }
 
     public function store(Request $request)

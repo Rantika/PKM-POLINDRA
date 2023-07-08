@@ -36,4 +36,9 @@ class Proposal extends Model
     {
         return $this->belongsTo("App\Models\Dosbing", "lecturer_id", "dosbing_id");
     }
+
+    public function komentar()
+    {
+        return $this->hasMany("App\Models\Komentar", "proposal_id", "id");
+    }
 }

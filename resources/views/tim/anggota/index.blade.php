@@ -32,11 +32,10 @@
                             <tr>
 
                                 <th class="text-center">No</th>
-                                <th>Nama Tim</th>
                                 <th>Anggota Tim</th>
                                 <th>Nim</th>
                                 <th>No Telepon</th>
-                                <th>Prody</th>
+                                <th>Prodi</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -44,7 +43,6 @@
                             @foreach ($tim as $data)
                             <tr>
                                 <td class="text-center">{{$loop->iteration}}.</td>
-                                <td>{{$data->tim->nama_tim}}</td>
                                 <td>{{$data->student->name}}</td>
                                 <td>{{$data->student->nim}}</td>
                                 <td>{{$data->student->phone_number}}</td>
@@ -187,4 +185,10 @@
 
 @section('js')
 {{-- Jika ada tambahan CSS khusus di page ini, tambahkan di sini --}}
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.datatable').DataTable();
+    });
+</script>
+
 @endsection

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\NotificationController;
 use App\Models\Comment;
 use App\Models\komen_proposal;
+use App\Models\Komentar;
 use App\Models\Proposal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -23,9 +24,22 @@ class RoleReviewerController extends Controller
     public function komentar($id)
     {
         $data['proposals'] = Proposal::where('id',$id)->first();
-        $data['data_proposal'] = komen_proposal::where('proposal_id',$id)->get();
         
         return view('reviewer.proposal.belum-review.index',$data);
+    }
+
+    public function post_komentar(Request $request)
+    {
+        return DB::transaction(function() use ($request) {
+            Komentar::create([
+                "user_id" => Auth::user()->lecturer->id,
+                "proposal_id" => $request["proposal_id"],
+                "komentar" => $request["komentar"],
+                "parent" => $request["parent"] 
+            ]);
+
+            return back();
+        });
     }
 
     public function setujui(Request $request)

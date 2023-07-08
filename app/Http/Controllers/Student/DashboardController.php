@@ -60,12 +60,15 @@ class DashboardController extends Controller
                 "nama_tim" => $request->nama_tim
             ]);
         } else {
+            $proposal = Proposal::where("student_id", Auth::user()->tim->user_id)->first();
+
             Dosbing::where("student_id", Auth::user()->id)->update([
                 "status" => 0,
                 "dosbing_id" => $request->dosbing_id
             ]);
 
-            Proposal::where("id", Auth::user()->tim->proposal->dosbing->id)->update([
+
+            Proposal::where("id", $proposal->id)->update([
                 "lecturer_id" => $request->dosbing_id
             ]);   
         }
