@@ -68,7 +68,7 @@
                                 </td>
                                 <td>
                                     <div class="form-check form-switch">
-                                        <input class="form-check-input" data-id="{{ $data->id }}" type="checkbox" {{$data->is_active ? 'checked' : ''}}>
+                                        <input class="form-check-input" data-id="{{ $data->id }}" type="checkbox" {{$data->status ? 'checked' : ''}}>
                                     </div>
                                 </td>
                                 <td class="text-center">
@@ -140,7 +140,7 @@
                 <form action="{{ route('setting.waktu-review.update', ['id' => $data->id]) }}" method="post">
                     @csrf
                     <div class="modal-header">
-                        <h5 class="modal-title">Edit Waktu Upload</h5>
+                        <h5 class="modal-title">Edit Waktu review</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -198,7 +198,7 @@
                 let val = $(this).is(':checked');
 
                 $.ajax({
-                    url: `{{route('setting.period.update-status')}}/${id}`,
+                    url: `{{route('setting.waktu-review.update')}}/${id}`,
                     data: { is_active : val ? 1 : 0 },
                     type: 'POST',
                     success: function (response) {

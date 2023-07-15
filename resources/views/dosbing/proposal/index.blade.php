@@ -286,7 +286,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-12">
+                        <!-- <div class="col-md-12">
                             <div class="form-floating">
                                 <textarea style="height: 100px" name="cover" type="text" class="form-control" id="done_cover" placeholder="Cover" disabled></textarea>
                                 <label for="cover">Cover</label>
@@ -321,7 +321,7 @@
                                 <textarea style="height: 100px" name="daftar_pustaka" type="text" class="form-control" id="done_daftar_pustaka" placeholder="Daftar Pustaka" disabled></textarea>
                                 <label for="dafta_pustaka">Daftar Pustaka</label>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -416,23 +416,24 @@
                 $.ajax({
                     url: `{{route('reviewer.get-proposal')}}/${id}`,
                     success: function (response) {
-                        $('#done-title').html(response.file_done ? response.file_done.split('/')[1] : '')
+                        console.log(response)
+                        $('#done-title').html(response.file ? response.file.split('/')[1] : '')
 
-                        if (response.file_done){
+                        if (response.file){
                             $('#done-file').attr('target', '_blank')
-                            $('#done-file').attr('href', `{{asset('/')}}` + response.file_done)
+                            $('#done-file').attr('href', `{{asset('/')}}` + response.file)
                         }else {
                             $('#done-file').attr('target', '_self')
                             $('#done-file').attr('href', `#`)
                             $('#done-file').html('Tidak ada Proposal diupload')
                         }
 
-                        $('#done_cover').html(response.comment.cover)
-                        $('#done_kata_pengantar').html(response.comment.kata_pengantar)
-                        $('#done_bab_1').html(response.comment.bab_1)
-                        $('#done_bab_2').html(response.comment.bab_2)
-                        $('#done_bab_3').html(response.comment.bab_3)
-                        $('#done_daftar_pustaka').html(response.comment.daftar_pustaka)
+                        // $('#done_cover').html(response.comment.cover)
+                        // $('#done_kata_pengantar').html(response.comment.kata_pengantar)
+                        // $('#done_bab_1').html(response.comment.bab_1)
+                        // $('#done_bab_2').html(response.comment.bab_2)
+                        // $('#done_bab_3').html(response.comment.bab_3)
+                        // $('#done_daftar_pustaka').html(response.comment.daftar_pustaka)
 
                         fadeOut()
                         $("#modalSelesai").modal('show');

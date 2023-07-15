@@ -60,7 +60,7 @@
                         </div>
                         <div class="col-md-11">
                             <strong>
-                                {{ $item["lecturer"]["name"] }}
+                                {{ $item["user"]["lecturer"]["name"] }}
                             </strong>
                             <br>
                             <span style="color: red">

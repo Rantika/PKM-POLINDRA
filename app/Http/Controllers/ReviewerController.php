@@ -44,7 +44,7 @@ class ReviewerController extends Controller
             }
 
             Proposal::where("student_id", $student->user_id)->update([
-                "reviewer_id" => $request->lecturer_id
+                "reviewer_id" => $data->id
             ]);
 
             DB::commit();

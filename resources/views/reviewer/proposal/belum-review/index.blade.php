@@ -72,13 +72,14 @@
                     <br>
 
                     @foreach ($proposals->komentar()->where("parent", 0)->orderBy("created_at", "DESC")->get() as $item)
+
                     <div class="row">
                         <div class="col-md-1">
                             <img src="{{ url('/image/profil.png') }}" style="width: 50px; height: 50px; border-radius: 50px;">
                         </div>
                         <div class="col-md-11">
                             <strong>
-                                {{ $item["lecturer"]["name"] }}
+                                {{ $item->user->lecturer->name }}
                             </strong>
                             <br>
                             <span style="color: red">

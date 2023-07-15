@@ -12,7 +12,8 @@ class AccController extends Controller
 {
     public function index()
     {
-        $data["proposals"] = Dosbing::where('dosbing_id', Auth::user()->lecturer->id)->get();
+        $data["proposals"] = Dosbing::with('student.proposal')->where('dosbing_id', Auth::user()->lecturer->id)->get();
+      
 
         return view("dosbing.acc.index", $data);
     }

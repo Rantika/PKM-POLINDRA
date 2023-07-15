@@ -116,11 +116,6 @@
             </a>
             <ul id="setting-nav" class="nav-content {{sideBarRoute('setting.*', true, true)}}" data-bs-parent="#sidebar-nav">
                 <li>
-                    <a href="{{route('setting.view.index')}}" class="{{sideBarRoute('setting.view.index')}}">
-                        <i class="bi bi-circle"></i><span>Tampilan</span>
-                    </a>
-                </li>
-                <li>
                     <a href="{{route('setting.period.index')}}" class="{{sideBarRoute('setting.period.index')}}">
                         <i class="bi bi-circle"></i><span>Periode</span>
                     </a>

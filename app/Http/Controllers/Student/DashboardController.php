@@ -33,7 +33,7 @@ class DashboardController extends Controller
         $data["tim"] = Tim::where("user_id", Auth::user()->id)->first();
         $data["dosbing"] = Lecturer::get();
         $data["schema"] = Scheme::where("deleted_at", NULL)->get();
-
+       
         return view('tim.index', $data);
     }
 
@@ -45,9 +45,11 @@ class DashboardController extends Controller
                 "student_id" => Auth::user()->id,
                 "status" => 0   
             ]);
+
+
     
             $proposal = Proposal::create([
-                "student_id" => $dosbing->student_id,
+                "student_id" => Auth::user()->id,
                 "lecturer_id" => $dosbing->dosbing_id,
                 "scheme_id" => $request->schema_id,
                 "title" => $request->title,

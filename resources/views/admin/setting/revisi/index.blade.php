@@ -140,7 +140,7 @@
                 <form action="{{ route('setting.upload-revisi.update', ['id' => $data->id]) }}" method="post">
                     @csrf
                     <div class="modal-header">
-                        <h5 class="modal-title">Edit Waktu Upload</h5>
+                        <h5 class="modal-title">Edit Waktu Upload Revisi</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">

@@ -81,6 +81,7 @@ class TimController extends Controller
 
     public function delete($id)
     {
+        TimStudent::where('student_id', $id)->delete();
         Student::find($id)->delete();
         return redirect()->back()->with('success', 'Berhasil menghapus akun tim!');
     }

@@ -49,13 +49,13 @@ use App\Models\Dosbing;
                             @foreach($proposals->where('status', 0)->where('is_confirmed', 1)->all() as $data)
                             @php
                             $cek = Dosbing::where("dosbing_id", $data->reviewer_id)
-                            ->where("student_id", $data->mahasiswa->user_id)
+                            ->where("student_id", $data->student->user_id)
                             ->first();
                             @endphp
 
                             @if($cek)
 
-                            @else
+                            
                             <tr>
                                 <td class="text-center">{{$loop->iteration}}</td>
                                 <td>{{$data->mahasiswa->name}}</td>
@@ -64,9 +64,21 @@ use App\Models\Dosbing;
                                 <td>{{ $data->lecturer->name }}</td>
                                 <td class="text-center"></td>
                                 <td class="text-center">
-                                    <a href="{{ url('/reviewer/proposal/'.$data->id.'/komentar') }}" class="btn btn-warning btn-sm">
-                                        <i class="bi bi-chat"></i> Komentar
-                                    </a>
+                                    @if($settings)
+                                        @if($settings->mulai <= now() && $settings->selesai > now())
+                                        <a href="{{ url('/reviewer/proposal/'.$data->id.'/komentar') }}" class="btn btn-warning btn-sm">
+                                        <i class="bi bi-chat"></i> Komentar 
+                                        </a>
+                                        @else
+                                        <button class="btn btn-warning btn-sm" disabled>
+                                        <i class="bi bi-chat"></i> Komenatr belum dibuka 
+                                        </button>
+                                        @endif
+                                    @else
+                                    <button class="btn btn-warning btn-sm" disabled>
+                                    <i class="bi bi-chat"></i> Komenatr belum dibuka 
+                                    </button>
+                                    @endif
                                 </td>
                             </tr>
                             @endif

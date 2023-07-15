@@ -42,10 +42,10 @@ class NewsController extends Controller
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
-            return redirect()->back()->with('error', 'Gagal membuat berita kegiatan PKM! \n\n Alasan :\n'. $e->getMessage());
+            return redirect()->back()->with('error', 'Gagal membuat jenis kegiatan PKM! \n\n Alasan :\n'. $e->getMessage());
         }
 
-        return redirect()->back()->with('success', 'Berhasil membuat berita kegiatan PKM!');
+        return redirect()->back()->with('success', 'Berhasil membuat jenis kegiatan PKM!');
     }
 
     public function show($id)
@@ -83,15 +83,15 @@ class NewsController extends Controller
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
-            return redirect()->back()->with('error', 'Gagal mengupdate berita kegiatan PKM! \n\n Alasan :\n'. $e->getMessage());
+            return redirect()->back()->with('error', 'Gagal mengupdate jenis kegiatan PKM! \n\n Alasan :\n'. $e->getMessage());
         }
 
-        return redirect()->back()->with('success', 'Berhasil mengupdate berita kegiatan PKM!');
+        return redirect()->back()->with('success', 'Berhasil mengupdate jenis kegiatan PKM!');
     }
 
     public function delete($id)
     {
         News::find($id)->delete();
-        return redirect()->back()->with('success', 'Berhasil menghapus berita kegiatan PKM!');
+        return redirect()->back()->with('success', 'Berhasil menghapus jenis kegiatan PKM!');
     }
 }

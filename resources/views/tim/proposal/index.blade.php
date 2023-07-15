@@ -47,25 +47,27 @@ if ($proposal->status == 3){
 $status = 'Lolos Didanai';
 $statusColor = 'success';
 }
+
 @endphp
 
 <section class="section profile">
 
-    <?php
+    @php
     $sekarang = strtotime(date("Y-m-d H:i:s"));
-    $selesai = strtotime($upload["selesai"]);
-    $end_review = strtotime($review["selesai"]);
-    $end_revisi = strtotime($revisi["selesai"]);
-    ?>
+    $selesai = strtotime($upload["selesai"] ?? '');
+    $end_review = strtotime($review["selesai"] ?? '');
+    $start_revisi = strtotime($revisi["mulai"] ?? '');
+    $end_revisi = strtotime($revisi["selesai"] ?? '');
+    @endphp
 
-    <?php if ($sekarang > $selesai) : ?>
+   @if ($sekarang > $selesai)
 
-    <?php else : ?>
-        <?php if ($sekarang > $end_review) : ?>
+    @else
+        @if ($sekarang > $end_review)
 
-        <?php else : ?>
+        @else
 
-        <?php endif ?>
+        @endif
         <div class="alert alert-info" role="alert">
             Batas Upload Proposal :
             <strong>
@@ -76,7 +78,7 @@ $statusColor = 'success';
                 {{ $selesai_upload }}
             </strong>
         </div>
-    <?php endif ?>
+   @endif
 
     <?php if ($sekarang > $end_review) : ?>
 
@@ -219,24 +221,26 @@ $statusColor = 'success';
                                     </div>
                                 </div>
 
-                                @if($proposal->status == 1 || $proposal->status == 2)
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Upload Proposal Revisi</div>
-                                    <div class="col-lg-9 col-md-8">
-                                        @if($proposal->status == 2 && $proposal->approved == 1)
-                                        <div class="alert alert-danger">
-                                            <small class="text-danger">
-                                                Data Sedang Dalam Pengecekan
-                                            </small>
+                                @if(($proposal->status == 1 || $proposal->status == 2) && $revisi)
+                                    @if($sekarang >= $start_revisi && $sekarang <= $end_revisi)
+                                    <div class="row">
+                                        <div class="col-lg-3 col-md-4 label">Upload Proposal Revisi</div>
+                                        <div class="col-lg-9 col-md-8">
+                                            @if($proposal->status == 2 && $proposal->approved == 1)
+                                            <div class="alert alert-danger">
+                                                <small class="text-danger">
+                                                    Data Sedang Dalam Pengecekan
+                                                </small>
+                                            </div>
+                                            @else
+                                            <input name="file" type="file" class="form-control" id="floatingFoto" placeholder="Proposal">
+                                            <label>Max Size : 5MB</label>
+
+                                            @endif
+
                                         </div>
-                                        @else
-                                        <input name="file" type="file" class="form-control" id="floatingFoto" placeholder="Proposal">
-                                        <label>Max Size : 5MB</label>
-
-                                        @endif
-
                                     </div>
-                                </div>
+                                    @endif
                                 @endif
 
                                 <div class="row">

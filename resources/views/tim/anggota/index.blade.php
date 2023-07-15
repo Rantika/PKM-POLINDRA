@@ -51,7 +51,7 @@
                                     <button type="button" class="btn btn-sm btn-warning my-4" data-bs-toggle="modal" data-bs-target="#modalEdit-{{$data->id}}">
                                         <i class="bi bi-pencil-square"></i> Edit
                                     </button>
-                                    <button class="btn btn-sm btn-danger delete" type="button" title="Delete"><i class="bi bi-trash"></i></button>
+                                    <button class="btn btn-sm btn-danger delete" type="button"  data-id="{{$data->student->id}}" title="Delete"><i class="bi bi-trash"></i></button>
                                 </td>
                             </tr>
                             @endforeach
@@ -188,6 +188,28 @@
 <script type="text/javascript">
     $(document).ready(function() {
         $('.datatable').DataTable();
+
+        $(document).on('click', '.delete', function () {
+                let id = $(this).data('id');
+
+                swal({
+                    title: "Yakin ingin menghapus data ini?",
+                    text: "Ketika data terhapus, anda tidak bisa mengembalikan data tersebut!",
+                    icon: "warning",
+                    buttons: [
+                        'Jangan, batalkan!',
+                        'Ya, lanjutkan!'
+                    ],
+                    dangerMode: true,
+                }).then(function(isConfirm) {
+                    if (isConfirm) {
+                        window.location.replace('{{route('student.tim.delete', '')}}/'+id);
+                    } else {
+                        swal("Dibatalkan", "Data aman", "error");
+                    }
+                })
+
+            });
     });
 </script>
 

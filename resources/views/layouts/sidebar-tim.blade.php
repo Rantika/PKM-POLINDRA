@@ -29,22 +29,13 @@
         
         <!-- Fitur Komentar Proposal -->
         <li class="nav-item">
-            <a class="nav-link" href="{{ url('/team/komentar-proposal') }}">
+            <a class="nav-link  {{sideBarRoute('team.komentar-proposal')}}" href="{{ url('/team/komentar-proposal') }}">
                 <i class="bi bi-book"></i>
                 <span>Komentar Proposal</span>
             </a>
         </li>
-        <!-- END -->
+        <!-- Komentar Proposal -->
 
-        <!-- ======= Forum ======= -->
-        <li class="nav-item">
-            <a class="nav-link collapsed {{sideBarRoute('forum.index')}}" href="{{route('forum.index')}}" >
-                <i class="bi bi-book"></i>
-                <span>Forum</span>
-            </a>
-        </li>
-        <!-- ======= Forum ======= -->
-        
         <!-- ======= Logout ======= -->
         <li class="nav-item">
             <a class="nav-link collapsed" href="{{route('logout')}}">

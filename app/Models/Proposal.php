@@ -12,7 +12,7 @@ class Proposal extends Model
     protected $guarded = [];
 
     public function student(){
-        return $this->belongsTo(Student::class);
+        return $this->belongsTo(Student::class, 'student_id', 'user_id');
     }
     public function reviewer(){
         return $this->belongsTo(Reviewer::class);

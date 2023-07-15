@@ -27,7 +27,7 @@ class SettingController extends Controller
     }
 
     public function update(Request $request, $id)
-    {
+    {dd($id);
         Settings::where("id", $id)->update([
             "mulai" => $request->mulai,
             "selesai" => $request->selesai

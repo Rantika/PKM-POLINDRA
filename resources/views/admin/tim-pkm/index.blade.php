@@ -77,10 +77,11 @@
                                         <td class="text-center">
                                             @if($data->status == 2)
                                             <a href="{{route('proposal.lolos', $data->id)}}" class="btn btn-sm btn-success" title="Lolos Didanai"><i class="bi bi-check-circle"></i></a>
-                                            @endif
-                                            <button class="btn btn-sm btn-primary bimbingan" type="button" data-id="{{$data->student->user->id}}" title="Lihat Bimbingan"><i class="bi bi-person-workspace"></i></button>
+                                            @else
+                                            <button class="btn btn-sm btn-primary bimbingan" type="button" data-id="{{$data->student->id}}" title="Lihat Bimbingan"><i class="bi bi-person-workspace"></i></button>
                                             <button class="btn btn-sm btn-info edit" type="button" data-id="{{$data->id}}" title="Edit"><i class="bi bi-pencil-square"></i></button>
                                             {{-- <button class="btn btn-sm btn-danger delete" type="button" data-id="{{$data->id}}" title="Delete"><i class="bi bi-trash"></i></button> --}}
+                                            @endif
                                         </td>
                                     </tr>
                                 @endforeach

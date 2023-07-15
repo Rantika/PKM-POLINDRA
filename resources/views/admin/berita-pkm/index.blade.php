@@ -9,7 +9,7 @@
 <!-- ======= Page Title ======= -->
 @section('breadcumb')
     <div class="pagetitle">
-        <h1>Berita Kegiatan PKM</h1>
+        <h1>Jenis Kegiatan PKM</h1>
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="#"></a></li>
@@ -37,7 +37,7 @@
                             <thead>
                             <tr>
                                 <th class="text-center">No</th>
-                                <th>Singkatan PKM</th>
+                                <th>Singkatan</th>
                                 <th>Jenis PKM</th>
                                 <th class="text-center">Foto</th>
                                 <th class="text-center">Aksi</th>
@@ -85,7 +85,7 @@
                             <div class="col-md-12">
                                 <div class="form-floating">
                                     <input name="title" type="text" class="form-control" id="floatingName" placeholder="Kegiatan">
-                                    <label for="floatingName">Singkatan PKM</label>
+                                    <label for="floatingName">Singkatan</label>
                                 </div>
                             </div>
                             <div class="col-md-12">
@@ -122,7 +122,7 @@
                 <form id="form-update" action="#" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-header">
-                        <h5 class="modal-title">Edit Berita Kegiatan PKM</h5>
+                        <h5 class="modal-title">Edit Jenis Kegiatan PKM</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">

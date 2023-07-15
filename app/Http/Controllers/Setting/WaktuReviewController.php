@@ -28,10 +28,18 @@ class WaktuReviewController extends Controller
 
     public function update(Request $request, $id)
     {
-        Settings::where("id", $id)->update([
-            "mulai" => $request->mulai,
-            "selesai" => $request->selesai
-        ]);
+        
+        if($request->has('is_active')){
+            Settings::where("id", $id)->update([
+                "status" => $request->is_active,
+            ]);
+        }else{
+            Settings::where("id", $id)->update([
+                "mulai" => $request->mulai,
+                "selesai" => $request->selesai
+            ]);
+        }
+        
 
         return back();
     }

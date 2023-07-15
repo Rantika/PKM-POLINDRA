@@ -59,28 +59,30 @@ class RoleStudentController extends Controller
                     
                     // Review
                     $review = Settings::where("kategori", "Review")->first();
-                    
-                    $mulai_review = Carbon::createFromFormat('Y-m-d H:i:s', $review["mulai"]);
-                    $format_review = $mulai_review->isoFormat('dddd, D MMMM YYYY HH:mm:ss');
-                    $data["mulai_review"] = $format_review;
-                    
-                    $selesai_review = Carbon::createFromFormat('Y-m-d H:i:s', $review["selesai"]);
-                    $format_review = $selesai_review->isoFormat('dddd, D MMMM YYYY HH:mm:ss');
-                    $data["selesai_review"] = $format_review;
+                    if ($review){
+                        $mulai_review = Carbon::createFromFormat('Y-m-d H:i:s', $review["mulai"]);
+                        $format_review = $mulai_review->isoFormat('dddd, D MMMM YYYY HH:mm:ss');
+                        $data["mulai_review"] = $format_review;
+                
+
+                        $selesai_review = Carbon::createFromFormat('Y-m-d H:i:s', $review["selesai"]);
+                        $format_review = $selesai_review->isoFormat('dddd, D MMMM YYYY HH:mm:ss');
+                        $data["selesai_review"] = $format_review;
+                    }
                     
                     // Revisi
                     $revisi = Settings::where("kategori", "Revisi")->first();
-                    
-                    $mulai_revisi = Carbon::createFromFormat('Y-m-d H:i:s', $revisi["mulai"]);
-                    $format_revisi = $mulai_revisi->isoFormat('dddd, D MMMM YYYY HH:mm:ss');
-                    $data["mulai_revisi"] = $format_revisi;
-                    
-                    $selesai_revisi = Carbon::createFromFormat('Y-m-d H:i:s', $revisi["selesai"]);
-                    $format_revisi = $selesai_revisi->isoFormat('dddd, D MMMM YYYY HH:mm:ss');
-                    $data["selesai_revisi"] = $format_revisi;
-                    
+                    if($revisi){
+                        $mulai_revisi = Carbon::createFromFormat('Y-m-d H:i:s', $revisi["mulai"]);
+                        $format_revisi = $mulai_revisi->isoFormat('dddd, D MMMM YYYY HH:mm:ss');
+                        $data["mulai_revisi"] = $format_revisi;
+                        
+                        $selesai_revisi = Carbon::createFromFormat('Y-m-d H:i:s', $revisi["selesai"]);
+                        $format_revisi = $selesai_revisi->isoFormat('dddd, D MMMM YYYY HH:mm:ss');
+                        $data["selesai_revisi"] = $format_revisi;
+                    }
                     $sekarang = strtotime(date("Y-m-d H:i:s"));
-                    
+                
                     return view('tim.proposal.index', $data, compact("upload","review","revisi"));
                 }
             }
@@ -156,19 +158,20 @@ class RoleStudentController extends Controller
             DB::beginTransaction();
             
             $data = Proposal::with('student')->where('student_id', Auth::user()->student->id)->first();
+            // dd($data);
             $data->update([
                 'status'        => 2,
                 'approved'      => 1
             ]);
             
-            Revisi::where("id", $request->proposal_id)->create([
+            $rev = Revisi::where("id", $request->proposal_id)->create([
                 "proposal_id" => $request->proposal_id,
                 "file" => 'proposal/Hasil AKhir-'.date('ymdhis') . '_' . $data->scheme->name . '_' . $request->title .'.'. $request->file->extension()
             ]);
             
             if ($request->hasFile('file')) {
                 $file = $request->file('file');
-                $file->move(public_path('proposal'), $data->file_done);
+                $file->move(public_path('proposal'), $rev->file);
                 
                 // Create notif untuk reviewer
                 $param = [
@@ -181,7 +184,7 @@ class RoleStudentController extends Controller
                 
                 // Create notif untuk admin
                 $param = [
-                    'id'            => User::where('role', 'admin')->first()->id,
+                    'id'            => User::where('id_hak_akses', 1)->first()->id,
                     'for'           => 'admin',
                     'type'          => 2,
                     'description'   => $data->student->name,
@@ -192,7 +195,7 @@ class RoleStudentController extends Controller
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
-            
+            dd($e->getMessage());
             return redirect()->back()->with('error', 'Gagal memproses Proposal! \n\n Alasan :\n'. $e->getMessage());
         }
         

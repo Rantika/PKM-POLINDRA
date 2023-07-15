@@ -8,6 +8,9 @@ use App\Models\Comment;
 use App\Models\komen_proposal;
 use App\Models\Komentar;
 use App\Models\Proposal;
+use App\Models\Reviewer;
+use App\Models\Revisi;
+use App\Models\Settings;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -17,7 +20,10 @@ class RoleReviewerController extends Controller
 {
     public function proposal()
     {
-        $data['proposals'] = Proposal::where('reviewer_id', Auth::user()->lecturer->id)->get();
+        $reviewTeamIds = Reviewer::where('lecturer_id', Auth::user()->lecturer->id)->pluck('id');
+        $data['settings']= Settings::where('kategori','Review')->first();
+        $data['proposals'] = Proposal::whereIn('reviewer_id', $reviewTeamIds)->get();
+        // dd($reviewTeamIds, $data['proposals']);
         
         return view('reviewer.proposal.index', $data);
     }
@@ -31,8 +37,12 @@ class RoleReviewerController extends Controller
     public function post_komentar(Request $request)
     {
         return DB::transaction(function() use ($request) {
+            Proposal::find($request["proposal_id"])->update([
+                'status' => 1
+            ]);
+
             Komentar::create([
-                "user_id" => Auth::user()->lecturer->id,
+                "user_id" => Auth::user()->id,
                 "proposal_id" => $request["proposal_id"],
                 "komentar" => $request["komentar"],
                 "parent" => $request["parent"] 
@@ -54,7 +64,7 @@ class RoleReviewerController extends Controller
     
     public function getProposal($id)
     {
-        $data = Proposal::with('comment')->find($id); // find : untuk mengambil data dari database dengan data primary key
+        $data = Revisi::where('proposal_id', $id)->first(); // find : untuk mengambil data dari database dengan data primary key
 
         return response()->json($data); // json : nampilin data terbaru tanpa refresh
     }
