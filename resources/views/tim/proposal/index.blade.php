@@ -327,7 +327,7 @@ $statusColor = 'success';
                                 <div class="row mb-3">
                                     <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
                                     <div class="col-md-8 col-lg-9">
-                                        <input name="email" type="email" class="form-control" id="Email" value="{{$proposal->mahasiswa->user->emails}}">
+                                        <input name="email" type="email" class="form-control" id="Email" value="{{$proposal->mahasiswa->user->email}}">
                                     </div>
                                 </div>
 

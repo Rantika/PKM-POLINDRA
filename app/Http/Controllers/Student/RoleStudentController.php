@@ -212,7 +212,7 @@ class RoleStudentController extends Controller
             'phone_number'  => $request->phone_number
         ]);
         
-        Proposal::where('student_id', Auth::user()->student->id)->update([
+        Proposal::where('student_id', Auth::user()->student->user_id)->update([
             'title'         => $request->title,
             'description'   => $request->description,
         ]);
@@ -233,13 +233,6 @@ class RoleStudentController extends Controller
         }
         
         $user = User::find(Auth::user()->id);
-        
-        if (!Hash::check($request->old, $user->password)){ // hash :
-            return redirect()->back()->with([
-                'position' => 'password',
-                'error' => 'Password lama yang anda masukkan salah!'
-            ]);
-        }
         
         $user->update([
             'password'  => bcrypt($request->password)

@@ -43,7 +43,7 @@
                             <div class="col-2">
                                 <div class="input-group">
                                     <label class="label">Nama</label>
-                                    <input class="input--style-4" type="text" name="name">
+                                    <input class="input--style-4 has-error" type="text" name="name">
                                 </div>
                             </div>
                             <div class="col-2">

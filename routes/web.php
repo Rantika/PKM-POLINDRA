@@ -319,7 +319,7 @@ Route::prefix('reviewer')->middleware(['role:lecturer,reviewer'])->controller(Ro
 Route::get('/team', [StudentDashboard::class, 'index'])->name('student.index');
 Route::post("/team", [StudentDashboard::class, "post"])->name("student.store-tim");
 Route::post("/pilih_akses/{id}", [AppController::class, "post"]);
-Route::prefix('team')->middleware(['role:student'])->controller(RoleStudentController::class)->group( function () {
+Route::prefix('team')->middleware(['role'])->controller(RoleStudentController::class)->group( function () {
     
     
     
