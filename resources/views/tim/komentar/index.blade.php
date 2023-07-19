@@ -79,7 +79,11 @@
                                 </div>
                                 <div class="col-md-11">
                                     <strong>
-                                        {{ $child["user"]["email"] }}
+                                        @if ($child["user"]["hak_akses"]["role"] == "Student")
+                                        {{ $child["user"]["student"]["name"] }}
+                                        @elseif($child["user"]["hak_akses"]["role"] == "Reviewer")
+                                        {{ $child["user"]["lecturer"]["name"] }}
+                                        @endif
                                     </strong>
                                     <br>
                                     <span style="color: red">

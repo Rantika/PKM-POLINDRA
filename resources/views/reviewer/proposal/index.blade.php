@@ -71,12 +71,12 @@ use App\Models\Dosbing;
                                         </a>
                                         @else
                                         <button class="btn btn-warning btn-sm" disabled>
-                                        <i class="bi bi-chat"></i> Komenatr belum dibuka 
+                                        <i class="bi bi-chat"></i> Komentar belum dibuka 
                                         </button>
                                         @endif
                                     @else
                                     <button class="btn btn-warning btn-sm" disabled>
-                                    <i class="bi bi-chat"></i> Komenatr belum dibuka 
+                                    <i class="bi bi-chat"></i> Komentar belum dibuka 
                                     </button>
                                     @endif
                                 </td>

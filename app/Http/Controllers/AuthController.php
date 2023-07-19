@@ -84,6 +84,10 @@ class AuthController extends Controller
                 "user_id" => $user->id,
                 "role" => "Student"
             ]);
+
+            User::where("id", $user->id)->update([
+                "id_hak_akses" => $role->id
+            ]);
                 
             $tim = Tim::create([
                 "user_id" => $user->id

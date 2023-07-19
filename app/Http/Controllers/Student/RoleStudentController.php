@@ -246,7 +246,7 @@ class RoleStudentController extends Controller
 
     public function komentar_proposal()
     {
-        $data["proposals"] = Proposal::where("student_id", Auth::user()->id)->first();
+        $data["proposals"] = Proposal::where("student_id", Auth::user()->student->user_id)->first();
 
         return view("tim.komentar.index", $data);
     }
