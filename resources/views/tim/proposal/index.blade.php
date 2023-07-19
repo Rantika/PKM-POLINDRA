@@ -83,8 +83,8 @@ $statusColor = 'success';
     <?php if ($sekarang > $end_review) : ?>
 
     <?php else : ?>
-        <div class="alert alert-danger" role="alert">
-            Batas Upload Review
+        <div class="alert alert-success" role="alert">
+            Waktu Review
             <strong>
                 {{ $mulai_review }}
             </strong>
