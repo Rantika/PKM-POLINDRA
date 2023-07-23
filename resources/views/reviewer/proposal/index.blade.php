@@ -46,28 +46,32 @@ use App\Models\Dosbing;
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($proposals->where('status', 0)->where('is_confirmed', 1)->all() as $data)
-                            @php
-                            $cek = Dosbing::where("dosbing_id", $data->reviewer_id)
-                            ->where("student_id", $data->student->user_id)
-                            ->first();
-                            @endphp
-
-                            @if($cek)
-
-                            
+                            @foreach($proposals as $data)
                             <tr>
                                 <td class="text-center">{{$loop->iteration}}</td>
                                 <td>{{$data->mahasiswa->name}}</td>
                                 <td>{{$data->title}}</td>
                                 <td>{{$data->scheme->name}}</td>
                                 <td>{{ $data->lecturer->name }}</td>
-                                <td class="text-center"></td>
+                                <td class="text-center">
+                                    @if ($data->approved == 1)
+                                        <button disabled class="btn btn-success btn-sm">
+                                            Lolos Didanai
+                                        </button>    
+                                    @else
+                                        <button disabled class="btn btn-warning btn-sm">
+                                            Belum Lolos
+                                        </button>
+                                    @endif
+                                </td>
                                 <td class="text-center">
                                     @if($settings)
                                         @if($settings->mulai <= now() && $settings->selesai > now())
                                         <a href="{{ url('/reviewer/proposal/'.$data->id.'/komentar') }}" class="btn btn-warning btn-sm">
                                         <i class="bi bi-chat"></i> Komentar 
+                                        </a>
+                                        <a target="_blank" href="{{ url('/reviewer/proposal/'.$data->id.'/file_revisi') }}" class="btn btn-info btn-sm">
+                                            <i class="bi bi-search"></i> File Revisi
                                         </a>
                                         @else
                                         <button class="btn btn-warning btn-sm" disabled>
@@ -81,7 +85,6 @@ use App\Models\Dosbing;
                                     @endif
                                 </td>
                             </tr>
-                            @endif
                             @endforeach
                         </tbody>
                     </table>

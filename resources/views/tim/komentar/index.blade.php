@@ -34,10 +34,14 @@
                         {{ $proposals->title }}
                         </span>
                         <span style="float: right;">
-                            Mahasiswa : 
-                            <span style="color: green; font-weight: bold; text-transform: uppercase;">
-                            {{ $proposals["mahasiswa"]["name"] }}
+                            Status Proposal : 
+                            @if ($proposals["approved"] == 0)
+                            <span style="color: red; font-weight: bold; text-transform: uppercase;">
+                                SEDANG DIREVIEW
                             </span>
+                            @else
+
+                            @endif
                         </span>
                     </strong>
                 </div>

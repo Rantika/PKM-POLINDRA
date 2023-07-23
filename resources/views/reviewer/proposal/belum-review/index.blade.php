@@ -27,6 +27,10 @@
 <section class="section profile">
     <div class="row">
         <div class="col-md-12">
+            <a href="{{ url('/reviewer/proposal') }}" class="btn btn-danger btn-sm">
+                Kembali
+            </a>
+            <br><br>
             <div class="card">
                 <div class="card-header">
                     <strong>
@@ -52,9 +56,12 @@
                     </p>
                 </div>
                 <div class="card-footer">
+                    @if ($proposals->approved == 1)
+                    @else
                     <button class="btn btn-danger btn-sm mb-3" id="btnkomentar">
                         Komentar
                     </button>
+                    @endif
 
                     <form style="display: none" id="viewkomentar" action="{{ url('/reviewer/proposal/'.$proposals["id"].'/komentar') }}" method="POST">
                         {{ csrf_field() }}
@@ -71,7 +78,7 @@
                     
                     <br>
 
-                    @foreach ($proposals->komentar()->where("parent", 0)->orderBy("created_at", "DESC")->get() as $item)
+                    @forelse ($proposals->komentar()->where("parent", 0)->orderBy("created_at", "DESC")->get() as $item)
 
                     <div class="row">
                         <div class="col-md-1">
@@ -117,6 +124,9 @@
 
                             @endforeach
 
+                            @if ($proposals->approved == 1)
+                                
+                            @else
                             <form style="margin-bottom: 30px;" action="{{ url('/reviewer/proposal/'.$proposals["id"].'/komentar') }}" method="POST">
                                 {{ csrf_field() }}
                                 <div class="form-group">
@@ -129,10 +139,22 @@
                                     </button>
                                 </div>
                             </form>
-
+                            @endif
                         </div>
                     </div>
-                    @endforeach
+                    @empty
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="alert alert-danger">
+                                <strong>
+                                    <i>
+                                        BELUM ADA KOMENTAR
+                                    </i>
+                                </strong>
+                            </div>
+                        </div>
+                    </div>
+                    @endforelse
                 </div>
             </div>
         </div>

@@ -63,8 +63,8 @@ class RoleStudentController extends Controller
                         $mulai_review = Carbon::createFromFormat('Y-m-d H:i:s', $review["mulai"]);
                         $format_review = $mulai_review->isoFormat('dddd, D MMMM YYYY HH:mm:ss');
                         $data["mulai_review"] = $format_review;
-                
-
+                        
+                        
                         $selesai_review = Carbon::createFromFormat('Y-m-d H:i:s', $review["selesai"]);
                         $format_review = $selesai_review->isoFormat('dddd, D MMMM YYYY HH:mm:ss');
                         $data["selesai_review"] = $format_review;
@@ -82,7 +82,7 @@ class RoleStudentController extends Controller
                         $data["selesai_revisi"] = $format_revisi;
                     }
                     $sekarang = strtotime(date("Y-m-d H:i:s"));
-                
+                    
                     return view('tim.proposal.index', $data, compact("upload","review","revisi"));
                 }
             }
@@ -146,120 +146,141 @@ class RoleStudentController extends Controller
     
     public function uploadProposalDone(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'file' => 'file|max:5024', // 5MB
-        ]);
+        // if ($request->file_review) {
+        //     $validator = Validator::make($request->all(), [
+        //         'file_review' => 'file|max:5024', // 5MB
+        //     ]);
+        // } else if ($request->file_fix) {
+        //     $validator = Validator::make($request->all(), [
+        //         'file_fix' => 'file|max:5024', // 5MB
+        //     ]);
+        // }
         
-        if ($validator->fails()) {
-            return redirect()->back()->with('error', 'Gagal membuat data! \n\n Alasan :\nUkuran File yang diupload terlalu besar');
-        }
+        // if ($validator->fails()) {
+        //     return redirect()->back()->with('error', 'Gagal membuat data! \n\n Alasan :\nUkuran File yang diupload terlalu besar');
+        // }
         
         try {
             DB::beginTransaction();
             
-            $data = Proposal::with('student')->where('student_id', Auth::user()->student->id)->first();
-            // dd($data);
-            $data->update([
-                'status'        => 2,
-                'approved'      => 1
-            ]);
-            
-            $rev = Revisi::where("id", $request->proposal_id)->create([
-                "proposal_id" => $request->proposal_id,
-                "file" => 'proposal/Hasil AKhir-'.date('ymdhis') . '_' . $data->scheme->name . '_' . $request->title .'.'. $request->file->extension()
-            ]);
-            
-            if ($request->hasFile('file')) {
-                $file = $request->file('file');
-                $file->move(public_path('proposal'), $rev->file);
+            if ($request->file_review) {
+                $data = Proposal::where('student_id', Auth::user()->id)->first();
+                // dd($data);
+                $data->update([
+                    'status'        => 2
+                ]);
                 
-                // Create notif untuk reviewer
-                $param = [
-                    'id'            => (Lecturer::with('user')->find($data->lecturer_id))->user->id,
-                    'for'           => 'reviewer',
-                    'type'          => 1, // 1 :
-                    'description'   => $data->student->name,
-                ];
-                NotificationController::create($param);
+                $rev = Revisi::where("id", $request->proposal_id)->create([
+                    "proposal_id" => $request->proposal_id,
+                    "file" => 'proposal/Revisi-'.date('ymdhis') . '_' . $data->scheme->name . '_' . $request->title .'.'. $request->file_review->extension()
+                ]);
                 
-                // Create notif untuk admin
-                $param = [
-                    'id'            => User::where('id_hak_akses', 1)->first()->id,
-                    'for'           => 'admin',
-                    'type'          => 2,
-                    'description'   => $data->student->name,
-                ];
-                NotificationController::create($param);
+                if ($request->hasFile('file_review')) {
+                    $file = $request->file('file_review');
+                    $file->move(public_path('proposal'), $rev->file);
+                    
+                    // Create notif untuk reviewer
+                    $param = [
+                        'id'            => (Lecturer::with('user')->find($data->lecturer_id))->user->id,
+                        'for'           => 'reviewer',
+                        'type'          => 1, // 1 :
+                        'description'   => $data->student->name,
+                    ];
+                    NotificationController::create($param);
+                    
+                    // Create notif untuk admin
+                    // $param = [
+                        //     'id'            => User::where('id_hak_akses', 1)->first()->id,
+                        //     'for'           => 'admin',
+                        //     'type'          => 2,
+                        //     'description'   => $data->student->name,
+                        // ];
+                        // NotificationController::create($param);
+                    }
+                } else if($request->file_fix) {
+                    
+                    $data = Proposal::where('student_id', Auth::user()->id)->first();
+
+                    $rev = 'proposal/Fix-'.date('ymdhis') . '_' . $data->scheme->name . '_' . $request->title .'.'. $request->file_fix->extension();
+
+                    $file = $request->file('file_fix');
+                    $file->move(public_path('proposal'), $rev);
+                    
+                    $data = Proposal::where('student_id', Auth::user()->id)->first();
+                    $data->update([
+                        "file_fix" => $rev
+                    ]);
+                }
+                
+                DB::commit();
+            } catch (\Exception $e) {
+                DB::rollBack();
+                dd($e->getMessage());
+                return redirect()->back()->with('error', 'Gagal memproses Proposal! \n\n Alasan :\n'. $e->getMessage());
             }
             
-            DB::commit();
-        } catch (\Exception $e) {
-            DB::rollBack();
-            dd($e->getMessage());
-            return redirect()->back()->with('error', 'Gagal memproses Proposal! \n\n Alasan :\n'. $e->getMessage());
+            return redirect()->back()->with('success', 'Berhasil memproses Proposal!');
         }
         
-        return redirect()->back()->with('success', 'Berhasil memproses Proposal!');
-    }
-    
-    public function update(Request $request)
-    {
-        User::find(Auth::user()->id)->update([
-            'email' => $request->email
-        ]);
-        
-        Student::find(Auth::user()->student->id)->update([
-            'phone_number'  => $request->phone_number
-        ]);
-        
-        Proposal::where('student_id', Auth::user()->student->user_id)->update([
-            'title'         => $request->title,
-            'description'   => $request->description,
-        ]);
-        
-        return redirect()->back()->with([
-            'position' => 'profile',
-            'success' => 'Update data profile berhasil!'
-        ]);
-    }
-    
-    public function changePassword(Request $request)
-    {
-        if ($request->password != $request->confirm_password){
+        public function update(Request $request)
+        {
+            User::find(Auth::user()->id)->update([
+                'email' => $request->email
+            ]);
+            
+            Student::find(Auth::user()->student->id)->update([
+                'phone_number'  => $request->phone_number
+            ]);
+            
+            Proposal::where('student_id', Auth::user()->student->user_id)->update([
+                'title'         => $request->title,
+                'description'   => $request->description,
+            ]);
+            
             return redirect()->back()->with([
-                'position' => 'password',
-                'error' => 'Password yang anda input tidak sama!'
+                'position' => 'profile',
+                'success' => 'Update data profile berhasil!'
             ]);
         }
         
-        $user = User::find(Auth::user()->id);
+        public function changePassword(Request $request)
+        {
+            if ($request->password != $request->confirm_password){
+                return redirect()->back()->with([
+                    'position' => 'password',
+                    'error' => 'Password yang anda input tidak sama!'
+                ]);
+            }
+            
+            $user = User::find(Auth::user()->id);
+            
+            $user->update([
+                'password'  => bcrypt($request->password)
+            ]);
+            
+            return redirect()->back()->with([
+                'position' => 'password',
+                'success' => 'Berhasil Mengupdate Password!'
+            ]);
+        }
         
-        $user->update([
-            'password'  => bcrypt($request->password)
-        ]);
+        public function komentar_proposal()
+        {
+            $data["proposals"] = Proposal::where("student_id", Auth::user()->student->user_id)->first();
+            
+            return view("tim.komentar.index", $data);
+        }
         
-        return redirect()->back()->with([
-            'position' => 'password',
-            'success' => 'Berhasil Mengupdate Password!'
-        ]);
+        public function balas_komentar(Request $request, $id_proposal)
+        {
+            Komentar::create([
+                "user_id" => Auth::user()->id,
+                "proposal_id" => $id_proposal,
+                "komentar" => $request["komentar"],
+                "parent" => $request["parent"]
+            ]);
+            
+            return back();
+        }
     }
-
-    public function komentar_proposal()
-    {
-        $data["proposals"] = Proposal::where("student_id", Auth::user()->student->user_id)->first();
-
-        return view("tim.komentar.index", $data);
-    }
-
-    public function balas_komentar(Request $request, $id_proposal)
-    {
-        Komentar::create([
-            "user_id" => Auth::user()->id,
-            "proposal_id" => $id_proposal,
-            "komentar" => $request["komentar"],
-            "parent" => $request["parent"]
-        ]);
-
-        return back();
-    }
-}
+    

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->integer('proposal_id');
             $table->string('file');
+            $table->enum("status", [1, 0])->default(0);
             $table->timestamps();
         });
     }

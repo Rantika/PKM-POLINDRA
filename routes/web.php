@@ -284,6 +284,11 @@ Route::group(["middleware" => ["role"]], function() {
         
         Route::get('/proposal/{id}/komentar', 'komentar');
         Route::post("/proposal/{id}/komentar", 'post_komentar');
+        Route::get("/proposal/{id}/file_revisi", "file_revisi");
+        Route::put("/proposal/{id}/file_revisi", "setujui_proposal");
+        Route::get("/proposal/{id}/file_revisi/{id_file}/download", "download");
+        Route::put("/proposal/{id}/file_revisi/{id_file}/ubah", "ubah");
+        Route::get("/proposal/{id}/setujui", "proposal_disetujui");
         Route::post('/proposal/belum-review','proses_belum_review');
         Route::get("/proposal/belum-review/{id}/update-status", 'update_status');
     });
