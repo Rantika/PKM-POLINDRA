@@ -48,10 +48,12 @@
                                 <td>{{$data->student->phone_number}}</td>
                                 <td>{{$data->student->prody->name}}</td>
                                 <td class="text-center">
-                                    <button type="button" class="btn btn-sm btn-warning my-4" data-bs-toggle="modal" data-bs-target="#modalEdit-{{$data->id}}">
+                                    <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#modalEdit-{{$data->id}}">
                                         <i class="bi bi-pencil-square"></i> Edit
                                     </button>
-                                    <button class="btn btn-sm btn-danger delete" type="button"  data-id="{{$data->student->id}}" title="Delete"><i class="bi bi-trash"></i></button>
+                                    <button class="btn btn-sm btn-danger delete" type="button"  data-id="{{$data->student->id}}" title="Delete">
+                                        <i class="bi bi-trash"></i> Hapus
+                                    </button>
                                 </td>
                             </tr>
                             @endforeach
