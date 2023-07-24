@@ -256,7 +256,8 @@ class RoleStudentController extends Controller
         Komentar::create([
             "user_id" => Auth::user()->id,
             "proposal_id" => $id_proposal,
-            "komentar" => $request["komentar"],
+            "komentar" =>
+             $request["komentar"],
             "parent" => $request["parent"]
         ]);
 
