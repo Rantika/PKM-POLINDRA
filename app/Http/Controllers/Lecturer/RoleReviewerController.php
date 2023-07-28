@@ -12,8 +12,11 @@ use App\Models\Reviewer;
 use App\Models\Revisi;
 use App\Models\Settings;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class RoleReviewerController extends Controller
@@ -205,7 +208,13 @@ class RoleReviewerController extends Controller
     {
         $file = Revisi::where("id", $id_file)->first();
         
-        echo $file;
+        $filePath = public_path($file->file);
+
+        $headers = [
+            'Content-Type' => 'application/pdf',
+        ];
+
+        return response()->file($filePath);
     }
 
     public function ubah(Request $request, $id_proposal, $id_file)
