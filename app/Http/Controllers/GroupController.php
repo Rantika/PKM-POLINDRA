@@ -10,12 +10,18 @@ class GroupController extends Controller
 {
     public function index()
     {
-        $data['groups'] = Group::get();
+        $data['groups'] = Group::orderBy("created_at", "DESC")->get();
         return view('admin.master-data.group-jurusan', $data);
     }
 
     public function store(Request $request)
     {
+        $cek = Group::where("name", $request->name)->count();
+
+        if ($cek > 0) {
+            return back()->with("error", "Jurusan " . $request->name . " Sudah Ada");
+        }
+
         try {
             DB::beginTransaction();
 
@@ -40,7 +46,13 @@ class GroupController extends Controller
     }
 
     public function update($id, Request $request)
-    {
+    {   
+        $cek = Group::where("name", $request->name)->count();
+
+        if ($cek > 0) {
+            return back()->with("error", "Jurusan " . $request->name . " Sudah Ada");
+        }
+
         try {
             DB::beginTransaction();
 

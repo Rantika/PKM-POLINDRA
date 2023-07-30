@@ -95,11 +95,11 @@
                     <div class="row mb-3">
                         <label class="control-label col-md-3"> Status Proposal </label>
                         <div class="col-md-7">
-                            <small class="text-success">
+                            <div class="btn btn-success btn-sm">
                                 <strong>
                                     <i class="bi bi-check"></i> Lolos Didanai
                                 </strong>
-                            </small>
+                            </div>
                         </div>
                     </div>
                     @else
