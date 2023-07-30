@@ -34,10 +34,14 @@
                         {{ $proposals->title }}
                         </span>
                         <span style="float: right;">
-                            Mahasiswa : 
-                            <span style="color: green; font-weight: bold; text-transform: uppercase;">
-                            {{ $proposals["mahasiswa"]["name"] }}
+                            Status Proposal : 
+                            @if ($proposals["approved"] == 0)
+                            <span style="color: red; font-weight: bold; text-transform: uppercase;">
+                                SEDANG DIREVIEW
                             </span>
+                            @else
+
+                            @endif
                         </span>
                     </strong>
                 </div>
@@ -79,7 +83,11 @@
                                 </div>
                                 <div class="col-md-11">
                                     <strong>
-                                        {{ $child["user"]["email"] }}
+                                        @if ($child["user"]["hak_akses"]["role"] == "Student")
+                                        {{ $child["user"]["student"]["name"] }}
+                                        @elseif($child["user"]["hak_akses"]["role"] == "Reviewer")
+                                        {{ $child["user"]["lecturer"]["name"] }}
+                                        @endif
                                     </strong>
                                     <br>
                                     <span style="color: red">

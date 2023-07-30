@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('title');
             $table->text('description')->nullable();
             $table->string('file')->nullable();
-            $table->string('file_review')->nullable();
+            $table->string('file_fix')->nullable();
             $table->string('status');
             $table->tinyInteger("approved")->default(0);
             $table->string('year');

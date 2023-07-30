@@ -45,7 +45,7 @@
                                 <th class="text-center">No Hp</th>
                                 {{-- <th class="text-center">User Simbelmawa</th> --}}
                                 <th class="text-center">Status</th>
-                                <th class="text-center">Aksi</th>
+                                <th class=""></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -60,14 +60,14 @@
                                     <td>{{$data->phone_number ?? '-'}}</td>
                                     {{-- <td>{{$data->phone_number ?? '-'}}</td> --}}
                                     <td class="text-center">
-                                        <span class="badge bg-{{$data->is_active ? 'success' : 'danger'}}">
-                                            <i class="bi bi-{{$data->is_active ? 'check' : 'x'}}-circle me-1"></i> {{$data->is_active ? 'Aktif' : 'Non-Aktif'}}
+                                        <span class="badge bg-{{$data->is_active ? 'success' : 'success'}}">
+                                            <i class="bi bi-{{$data->is_active ? 'check' : ''}}-circle me-1"></i> {{$data->is_active ? 'Aktif' : 'Aktif'}}
                                         </span>
                                     </td>
                                     <td class="text-center">
-                                        <button class="btn btn-sm btn-{{$data->username_simbelmawa ? 'success' : 'warning'}} lolos" type="button" data-id="{{$data->id}}" title="{{$data->username_simbelmawa ? 'Update' : 'Input'}} Akun Simbelmawa"><i class="bi bi-person-fill"></i></button>
+                                        <!-- <button class="btn btn-sm btn-{{$data->username_simbelmawa ? 'success' : 'warning'}} lolos" type="button" data-id="{{$data->id}}" title="{{$data->username_simbelmawa ? 'Update' : 'Input'}} Akun Simbelmawa"><i class="bi bi-person-fill"></i></button>
                                         {{-- <button class="btn btn-sm btn-info edit" type="button" data-id="{{$data->id}}" title="Edit"><i class="bi bi-pencil-square"></i></button> --}}
-                                        {{-- <button class="btn btn-sm btn-danger delete" type="button" data-id="{{$data->id}}" title="Delete"><i class="bi bi-trash"></i></button> --}}
+                                        {{-- <button class="btn btn-sm btn-danger delete" type="button" data-id="{{$data->id}}" title="Delete"><i class="bi bi-trash"></i></button> --}} -->
                                     </td>
                                 </tr>
                             @endforeach

@@ -24,34 +24,34 @@
 @section('content')
 @php
 if ($proposal->status == 0) {
-if ($proposal->file != null) $status = 'Belum direview';
-else $status = 'Belum Upload Proposal';
-
-$statusColor = 'danger';
+    if ($proposal->file != null) $status = 'Belum direview';
+    else $status = 'Belum Upload Proposal';
+    
+    $statusColor = 'danger';
 }
 
 if ($proposal->status == 1){
-$status = 'Revisi';
-$statusColor = 'warning';
+    $status = 'Revisi';
+    $statusColor = 'warning';
 }
 if ($proposal->status == 2){
-if ($proposal->approved == 1) {
-$status = "Tunggu Konfirmasi";
-$statusColor = "warning";
-} else {
-$status = 'Selesai';
-$statusColor = 'primary';
-}
+    if ($proposal->approved == 1) {
+        $status = "Tunggu Konfirmasi";
+        $statusColor = "warning";
+    } else if ($proposal->approved == 0) {
+        $status = 'Revisi';
+        $statusColor = 'warning';
+    }
 }
 if ($proposal->status == 3){
-$status = 'Lolos Didanai';
-$statusColor = 'success';
+    $status = 'Lolos Didanai';
+    $statusColor = 'success';
 }
 
 @endphp
 
 <section class="section profile">
-
+    
     @php
     $sekarang = strtotime(date("Y-m-d H:i:s"));
     $selesai = strtotime($upload["selesai"] ?? '');
@@ -59,56 +59,56 @@ $statusColor = 'success';
     $start_revisi = strtotime($revisi["mulai"] ?? '');
     $end_revisi = strtotime($revisi["selesai"] ?? '');
     @endphp
-
-   @if ($sekarang > $selesai)
-
+    
+    @if ($sekarang > $selesai)
+    
     @else
-        @if ($sekarang > $end_review)
-
-        @else
-
-        @endif
-        <div class="alert alert-info" role="alert">
-            Batas Upload Proposal :
-            <strong>
-                {{ $mulai }}
-            </strong>
-            s/d
-            <strong>
-                {{ $selesai_upload }}
-            </strong>
-        </div>
-   @endif
-
+    @if ($sekarang > $end_review)
+    
+    @else
+    
+    @endif
+    <div class="alert alert-info" role="alert">
+        Batas Upload Proposal :
+        <strong>
+            {{ $mulai }}
+        </strong>
+        s/d
+        <strong>
+            {{ $selesai_upload }}
+        </strong>
+    </div>
+    @endif
+    
     <?php if ($sekarang > $end_review) : ?>
-
+    
     <?php else : ?>
-        <div class="alert alert-success" role="alert">
-            Waktu Review
-            <strong>
-                {{ $mulai_review }}
-            </strong>
-            s/d
-            <strong>
-                {{ $selesai_review }}
-            </strong>
-        </div>
+    <div class="alert alert-success" role="alert">
+        Waktu Review
+        <strong>
+            {{ $mulai_review }}
+        </strong>
+        s/d
+        <strong>
+            {{ $selesai_review }}
+        </strong>
+    </div>
     <?php endif ?>
-
+    
     <?php if ($sekarang > $end_revisi) : ?>
-
+    
     <?php else : ?>
-        <div class="alert alert-danger" role="alert">
-            Batas Upload Revisi :
-            <strong>
-                {{ $mulai_revisi }}
-            </strong> s/d
-            <strong>
-                {{ $selesai_revisi }}
-            </strong>
-        </div>
+    <div class="alert alert-danger" role="alert">
+        Batas Upload Revisi :
+        <strong>
+            {{ $mulai_revisi }}
+        </strong> s/d
+        <strong>
+            {{ $selesai_revisi }}
+        </strong>
+    </div>
     <?php endif ?>
-
+    
     <div class="row">
         <div class="col-xl-4">
             <div class="card">
@@ -136,7 +136,7 @@ $statusColor = 'success';
                     </div>
                 </div>
             </div>
-
+            
             @if($proposal->status == 1 && $proposal->file_review)
             <div class="card">
                 <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
@@ -150,40 +150,40 @@ $statusColor = 'success';
                 </div>
             </div>
             @endif
-
+            
         </div>
-
+        
         <div class="col-xl-8">
-
+            
             <div class="card">
                 <div class="card-body pt-3">
                     <!-- ======= Bordered Tabs ======= -->
                     <ul class="nav nav-tabs nav-tabs-bordered">
-
+                        
                         <li class="nav-item">
                             <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Overview</button>
                         </li>
-
-                        @if($proposal->status != 0)
+                        
+                        <!-- @if($proposal->status != 0)
                         <li class="nav-item">
                             <button class="nav-link" data-bs-toggle="tab" data-bs-target="#komentar">Catatan Proposal</button>
                         </li>
-                        @endif
-
+                        @endif -->
+                        
                         <li class="nav-item">
                             <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Edit Profil Tim</button>
                         </li>
-
+                        
                         <li class="nav-item">
                             <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">Ganti Password</button>
                         </li>
-
+                        
                     </ul>
                     <!-- ======= End Bordered Tabs ======= -->
-
+                    
                     <!-- ======= Content Tabs ======= -->
                     <div class="tab-content pt-2">
-
+                        
                         <!-- ======= Overview Tabs ======= -->
                         <div class="tab-pane fade show active profile-overview" id="profile-overview">
                             <form action="{{$proposal->status == 0 ? route('student.upload-proposal') : route('student.upload-proposal-done')}}" method="post" enctype="multipart/form-data">
@@ -191,58 +191,93 @@ $statusColor = 'success';
                                 <input type="hidden" name="proposal_id" value="{{ $proposal->id }}">
                                 <h5 class="card-title">{{$proposal->title}}</h5>
                                 <p class="small fst-italic">{{$proposal->description ?? 'Belum ada deskripsi'}}</p>
-
+                                
                                 <h5 class="card-title">Detail Proposal</h5>
-
+                                
                                 <div class="row">
                                     <div class="col-lg-3 col-md-4 label ">Skema</div>
                                     <div class="col-lg-9 col-md-8">{{$proposal->scheme->name}}</div>
                                 </div>
-
+                                
                                 <div class="row">
                                     <div class="col-lg-3 col-md-4 label">Reviewer</div>
                                     <div class="col-lg-9 col-md-8">{{optional($proposal->reviewer)->lecturer->name ?? '-'}}</div>
                                 </div>
-
+                                
                                 <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Proposal</div>
+                                    <div class="col-lg-3 col-md-4 label">
+                                        <!-- @if (!$proposal->file_fix) -->
+                                        Proposal
+                                        <!-- @else
+                                        File Fix Proposal
+                                        @endif -->
+                                    </div>
                                     <div class="col-lg-9 col-md-8">
                                         @if(!$proposal->file)
                                         <input name="file" type="file" class="form-control" id="floatingFoto" placeholder="File Proposal">
+                                        <label>Max Size : 5MB</label>
+                                        @else
+                                            @if ($proposal->approved == 0 && $proposal->status == 1)
+                                            <input name="file_review" type="file" class="form-control" id="file_review" placeholder="File Proposal">
                                             <label>Max Size : 5MB</label>
+                                            @else
+                                                @if ($proposal->approved == 0 && $proposal->status == 2)
+                                                <span style="color: red; font-weight: bold">
+                                                    Sedang di Review
+                                                </span>
+                                                @elseif($proposal->approved == 0 && $proposal->status == 3)
+                                                <span style="color: blue; font-weight: bold">
+                                                    Lolos
+                                                </span>
+                                                @elseif($proposal->approved == 1 && $proposal->status == 3)
+                                                    @if (!$proposal->file_fix)
+                                                    <small class="text-success">
+                                                        <strong>
+                                                            <i>
+                                                                Upload Proposal Yang Sudah Disetujui
+                                                            </i>
+                                                        </strong>
+                                                    </small>
+                                                    <input name="file_fix" type="file" class="form-control" id="file_fix" placeholder="File Proposal">
+                                                    <label>Max Size : 5MB</label>
+                                                    @else
+                                                    {{ $proposal->file_fix }}
+                                                    @endif
+                                                @endif
                                             @endif
+                                        @endif
                                     </div>
                                 </div>
-
+                                
                                 <div class="row">
                                     <div class="col-lg-3 col-md-4 label">Status Proposal</div>
                                     <div class="col-lg-9 col-md-8">
                                         <span class="badge bg-{{$statusColor}}">{{ucfirst($status)}}</span>
                                     </div>
                                 </div>
-
+                                
                                 @if(($proposal->status == 1 || $proposal->status == 2) && $revisi)
-                                    @if($sekarang >= $start_revisi && $sekarang <= $end_revisi)
-                                    <div class="row">
-                                        <div class="col-lg-3 col-md-4 label">Upload Proposal Revisi</div>
-                                        <div class="col-lg-9 col-md-8">
-                                            @if($proposal->status == 2 && $proposal->approved == 1)
-                                            <div class="alert alert-danger">
-                                                <small class="text-danger">
-                                                    Data Sedang Dalam Pengecekan
-                                                </small>
-                                            </div>
-                                            @else
-                                            <input name="file" type="file" class="form-control" id="floatingFoto" placeholder="Proposal">
-                                            <label>Max Size : 5MB</label>
-
-                                            @endif
-
+                                @if($sekarang >= $start_revisi && $sekarang <= $end_revisi)
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Upload Proposal Revisi</div>
+                                    <div class="col-lg-9 col-md-8">
+                                        @if($proposal->status == 2 && $proposal->approved == 1)
+                                        <div class="alert alert-danger">
+                                            <small class="text-danger">
+                                                Data Sedang Dalam Pengecekan
+                                            </small>
                                         </div>
+                                        @else
+                                        <input name="file" type="file" class="form-control" id="floatingFoto" placeholder="Proposal">
+                                        <label>Max Size : 5MB</label>
+                                        
+                                        @endif
+                                        
                                     </div>
-                                    @endif
+                                </div>
                                 @endif
-
+                                @endif
+                                
                                 <div class="row">
                                     <div class="col-lg-3 col-md-4 label">Status Bimbingan</div>
                                     <div class="col-lg-9 col-md-8">
@@ -251,9 +286,9 @@ $statusColor = 'success';
                                         </span>
                                     </div>
                                 </div>
-
+                                
                                 @if($cekstatus->status == 0 || $cekstatus->status == 2)
-
+                                
                                 @else
                                 <div class="text-center {{$proposal->status == 2 ? 'd-none' : ''}}">
                                     <button type="submit" class="btn btn-primary">Simpan</button>
@@ -262,10 +297,10 @@ $statusColor = 'success';
                             </form>
                         </div>
                         <!-- ======= End Overview Tabs ======= -->
-
+                        
                         <!-- ======= Komentas Proposal Tabs ======= -->
                         <div class="tab-pane fade komentar pt-3" id="komentar">
-
+                            
                             @foreach($komen as $k)
                             <div class="row mb-3">
                                 <label for="fullName" class="col-md-4 col-lg-3 col-form-label">{{ $k->title }}</label>
@@ -276,7 +311,7 @@ $statusColor = 'success';
                             @endforeach
                         </div>
                         <!-- ======= End Komentas Proposal Tabs ======= -->
-
+                        
                         <!-- ======= Profile Edit Tabs ======= -->
                         <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
                             @if(session()->has("error"))
@@ -295,64 +330,64 @@ $statusColor = 'success';
                             @endif
                             <form method="post" action="{{route('student.profile.update')}}">
                                 @csrf
-
+                                
                                 <div class="row mb-3">
                                     <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Pengusul</label>
                                     <div class="col-md-8 col-lg-9">
                                         <input name="fullName" type="text" class="form-control" id="fullName" value="{{$proposal->mahasiswa->name}}" disabled>
                                     </div>
                                 </div>
-
+                                
                                 <div class="row mb-3">
                                     <label for="about" class="col-md-4 col-lg-3 col-form-label">NIM</label>
                                     <div class="col-md-8 col-lg-9">
                                         <input name="nim" type="text" class="form-control" id="nim" value="{{$proposal->mahasiswa->nim}}" disabled>
                                     </div>
                                 </div>
-
+                                
                                 <div class="row mb-3">
                                     <label for="Job" class="col-md-4 col-lg-3 col-form-label">Jurusan</label>
                                     <div class="col-md-8 col-lg-9">
                                         <input name="job" type="text" class="form-control" id="Job" value="{{$proposal->mahasiswa->prody->name}}" disabled>
                                     </div>
                                 </div>
-
+                                
                                 <div class="row mb-3">
                                     <label for="Country" class="col-md-4 col-lg-3 col-form-label">No Hp</label>
                                     <div class="col-md-8 col-lg-9">
                                         <input name="phone_number" type="text" class="form-control" id="Country" value="{{$proposal->mahasiswa->phone_number}}">
                                     </div>
                                 </div>
-
+                                
                                 <div class="row mb-3">
                                     <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
                                     <div class="col-md-8 col-lg-9">
                                         <input name="email" type="email" class="form-control" id="Email" value="{{$proposal->mahasiswa->user->email}}">
                                     </div>
                                 </div>
-
+                                
                                 <div class="row mb-3">
                                     <label for="company" class="col-md-4 col-lg-3 col-form-label">Judul</label>
                                     <div class="col-md-8 col-lg-9">
                                         <input name="title" type="text" class="form-control" id="company" value="{{$proposal->title}}">
                                     </div>
                                 </div>
-
+                                
                                 <div class="row mb-3">
                                     <label for="company" class="col-md-4 col-lg-3 col-form-label">Deskripsi Singkat</label>
                                     <div class="col-md-8 col-lg-9">
                                         <textarea name="description" class="form-control" id="about" style="height: 100px">{{$proposal->description}}</textarea>
                                     </div>
                                 </div>
-
+                                
                                 <div class="text-center">
                                     <button type="submit" class="btn btn-primary">Simpan</button>
                                 </div>
                             </form><!-- End Profile Edit Form -->
-
+                            
                         </div>
                         <!-- ======= End Profile Edit Tabs ======= -->
-
+                        
                         <!-- ======= Ganti Password Tabs ======= -->
                         <div class="tab-pane fade pt-3" id="profile-change-password">
                             @if(session()->has("error"))
@@ -378,34 +413,34 @@ $statusColor = 'success';
                                         <input name="old" type="password" class="form-control" id="currentPassword">
                                     </div>
                                 </div>
-
+                                
                                 <div class="row mb-3">
                                     <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">Password Baru</label>
                                     <div class="col-md-8 col-lg-9">
                                         <input name="password" type="password" class="form-control" id="newPassword">
                                     </div>
                                 </div>
-
+                                
                                 <div class="row mb-3">
                                     <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Konfirmasi Password</label>
                                     <div class="col-md-8 col-lg-9">
                                         <input name="confirm_password" type="password" class="form-control" id="renewPassword">
                                     </div>
                                 </div>
-
+                                
                                 <div class="text-center">
                                     <button type="submit" class="btn btn-primary">Ganti Password</button>
                                 </div>
                             </form><!-- End Change Password Form -->
-
+                            
                         </div>
                         <!-- ======= End Ganti Password Tabs ======= -->
-
+                        
                     </div>
                     <!-- ======= End Content Tabs ======= -->
                 </div>
             </div>
-
+            
         </div>
     </div>
 </section>

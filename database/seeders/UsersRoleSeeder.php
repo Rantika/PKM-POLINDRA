@@ -19,5 +19,20 @@ class UsersRoleSeeder extends Seeder
             'user_id' => "1",
             "role" => "Admin"
         ]);
+
+        UsersRole::create([
+            "user_id" => "2",
+            "role" => "Dosen Pembimbing"
+        ]);
+        
+        UsersRole::create([
+            "user_id" => "3",
+            "role" => "Dosen Pembimbing"
+        ]);
+
+        UsersRole::create([
+            "user_id" => "4",
+            "role" => "Dosen Pembimbing"
+        ]);
     }
 }

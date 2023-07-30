@@ -31,5 +31,11 @@ class DatabaseSeeder extends Seeder
         $this->call(UserSeeder::class);
         $this->call(SchemaSeeder::class);
         $this->call(AdminSeeder::class);
+        $this->call(LecturerSeeder::class);
+        // $this->call(StudentSeeder::class);
+        $this->call(PeriodeSeeder::class);
+        // $this->call(TimSeeder::class);
+        // $this->call(TimStudentSeeder::class);
+        // $this->call(ProposalSeeder::class);
     }
 }

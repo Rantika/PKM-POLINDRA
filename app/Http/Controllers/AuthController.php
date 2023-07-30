@@ -41,7 +41,7 @@ class AuthController extends Controller
             }
 
             if (Auth::user()->usersrole->role == "Dosen Pembimbing") return redirect()->route("lecturer.index");
-            if (Auth::user()->usersrole->role == "Student") return redirect()->route("student.index");
+            if (Auth::user()->usersrole->role == "Student") return redirect()->route("student.index")->with("success", "Anda Berhasil Login Sebagai Mahasiswa");
             if (Auth::user()->usersrole->role == "Lecturer") return redirect()->route("lecturer.index");
             
         }else{
@@ -84,6 +84,10 @@ class AuthController extends Controller
                 "user_id" => $user->id,
                 "role" => "Student"
             ]);
+
+            User::where("id", $user->id)->update([
+                "id_hak_akses" => $role->id
+            ]);
                 
             $tim = Tim::create([
                 "user_id" => $user->id
@@ -106,7 +110,7 @@ class AuthController extends Controller
         }
 
         Auth::loginUsingId($user->id); // loginUsingId :
-        return redirect()->route('student.index');
+        return redirect()->route('student.index')->with("success", "Akun Anda Berhasil di Daftarkan");
     }
 
     public function logout(Request $request)

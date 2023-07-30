@@ -46,8 +46,6 @@ class DashboardController extends Controller
                 "status" => 0   
             ]);
 
-
-    
             $proposal = Proposal::create([
                 "student_id" => Auth::user()->id,
                 "lecturer_id" => $dosbing->dosbing_id,

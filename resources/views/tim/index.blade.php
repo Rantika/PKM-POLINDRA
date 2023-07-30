@@ -18,12 +18,20 @@
 @section('content')
 
 <section class="section profile">
-
+    
+    @if (session("success"))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Selamat Datang, {{ Auth::user()->student->name }} !</strong> 
+        {!! session("success") !!}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    @endif
+    
     @if(empty($tim))
-
+    
     @else
     @if($tim["nama_tim"] == null)
-    <div class="alert alert-warning" role="alert">
+    <div class="alert alert-danger" role="alert">
         <h4 class="alert-heading">Perhatian!</h4>
         <p>
             Anda Tidak Bisa Mengupload Data Proposal TIM .
@@ -46,53 +54,61 @@
     </div>
     @endif
     @endif
-
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header">
-                    <i class="bi bi-pencil"></i>
-                    <strong>
-                        Profil Tim
-                    </strong>
-                </div>
-                <form action="{{ route('student.store-tim') }}" method="POST">
-                    {{ csrf_field() }}
-                    <div class="card-body">
+    
+    <form action="{{ route('student.store-tim') }}" method="POST">
+        {{ csrf_field() }}
+        <div class="row">
+            <div class="col-md-5">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="bi bi-pencil"></i>
+                        <strong>
+                            Ketua Tim
+                        </strong>
+                    </div>
+                    <div class="card-body pt-2">
+                        <div class="row">
+                            <label class="col-md-3"> Pengusul </label>
+                            <div class="col-md-7">
+                                {{ Auth::user()->student->name }}
+                            </div>
+                        </div>
                         <div class="row pt-2">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="fullName" class="pb-2"> Pengusul </label>
-                                    <input type="text" class="form-control" name="fullName" value="{{Auth::user()->student->name}}" disabled>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="nim" class="pb-2"> NIM </label>
-                                    <input type="text" class="form-control" name="nim" id="nim" value="{{Auth::user()->student->nim}}" disabled>
-                                </div>
+                            <label class="col-md-3"> NIM </label>
+                            <div class="col-md-7">
+                                {{ Auth::user()->student->nim }}
                             </div>
                         </div>
-                        <div class="row pt-3">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="fullName" class="pb-2"> Jurusan </label>
-                                    <input type="text" class="form-control" name="fullName" value="{{Auth::user()->student->prody->group->name}}" disabled>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="nim" class="pb-2"> Nomor Handphone </label>
-                                    <input type="text" class="form-control" name="nim" id="nim" value="{{Auth::user()->student->phone_number}}" disabled>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="nim" class="pb-2"> Email </label>
-                                    <input type="text" class="form-control" name="nim" id="nim" value="{{Auth::user()->email}}" disabled>
-                                </div>
+                        <div class="row pt-2">
+                            <label class="col-md-3"> Jurusan </label>
+                            <div class="col-md-7">
+                                {{ Auth::user()->student->prody->group->name }}
                             </div>
                         </div>
+                        <div class="row pt-2">
+                            <label class="col-md-3"> No. HP </label>
+                            <div class="col-md-7">
+                                {{ Auth::user()->student->phone_number }}
+                            </div>
+                        </div>
+                        <div class="row pt-2">
+                            <label class="col-md-3"> Jurusan </label>
+                            <div class="col-md-7">
+                                {{ Auth::user()->email }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="bi bi-pencil"></i>
+                        <strong>
+                            Profil Tim
+                        </strong>
+                    </div>
+                    <div class="card-body">
                         <div class="row pt-3">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -110,7 +126,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="schema_id" class="pb-2"> Schema </label>
+                                    <label for="schema_id" class="pb-2"> Skema PKM </label>
                                     @if(empty($tim))
                                     <select name="schema_id" class="form-control" id="schema_id">
                                         <option value="">- Pilih -</option>
@@ -191,14 +207,14 @@
                                     <select name="dosbing_id" class="form-control" id="dosbing_id" required>
                                         <option value="">- Pilih -</option>
                                         @foreach($dosbing as $data)
-                                            @if($data->id == $cekstatus->dosbing_id)
-                                            
-                                            @else
-                                            <option value="{{ $data->id }}">
-                                                {{ $data->name }}
-                                            </option>
+                                        @if($data->id == $cekstatus->dosbing_id)
                                         
-                                            @endif
+                                        @else
+                                        <option value="{{ $data->id }}">
+                                            {{ $data->name }}
+                                        </option>
+                                        
+                                        @endif
                                         @endforeach
                                     </select>
                                     @else
@@ -212,26 +228,26 @@
                     </div>
                     <div class="card-footer">
                         @if(empty($tim))
-
+                        
                         @else
-                            @if($is_team == 0)
-                            <div class="alert alert-danger text-center">
-                                <strong>
-                                    <i>
-                                        Silahkan Daftarkan Nama Anggota TIM Anda Terlebih Dahulu
-                                    </i>
-                                </strong>
-                            </div>
-                            @else
-                                @if(empty($cekstatus))
-                                <button type="reset" class="btn btn-danger btn-sm">
+                        @if($is_team == 0)
+                        <div class="alert alert-danger text-center">
+                            <strong>
+                                <i>
+                                    Silahkan Daftarkan Nama Anggota TIM Anda Terlebih Dahulu
+                                </i>
+                            </strong>
+                        </div>
+                        @else
+                        @if(empty($cekstatus))
+                        <button type="reset" class="btn btn-danger btn-sm">
                             <i class="bi bi-trash"></i> Batal
                         </button>
                         <button type="submit" class="btn btn-primary btn-sm">
                             <i class="bi bi-save"></i> Simpan
                         </button>
-                                @else
-                                @if($cekstatus->status == 0)
+                        @else
+                        @if($cekstatus->status == 0)
                         <a class="btn btn-success" style="width: 100%;">
                             <strong>
                                 Status :
@@ -265,14 +281,14 @@
                             </strong>
                         </button>
                         @endif
-                                @endif
-                            @endif
+                        @endif
+                        @endif
                         @endif
                     </div>
-                </form>
+                </div>
             </div>
         </div>
-    </div>
+    </form>
 </section>
 
 <section class="section profile">
@@ -286,16 +302,42 @@
                 </div>
                 <div class="card-body pt-3">
                     @if(!empty($tim_student))
-                    <ol>
+                    <div class="row">
                         @forelse($tim_student as $tim)
-                        <!-- <li>{{ $tim->student->id }}</li> -->
-                        <li>{{ $tim->student->name }}</li>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body pt-4">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <center>
+                                                <img src="{{ url('/assets/img/user-icon.png') }}" style="width: 100px; height: 100px;">
+                                            </center>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <strong>
+                                                {{ $tim->student->nim }}
+                                                <br>
+                                                {{ $tim->student->name }}
+                                            </strong>
+                                            <br>
+                                            {{ $tim->student->prody->name }}
+                                            <br>
+                                            {{ $tim->student->phone_number }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         @empty
-                        <div class="alert alert-danger">
-                            Data Tidak Ada
+                        <div class="col-md-12">
+                            <div class="alert alert-danger text-center">
+                                <strong>
+                                    Data Anggota Tim Belum Ada
+                                </strong>
+                            </div>
                         </div>
                         @endforelse
-                    </ol>
+                    </div>
                     @else
                     Nama Tim Belum Ada
                     @endif

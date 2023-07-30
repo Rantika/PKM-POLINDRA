@@ -52,6 +52,14 @@ class RoleReviewerController extends Controller
         });
     }
 
+    public function file_revisi($id_proposal)
+    {
+        $data["proposals"] = Proposal::where("id", $id_proposal)->first();
+        $data["file"] = Revisi::where("proposal_id", $data["proposals"]["id"])->get();
+        
+        return view("reviewer.proposal.file_revisi", $data);
+    }
+
     public function setujui(Request $request)
     {
         Proposal::where("id", $request->proposal_id)->update([
@@ -176,5 +184,75 @@ class RoleReviewerController extends Controller
         }
 
         return redirect()->back()->with('success', 'Berhasil memproses Proposal!');
+    }
+
+    public function proposal_disetujui($id_proposal)
+    {
+        try {
+            DB::beginTransaction();
+            
+            echo "Ada";
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            
+            return redirect()->back()->with("error", "Proposal Gagal Disetujui" . $e->getMessage());
+        }
+    }
+
+    public function download($id_proposal, $id_file)
+    {
+        $file = Revisi::where("id", $id_file)->first();
+        
+        echo $file;
+    }
+
+    public function ubah(Request $request, $id_proposal, $id_file)
+    {
+        try {
+            DB::beginTransaction();
+
+            if ($request->status == "1") {
+                $status = "1";
+            } else if ($request->status == "2") {
+                $status = "3";
+            }
+
+            Proposal::where("id", $id_proposal)->update([
+                "status" => $status
+            ]);
+
+            Revisi::where("id", $id_file)->update([
+                "status" => $request->status
+            ]);
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            
+            return redirect()->back()->with("error", "Data Gagal di Simpan" . $e->getMessage());
+        }
+
+        return redirect()->back()->with('success', 'Status Berhasil di Ubah');
+    }
+
+    public function setujui_proposal($id_proposal)
+    {
+        try {
+            DB::beginTransaction();
+
+            Proposal::where("id", $id_proposal)->update([
+                "approved" => 1
+            ]);
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            
+            return redirect()->back()->with("error", "Data Gagal di Simpan" . $e->getMessage());
+        }
+
+        return redirect("/reviewer/proposal")->with('success', 'Status Berhasil di Ubah');
     }
 }
