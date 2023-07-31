@@ -103,7 +103,7 @@
                         </div>
                     </div>
                     @else
-                        @if ($proposals->status == 2 || $proposals->status == 1)
+                        @if ($proposals->status == 2 || $proposals->status == 1 || $proposals->status == 0)
                             
                         @else
                         <form action="{{ url('/reviewer/proposal/'.$proposals->id.'/file_revisi') }}" method="POST">

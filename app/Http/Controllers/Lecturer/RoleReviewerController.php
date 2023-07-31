@@ -25,7 +25,7 @@ class RoleReviewerController extends Controller
     {
         $reviewTeamIds = Reviewer::where('lecturer_id', Auth::user()->lecturer->id)->pluck('id');
         $data['settings']= Settings::where('kategori','Review')->first();
-        $data['proposals'] = Proposal::whereIn('reviewer_id', $reviewTeamIds)->get();
+        $data['proposals'] = Proposal::whereIn('reviewer_id', $reviewTeamIds)->where("is_confirmed", 1)->get();
         // dd($reviewTeamIds, $data['proposals']);
         
         return view('reviewer.proposal.index', $data);
@@ -40,9 +40,14 @@ class RoleReviewerController extends Controller
     public function post_komentar(Request $request)
     {
         return DB::transaction(function() use ($request) {
-            Proposal::find($request["proposal_id"])->update([
-                'status' => 1
-            ]);
+            
+            $cek = Proposal::where("id", $request->proposal_id)->first();
+
+            if ($cek->status == 0) {
+                Proposal::find($request["proposal_id"])->update([
+                    'status' => 1
+                ]);
+            }
 
             Komentar::create([
                 "user_id" => Auth::user()->id,
