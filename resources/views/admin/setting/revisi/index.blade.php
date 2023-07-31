@@ -103,7 +103,7 @@
                 <form action="{{route('setting.upload-revisi.store')}}" method="post">
                     @csrf
                     <div class="modal-header">
-                        <h5 class="modal-title">Waktu Upload Proposal</h5>
+                        <h5 class="modal-title">Setting Upload Revisi</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -173,7 +173,7 @@
 @section('js')
     {{-- Jika ada tambahan CSS khusus di page ini, tambahkan di sini --}}
     <script>
-        $(document).ready(function () {
+         $(document).ready(function () {
             $('.datatable').DataTable();
 
             $(document).on('click', '.edit', function () {
@@ -198,7 +198,7 @@
                 let val = $(this).is(':checked');
 
                 $.ajax({
-                    url: `{{route('setting.period.update-status')}}/${id}`,
+                    url: `{{route('setting.upload-revisi.update')}}/${id}`,
                     data: { is_active : val ? 1 : 0 },
                     type: 'POST',
                     success: function (response) {

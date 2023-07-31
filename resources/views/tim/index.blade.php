@@ -31,7 +31,7 @@
     
     @else
     @if($tim["nama_tim"] == null)
-    <div class="alert alert-warning" role="alert">
+    <div class="alert alert-danger" role="alert">
         <h4 class="alert-heading">Perhatian!</h4>
         <p>
             Anda Tidak Bisa Mengupload Data Proposal TIM .
@@ -126,7 +126,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="schema_id" class="pb-2"> Schema </label>
+                                    <label for="schema_id" class="pb-2"> Skema PKM </label>
                                     @if(empty($tim))
                                     <select name="schema_id" class="form-control" id="schema_id">
                                         <option value="">- Pilih -</option>

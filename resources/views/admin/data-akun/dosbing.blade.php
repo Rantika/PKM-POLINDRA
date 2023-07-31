@@ -81,7 +81,7 @@
                                     </span>
                                     </td>
                                     <td class="text-center">
-                                        <button class="btn btn-sm btn-{{$data->username_simbelmawa ? 'success' : 'warning'}} lolos" type="button" data-id="{{$data->id}}" title="{{$data->username_simbelmawa ? 'Update' : 'Input'}} Akun Simbelmawa"><i class="bi bi-person-fill"></i></button>
+                                        <!-- <button class="btn btn-sm btn-{{$data->username_simbelmawa ? 'success' : 'warning'}} lolos" type="button" data-id="{{$data->id}}" title="{{$data->username_simbelmawa ? 'Update' : 'Input'}} Akun Simbelmawa"><i class="bi bi-person-fill"></i></button> -->
                                         <button class="btn btn-sm btn-info edit" type="button" title="Edit" data-bs-toggle="modal" data-bs-target="#modalDialogEdit-{{ $data->id }}">
                                             <i class="bi bi-pencil-square"></i>
                                         </button>

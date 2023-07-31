@@ -77,7 +77,7 @@
                                                         <i class="bi bi-download"></i> Download Proposal
                                                     </button>
                                                     <a href="{{route('lecturer.confirm', $data->id)}}" class="btn btn-sm btn-{{$data->is_confirmed ? 'success' : 'warning'}}" title="Approve Proposal">
-                                                        <i class="bi bi-eye"></i> {{$data->is_confirmed ? 'Approved' : 'Approve'}}
+                                                        <i class="bi bi-eye"></i> {{$data->is_confirmed ? 'Approved' : 'Setujui Proposal'}}
                                                     </a>
                                                 </td>
                                             </tr>
@@ -99,7 +99,7 @@
                                         <th class="text-center">Judul</th>
                                         <th class="text-center">Skema</th>
                                         <th class="text-center">Reviewer</th>
-                                        <th class="text-center">Aksi</th>
+                                        <th class="text-center"></th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -110,11 +110,8 @@
                                             <td>{{$data->title}}</td>
                                             <td>{{$data->scheme->name}}</td>
                                             <td>{{optional($data->reviewer)->lecturer->name ?? '-'}}</td>
-                                            <td class="text-center">
-                                                <button class="btn btn-sm btn-info review" data-id="{{$data->id}}" title="Lihat Detail" data-bs-toggle="modal" data-bs-target="#modalRevisi">
-                                                    <i class="bi bi-eye"></i>   
-                                                </button>
-                                            </td>
+                                            <td></td>
+    
                                         </tr>
                                     @endforeach
                                     </tbody>
@@ -163,12 +160,12 @@
     </section>
     <!-- ======= End Tabs Section ======= -->
 
-    <!-- ======= Konfirmasi ======= -->
+    <!-- ======= Download Proposal ======= -->
     <div class="modal fade" id="modalDialogScrollable" tabindex="-1">
         <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Konfirmasi Bimbingan PKM</h5>
+                    <h5 class="modal-title">Download Proposal</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -192,7 +189,7 @@
             </div>
         </div>
     </div>
-    <!-- ======= End Konfirmasi ======= -->
+    <!-- ======= Download Proposal ======= -->
 
     <!-- ======= Review ======= -->
     <div class="modal fade" id="modalRevisi" tabindex="-1">

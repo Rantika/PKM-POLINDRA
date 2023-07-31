@@ -16,8 +16,8 @@ class PeriodeSeeder extends Seeder
     public function run()
     {
         Period::create([
-            "name" => "PKM POLIDNRA",
-            "description" => "pkm_polindra",
+            "name" => "2022/2023",
+            "description" => "Program Kreatifitas Mahasiswa",
             "is_active" => 1
         ]);
     }

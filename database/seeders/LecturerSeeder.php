@@ -18,21 +18,21 @@ class LecturerSeeder extends Seeder
         Lecturer::create([
             "user_id" =>  2,
             "prody_id" => 2,
-            "name" => "Mohammad Bajuri",
+            "name" => "Muhammad Anis Al Hilmi, S.Si., M.T",
             "is_active" => 0
         ]);
 
         Lecturer::create([
             "user_id" =>  3,
             "prody_id" => 2,
-            "name" => "Mohammad Hamdan",
+            "name" => "Eka Ismantohadi, S.Kom., M.Eng",
             "is_active" => 0
         ]);
 
         Lecturer::create([
             "user_id" =>  4,
             "prody_id" => 2,
-            "name" => "Mohammad Ronaldo",
+            "name" => "Kurnia Adi Cahyanto, S.T., M.Kom",
             "is_active" => 0
         ]);
     }

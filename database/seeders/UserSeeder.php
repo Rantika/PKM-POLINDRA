@@ -22,19 +22,19 @@ class UserSeeder extends Seeder
         ]);
 
         User::create([
-            "email" => "fauzi@gmail.com",
+            "email" => "anis@gmail.com",
             "password" => bcrypt("123456"),
             "id_hak_akses" => 2
         ]);
 
         User::create([
-            "email" => "bambang@gmail.com",
+            "email" => "eka@gmail.com",
             "password" => bcrypt("123456"),
             "id_hak_akses" => 3
         ]);
 
         User::create([
-            "email" => "judika@gmail.com",
+            "email" => "kurnia@gmail.com",
             "password" => bcrypt("123456"),
             "id_hak_akses" => 4
         ]);

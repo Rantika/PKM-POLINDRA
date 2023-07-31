@@ -18,9 +18,9 @@ class StudentSeeder extends Seeder
         Student::create([
             "user_id" => 5,
             "prody_id" => 3,
-            "name" => "Riyan Subroto",
-            "nim" => "2003055",
-            "phone_number" => "2839283922"
+            "name" => "Rantika",
+            "nim" => "2003084",
+            "phone_number" => "087892013370"
         ]);
 
         Student::create([

@@ -283,4 +283,3 @@ class RoleStudentController extends Controller
             return back();
         }
     }
-    

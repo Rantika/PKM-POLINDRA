@@ -100,12 +100,12 @@
                         <div class="col-md-12">
                             <div class="form-floating">
                                 <select class="form-select" name="lecturer_id">
-                                    <option value="">- Pilih Dosen -</option>
+                                    <option value="">- Pilih Reviewer -</option>
                                     @foreach($lecturers as $data)
                                     <option value="{{$data->id}}">{{$data->name}}</option>
                                     @endforeach
                                 </select>
-                                <label for="jurusan">Dosen</label>
+                                <label for="jurusan">Reviewer</label>
                             </div>
                         </div>
                         <div class="col-md-12">

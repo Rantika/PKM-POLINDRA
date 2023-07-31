@@ -53,7 +53,7 @@
                                     <td class="text-center">
                                         @if($data->status == 1)
                                             <button class="btn btn-success btn-sm">
-                                                ACC
+                                                Setuju
                                             </button>
                                         @elseif($data->status == 0)
                                             <button class="btn btn-warning btn-sm">

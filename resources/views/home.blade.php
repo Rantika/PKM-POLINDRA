@@ -123,7 +123,7 @@
                     <h4 class="text-center text-black"  >
                         JENIS PKM YANG DI LOMBAKAN
                     </h4>
-                    <p class="text-center text-black">Terdapat Beberaa Bidang</p>
+                    <p class="text-center text-black">Terdapat Beberapa Bidang</p>
                 </div>
                 <div class="row">
                 @foreach($news as $data)
