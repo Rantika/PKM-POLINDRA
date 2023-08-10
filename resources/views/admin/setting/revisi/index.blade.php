@@ -12,14 +12,14 @@
 
 @section('breadcumb')
     <div class="pagetitle">
-        <h1>Setting Upload Revisi</h1>
+        <h1>Waktu Revisi</h1>
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
                     <a href="{{ url('/dashboard') }}">Dashboard</a>
                 </li>
                 <li class="breadcrumb-item active">
-                    Setting Upload Revisi
+                    Waktu Revisi
                 </li>
             </ol>
         </nav>
@@ -60,7 +60,7 @@
                                     @endphp
                                 </td>
                                 <td>
-                                @php
+                                    @php
                                         $mulai = Carbon::createFromFormat('Y-m-d H:i:s', $data->selesai);
                                         $format = $mulai->isoFormat('dddd, D MMMM YYYY HH:mm:ss');
                                         echo $format;
@@ -68,7 +68,7 @@
                                 </td>
                                 <td>
                                     <div class="form-check form-switch">
-                                        <input class="form-check-input" data-id="{{ $data->id }}" type="checkbox" {{$data->is_active ? 'checked' : ''}}>
+                                        <input class="form-check-input" data-id="{{ $data->id }}" type="checkbox" {{$data->status ? 'checked' : ''}}>
                                     </div>
                                 </td>
                                 <td class="text-center">
@@ -103,7 +103,7 @@
                 <form action="{{route('setting.upload-revisi.store')}}" method="post">
                     @csrf
                     <div class="modal-header">
-                        <h5 class="modal-title">Setting Upload Revisi</h5>
+                        <h5 class="modal-title">Waktu Revisi Proposal</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -140,7 +140,7 @@
                 <form action="{{ route('setting.upload-revisi.update', ['id' => $data->id]) }}" method="post">
                     @csrf
                     <div class="modal-header">
-                        <h5 class="modal-title">Edit Waktu Upload Revisi</h5>
+                        <h5 class="modal-title">Edit Waktu Revisi</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -173,7 +173,7 @@
 @section('js')
     {{-- Jika ada tambahan CSS khusus di page ini, tambahkan di sini --}}
     <script>
-         $(document).ready(function () {
+        $(document).ready(function () {
             $('.datatable').DataTable();
 
             $(document).on('click', '.edit', function () {

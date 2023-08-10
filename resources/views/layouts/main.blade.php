@@ -62,7 +62,7 @@
   <!-- ======= Footer ======= -->
   <footer id="footer" class="footer">
     <div class="copyright">
-      &copy; Copyright <strong><span>{{ $configs->where('name', 'name')->first() == null ? 'Pojok Kemahasiswaan' : $configs->where('name', 'name')->first()->value }} Politeknik Negeri indramayu.</span></strong>
+      &copy; Copyright <strong><span>{{ $configs->where('name', 'name')->first() == null ? 'PKM' : $configs->where('name', 'name')->first()->value }} POLINDRA.</span></strong>
     </div>
   </footer>
   <!-- ======= End Footer ======= -->

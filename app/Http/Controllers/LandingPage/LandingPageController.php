@@ -8,6 +8,7 @@ use App\Models\News;
 use App\Models\Scheme;
 use App\Models\ViewConf;
 use App\Models\Proposal;
+use App\Models\Lecturer;
 use App\Models\Tahapan;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
@@ -19,7 +20,7 @@ class LandingPageController extends Controller
         $data['configs'] = ViewConf::get();
         $data['informations'] = Information::get();
         $data['schemes'] = Scheme::get();
-        
+        $data['lecturer'] = Lecturer::get();
 
         $data['news'] = News::limit(10)->get();
         $data['view_setting'] = ViewConf::orderBy('updated_at', 'desc')->first();
@@ -38,6 +39,9 @@ class LandingPageController extends Controller
                     })
                     ->addColumn('skema', function($row){
                         return $row->scheme->short;
+                    })
+                    ->addColumn('lecturer', function($row){
+                        return $row->lecturer->name;
                     })
                     ->editColumn('file_done', function($row){
                         if($row->file_done != null){

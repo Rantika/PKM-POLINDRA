@@ -297,7 +297,7 @@ Route::group(["middleware" => ["role"]], function() {
         Route::get('/proposal', 'proposal')->name('student.proposal');
         Route::post('/proposal', 'uploadProposal')->name('student.upload-proposal');
         Route::post('/proposal-done', 'uploadProposalDone')->name('student.upload-proposal-done');
-        Route::get("/komentar-proposal", 'komentar_proposal');
+        Route::get("/komentar-proposal", 'komentar_proposal')->name('team.komentar-proposal');
         Route::post("/proposal/{id_proposal}/komentar", "balas_komentar");
     });
 

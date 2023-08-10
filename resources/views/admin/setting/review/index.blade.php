@@ -137,7 +137,7 @@
     <div class="modal fade" id="modalDialogScrollable-{{ $data['id'] }}" tabindex="-1">
         <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
             <div class="modal-content">
-                <form action="{{ route('setting.waktu-review.update', ['id' => $data->id]) }}" method="post">
+                <form action="{{ route('setting.upload-revisi.update', ['id' => $data->id]) }}" method="post">
                     @csrf
                     <div class="modal-header">
                         <h5 class="modal-title">Edit Waktu review</h5>
@@ -181,9 +181,9 @@
                 let id = $(this).data('id')
 
                 $.ajax({
-                    url: `{{route('setting.period.show')}}/${id}`,
+                    url: `{{route('setting.waktu-review.show')}}/${id}`,
                     success: function (response) {
-                        $('#form-update').attr('action', `{{route('setting.period.update')}}/${response.id}`)
+                        $('#form-update').attr('action', `{{route('setting.waktu-review.update')}}/${response.id}`)
                         $('#name').val(response.name)
                         $('#description').val(response.description)
 
@@ -221,7 +221,7 @@
                     dangerMode: true,
                 }).then(function(isConfirm) {
                     if (isConfirm) {
-                        window.location.replace('{{route('setting.period.delete', '')}}/'+id);
+                        window.location.replace('{{route('setting.waktu-review.delete', '')}}/'+id);
                     } else {
                         swal("Dibatalkan", "Data aman", "error");
                     }

@@ -53,30 +53,29 @@
                             <tr>
                                 <td class="text-center">{{$loop->iteration}}</td>
                                 <td>
-                                    @php
+                                @php
                                         $mulai = Carbon::createFromFormat('Y-m-d H:i:s', $data->mulai);
                                         $format = $mulai->isoFormat('dddd, D MMMM YYYY HH:mm:ss');
                                         echo $format;
                                     @endphp
                                 </td>
                                 <td>
-                                @php
+                                    @php
                                         $mulai = Carbon::createFromFormat('Y-m-d H:i:s', $data->selesai);
                                         $format = $mulai->isoFormat('dddd, D MMMM YYYY HH:mm:ss');
                                         echo $format;
                                     @endphp
                                 </td>
-                                
                                 <td>
                                     <div class="form-check form-switch">
-                                        <input class="form-check-input" data-id="{{ $data->id }}" type="checkbox" {{$data->is_active ? 'checked' : ''}}>
+                                        <input class="form-check-input" data-id="{{ $data->id }}" type="checkbox" {{$data->status ? 'checked' : ''}}>
                                     </div>
                                 </td>
                                 <td class="text-center">
                                     <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#modalDialogScrollable-{{ $data['id'] }}">
                                         <i class="bi bi-pencil"></i>
                                     </button>
-                                    <form action="{{ route('setting.pengaturan.delete', ['id' => $data['id']]) }}" method="POST" style="display: inline;">
+                                    <form action="{{ route('setting.waktu-review.delete', ['id' => $data['id']]) }}" method="POST" style="display: inline;">
                                         @csrf
                                         @method("DELETE")
                                         <button class="btn btn-sm btn-danger" type="submit">
@@ -103,7 +102,6 @@
             <div class="modal-content">
                 <form action="{{route('setting.pengaturan.store')}}" method="post">
                     @csrf
-
                     <div class="modal-header">
                         <h5 class="modal-title">Waktu Upload Proposal</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -142,7 +140,7 @@
                 <form action="{{ route('setting.pengaturan.update', ['id' => $data->id]) }}" method="post">
                     @csrf
                     <div class="modal-header">
-                        <h5 class="modal-title">Edit Waktu Upload</h5>
+                        <h5 class="modal-title">Edit Upload Proposal</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -185,7 +183,7 @@
                 $.ajax({
                     url: `{{route('setting.period.show')}}/${id}`,
                     success: function (response) {
-                        $('#form-update').attr('action', `{{route('setting.period.update')}}/${response.id}`)
+                        $('#form-update').attr('action', `{{route('setting.pengaturan.update')}}/${response.id}`)
                         $('#name').val(response.name)
                         $('#description').val(response.description)
 
@@ -200,7 +198,7 @@
                 let val = $(this).is(':checked');
 
                 $.ajax({
-                    url: `{{route('setting.period.update-status')}}/${id}`,
+                    url: `{{route('setting.pengaturan.update')}}/${id}`,
                     data: { is_active : val ? 1 : 0 },
                     type: 'POST',
                     success: function (response) {
@@ -223,7 +221,7 @@
                     dangerMode: true,
                 }).then(function(isConfirm) {
                     if (isConfirm) {
-                        window.location.replace('{{route('setting.period.delete', '')}}/'+id);
+                        window.location.replace('{{route('setting.pengaturan.delete', '')}}/'+id);
                     } else {
                         swal("Dibatalkan", "Data aman", "error");
                     }

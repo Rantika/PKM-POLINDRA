@@ -52,6 +52,8 @@
                             {{ Auth::user()->lecturer->name }}
                         @elseif(Auth::user()->usersrole->role == "Student")
                             {{ Auth::user()->student->name }}
+                        @elseif(Auth::user()->usersrole->role == "Reviewer")
+                            {{ Auth::user()->lecturer->reviewer->name }}
                         @endif
                         </h6>
                         <span>
@@ -61,6 +63,8 @@
                             {{ Auth::user()->usersrole->role }}
                         @elseif(Auth::user()->usersrole->role == "Student")
                             {{ Auth::user()->usersrole->role }}
+                        @elseif(Auth::user()->usersrole->role == "Reviewer")
+                            {{ Auth::user()->lecturer->name }}
                         @endif
                         </span>
                     </li>

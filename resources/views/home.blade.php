@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title> {{ $configs->where('name', 'short')->first() == null ? 'Pojok Kemahasiswaan' : $configs->where('name', 'short')->first()->value }} | Polindra | @yield('title')</title>
+  <title> {{ $configs->where('name', 'short')->first() == null ? 'Program Kreativitas Mahasiswa' : $configs->where('name', 'short')->first()->value }} | Polindra | @yield('title')</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -52,7 +52,7 @@
           <li><a class="nav-link scrollto" href="#info">Informasi Kegiatan</a></li>
           <li><a class="nav-link scrollto" href="#template">Jenis PKM</a></li>
           <li><a class="nav-link scrollto" href="#berita">Tahap Pendaftaran</a></li>
-          <li><a class="nav-link scrollto" href="#berkas">Mahasiswa</a></li>
+          <li><a class="nav-link scrollto" href="#berkas">Tim</a></li>
           <li><a class="nav-link scrollto" href="#about">Tentang Kami</a></li>
           <li><a class="nav-link scrollto" href="{{route('login')}}">Login</a></li>
          </ul>
@@ -153,7 +153,7 @@
                     <div class="col-md-4 mb-4">
                         <div class="">
                             <div class="text-center">
-                                <img src="/image/gambar-sosialiasi.png" height="140" alt="" class="mb-2" />
+                                <img src="{{ asset('image/gambar-sosialiasi.png')}}" height="140" alt="" class="mb-2" />
                                 <h5 class="mb-0" style="color: #ffff;" >1.Sosialiasi</h5>
 
                                 <p class="mb-0" style="color: #ffff;">
@@ -166,7 +166,7 @@
                     <div class="col-md-4 mb-4">
                         <div class="">
                             <div class="text-center">
-                                <img src="/image/gambar-pengajuan-judul.png" height="140" alt=""
+                                <img src="{{ asset('image/gambar-pengajuan-judul.png')}}" height="140" alt=""
                                     class="mb-2" />
                                 <h5 class="mb-0" style="color: #ffff;">2.Pengajuan Judul</h5>
 
@@ -180,7 +180,7 @@
                     <div class="col-md-4 mb-4">
                         <div class="">
                             <div class="text-center">
-                                <img src="/image/gambar-penilaian-judul.png" height="140" alt=""
+                                <img src="{{ asset('image/gambar-penilaian-judul.png')}}" height="140" alt=""
                                     class="mb-2" />
                                 <h5 class="mb-0" style="color: #ffff;">3.Penilaian Judul</h5>
 
@@ -195,7 +195,7 @@
                     <div class="col-md-4 mb-4">
                         <div class="">
                             <div class="text-center">
-                                <img src="/image/gambar-pengajuan-proposal.png" height="140" alt=""
+                                <img src="{{ asset('image/gambar-pengajuan-proposal.png')}}" height="140" alt=""
                                     class="mb-2" />
                                 <h5 class="mb-0" style="color: #ffff;">4.Pengajuan Proposal</h5>
 
@@ -209,7 +209,7 @@
                     <div class="col-md-4 mb-4">
                         <div class="">
                             <div class="text-center">
-                                <img src="/image/gambar-penilaian-judul.png" height="140" alt=""
+                                <img src="{{ asset('image/gambar-penilaian-judul.png')}}" height="140" alt=""
                                     class="mb-2" />
                                 <h5 class="mb-0" style="color: #ffff;">5.Penilaian Proposal</h5>
 
@@ -223,7 +223,20 @@
                     <div class="col-md-4 mb-4">
                         <div class="">
                             <div class="text-center">
-                                <img src="/image/proposal-disetujui.png" height="140" alt="" class="mb-2" />
+                                <img src="{{ asset('image/gambar-penilaian-judul.png')}}" height="140" alt=""
+                                    class="mb-2" />
+                                <h5 class="mb-0" style="color: #ffff;">6.Revisi Proposal</h5>
+
+                                <p class="mb-0" style="color: #ffff;">
+                                    Revisi proposal yang dilakukan oleh mahasiswa 
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="">
+                            <div class="text-center">
+                                <img src="{{ asset('image/proposal-disetujui.png')}}" height="140" alt="" class="mb-2" />
                                 <h5 class="mb-0" style="color: #ffff;">
                                     6.Propsal PKM Disetujui
                                 </h5>
@@ -257,7 +270,8 @@
                         <tr>
                             <th class="text-center">No</th>
                             <th class="text-center">Tahun</th>
-                            <th class="text-center">Mahasiswa</th>
+                            <th class="text-center">Ketua Tim</th>
+                            <th class="text-center">Dosen Pembimbing</th>
                             <th class="text-center">Jurusan</th>
                             <th class="text-center">Judul</th>
                             <th class="text-center">Skema</th>
@@ -283,7 +297,7 @@
 
             <div class="section-title pb-0" data-aos="zoom-out">
                 <h2>Tentang Kami</h2>
-                <p>{{ $configs->where('name', 'name')->first() == null ? 'Pojok Kemahasiswaan' : $configs->where('name', 'name')->first()->value }} Politeknik Negeri Indramayu</p>
+                <p>{{ $configs->where('name', 'name')->first() == null ? 'Program Kreatifitas Mahasiswa' : $configs->where('name', 'name')->first()->value }} Politeknik Negeri Indramayu</p>
             </div>
 
             <div class="tab-content" data-aos="fade-up">
@@ -291,7 +305,7 @@
                     <div class="row">
                         <div class="col-lg-7 order-2 order-lg-1 mt-3 mt-lg-0" >
                             <p style="text-align: justify" >
-                                {{ $configs->where('name', 'name')->first() == null ? 'Pojok Kemahasiswaan' : $configs->where('name', 'name')->first()->value }} merupakan sebuah aplikasi mengenai kegiatan Program Kreativitas Mahasiswa (PKM). PKM merupakan salah satu program yang dijalankan oleh Direktorat Penelitian dan Pengabdian kepada Masyarakat (Ditlitabmas) Direktorat Jenderal Pendidikan Tinggi (Ditjen DIKTI) Kemdikbud untuk meningkatkan mutu peserta didik (mahasiswa) di perguruan tinggi.
+                                {{ $configs->where('name', 'name')->first() == null ? 'Aplikasi ini' : $configs->where('name', 'name')->first()->value }} merupakan sebuah aplikasi mengenai kegiatan Program Kreativitas Mahasiswa (PKM). PKM merupakan salah satu program yang dijalankan oleh Direktorat Penelitian dan Pengabdian kepada Masyarakat (Ditlitabmas) Direktorat Jenderal Pendidikan Tinggi (Ditjen DIKTI) Kemdikbud untuk meningkatkan mutu peserta didik (mahasiswa) di perguruan tinggi.
                             </p>
                             <p style="text-align: justify">
                                 Politeknik Negeri Indramayu merupakan salah satu perguruan tinggi negeri
@@ -324,14 +338,14 @@
   <!-- ======= Footer ======= -->
   <footer id="footer" style="background-color: #23B6E4;">
     <div class="container">
-        <h4>{{ $configs->where('name', 'name')->first() == null ? 'Pojok Kemahasiswaan' : $configs->where('name', 'name')->first()->value }} Politeknik Negeri Indramayu</h4>
+        <h4>{{ $configs->where('name', 'name')->first() == null ? 'Program Kreatifitas Mahasiswa' : $configs->where('name', 'name')->first()->value }} Politeknik Negeri Indramayu</h4>
         <div class="social-links">
             <a href="https://web.facebook.com/Politeknik.Negeri.Indramayu" class="facebook"><i class="bx bxl-facebook"></i></a>
             <a href="https://www.instagram.com/politekniknegeriindramayu/" class="instagram"><i class="bx bxl-instagram"></i></a>
             <a href="https://www.youtube.com/channel/UCIuz_Wn_39fnHhLMIwlxQlA" class="youtube"><i class="bx bxl-youtube"></i></a>
         </div>
         <div class="copyright">
-            &copy; Copyright <strong><span>{{ $configs->where('name', 'name')->first() == null ? 'Pojok Kemahasiswaan' : $configs->where('name', 'name')->first()->value }} Politeknik Negeri Indramayu</span></strong>.
+            &copy; Copyright <strong><span>{{ $configs->where('name', 'name')->first() == null ? 'PKM ' : $configs->where('name', 'name')->first()->value }} POLINDRA</span></strong>.
         </div>
     </div>
   </footer>
@@ -362,6 +376,7 @@
             {"width": "5%", data: 'DT_RowIndex', name: 'id'},
             {data: 'year', name: 'year'},
             {data: 'nama_mahasiswa', name: 'nama_mahasiswa'},
+            {data: 'lecturer', name: 'lecturer'},
             {data: 'jurusan_mahasiswa', name: 'jurusan_mahasiswa'},
             {data: 'title', name: 'title'},
             {data: 'skema', name: 'skema'},

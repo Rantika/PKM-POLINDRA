@@ -72,7 +72,7 @@
                                         <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal-{{ $data->id }}">
                                             <i class="bi bi-pencil"></i> Ubah Status
                                         </button>
-                                        @else
+                                         @else
                                             -
                                         @endif
                                     </td>

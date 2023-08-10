@@ -233,13 +233,13 @@ if ($proposal->status == 3){
                                                     @if (!$proposal->file_fix)
                                                     <small class="text-success">
                                                         <strong>
-                                                            <i>
-                                                                Upload Proposal Yang Sudah Disetujui
-                                                            </i>
+                                                            <b>
+                                                                Selamat Proposal Anda Lolos didanai
+                                                            </b>
                                                         </strong>
                                                     </small>
-                                                    <input name="file_fix" type="file" class="form-control" id="file_fix" placeholder="File Proposal">
-                                                    <label>Max Size : 5MB</label>
+                                                    <!-- <input name="file_fix" type="file" class="form-control" id="file_fix" placeholder="File Proposal">
+                                                    <label>Max Size : 5MB</label> -->
                                                     @else
                                                     {{ $proposal->file_fix }}
                                                     @endif
@@ -259,7 +259,7 @@ if ($proposal->status == 3){
                                 @if(($proposal->status == 1 || $proposal->status == 2) && $revisi)
                                 @if($sekarang >= $start_revisi && $sekarang <= $end_revisi)
                                 <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Upload Proposal Revisi</div>
+                                    <!-- <div class="col-lg-3 col-md-4 label">Upload Proposal Revisi</div> -->
                                     <div class="col-lg-9 col-md-8">
                                         @if($proposal->status == 2 && $proposal->approved == 1)
                                         <div class="alert alert-danger">
@@ -268,8 +268,8 @@ if ($proposal->status == 3){
                                             </small>
                                         </div>
                                         @else
-                                        <input name="file" type="file" class="form-control" id="floatingFoto" placeholder="Proposal">
-                                        <label>Max Size : 5MB</label>
+                                        <!-- <input name="file" type="file" class="form-control" id="floatingFoto" placeholder="Proposal">
+                                        <label>Max Size : 5MB</label> -->
                                         
                                         @endif
                                         

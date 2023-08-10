@@ -25,6 +25,12 @@ class WaktuReviewController extends Controller
 
         return back();
     }
+    
+    public function show($id)
+    {
+        $data = Settings::find($id);
+        return response()->json($data);
+    }
 
     public function update(Request $request, $id)
     {

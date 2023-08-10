@@ -27,11 +27,17 @@ class SettingController extends Controller
     }
 
     public function update(Request $request, $id)
-    {dd($id);
-        Settings::where("id", $id)->update([
-            "mulai" => $request->mulai,
-            "selesai" => $request->selesai
-        ]);
+    {
+        if($request->has('is_active')){
+            Settings::where("id", $id)->update([
+                "status" => $request->is_active,
+            ]);
+        }else{
+            Settings::where("id", $id)->update([
+                "mulai" => $request->mulai,
+                "selesai" => $request->selesai
+            ]);
+        }
 
         return back();
     }
@@ -40,6 +46,7 @@ class SettingController extends Controller
     {
         Settings::where("id", $id)->delete();
 
-        return back();
+        Settings::find($id)->delete();
+        return redirect()->back()->with('success', 'Berhasil menghapus Pengaturan Periode!');
     }
 }

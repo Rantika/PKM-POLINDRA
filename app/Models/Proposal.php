@@ -23,6 +23,9 @@ class Proposal extends Model
     public function scheme(){
         return $this->belongsTo(Scheme::class);
     }
+    public function tim(){
+        return $this->belongsTo(Scheme::class);
+    }
     public function comment(){
         return $this->hasOne(Comment::class);
     }

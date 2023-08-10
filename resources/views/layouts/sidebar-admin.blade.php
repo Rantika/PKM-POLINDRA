@@ -57,11 +57,11 @@
             </a>
             <ul id="components-nav" class="nav-content {{sideBarRoute('account.*', true, true)}}" data-bs-parent="#sidebar-nav">
                 <!-- ======= Data Akun Admin ======= -->
-                <li>
+                <!-- <li>
                     <a href="{{route('account.admin.index')}}" class="{{sideBarRoute('account.admin.index')}}">
                         <i class="bi bi-circle"></i><span>Data Akun Admin</span>
                     </a>
-                </li>
+                </li> -->
                 <!-- ======= End Data Akun Admin ======= -->
 
                 <!-- ======= Data Akun Dosen ======= -->

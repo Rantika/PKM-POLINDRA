@@ -37,7 +37,7 @@
 
 <!-- ======= Proposal PKM ======= -->
 <li class="nav-item">
-    <a class="nav-link {{ sideBarRoute('lectuter.acc') }} "  href="{{ route('lecturer.acc') }}">
+    <a class="nav-link {{ sideBarRoute('lecturer.acc') }} "  href="{{ route('lecturer.acc') }}">
         <i class="bi bi-book"></i>
         <span>Bimbingan</span>
     </a>
@@ -49,8 +49,7 @@
         <span>Proposal PKM</span>
     </a>
 </li>
-<!-- ======= End Proposal PKM ======= -->
-<!-- ======= Forum ======= -->
+
 
         @elseif(Auth::user()->hak_akses->role == "Reviewer")
         <li class="nav-heading">Reviewer</li>
@@ -62,9 +61,7 @@
         <span>Dashboard</span>
     </a>
 </li>
-<!-- ======= End Dashboard ======= -->
 
-<!-- ======= Review Proposal PKM ======= -->
 <li class="nav-item">
     <a class="nav-link {{sideBarRoute('reviewer.proposal')}}" href="{{route('reviewer.proposal')}}">
         <i class="bi bi-book"></i>

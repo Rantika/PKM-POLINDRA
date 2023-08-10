@@ -234,42 +234,6 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- <div class="col-md-12">
-                            <div class="form-floating">
-                                <textarea style="height: 100px" name="cover" type="text" class="form-control" id="done_cover" placeholder="Cover" disabled></textarea>
-                                <label for="cover">Cover</label>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="form-floating">
-                                <textarea style="height: 100px" name="kata_pengantar" type="text" class="form-control" id="done_kata_pengantar" placeholder="Kata Pengantar" disabled></textarea>
-                                <label for="kata_pengantar">Kata Pengantar</label>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="form-floating">
-                                <textarea style="height: 100px" name="bab_1" type="text" class="form-control" id="done_bab_1" placeholder="BAB I" disabled></textarea>
-                                <label for="bab_1">BAB I</label>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="form-floating">
-                                <textarea style="height: 100px" name="bab_2" type="text" class="form-control" id="done_bab_2" placeholder="BAB II" disabled></textarea>
-                                <label for="bab_2">BAB II</label>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="form-floating">
-                                <textarea style="height: 100px" name="bab_3" type="text" class="form-control" id="done_bab_3" placeholder="BAB III" disabled></textarea>
-                                <label for="bab_3">BAB III</label>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="form-floating">
-                                <textarea style="height: 100px" name="daftar_pustaka" type="text" class="form-control" id="done_daftar_pustaka" placeholder="Daftar Pustaka" disabled></textarea>
-                                <label for="dafta_pustaka">Daftar Pustaka</label>
-                            </div>
-                        </div> -->
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -374,13 +338,6 @@
                             $('#done-file').attr('href', `#`)
                             $('#done-file').html('Tidak ada Proposal diupload')
                         }
-
-                        // $('#done_cover').html(response.comment.cover)
-                        // $('#done_kata_pengantar').html(response.comment.kata_pengantar)
-                        // $('#done_bab_1').html(response.comment.bab_1)
-                        // $('#done_bab_2').html(response.comment.bab_2)
-                        // $('#done_bab_3').html(response.comment.bab_3)
-                        // $('#done_daftar_pustaka').html(response.comment.daftar_pustaka)
 
                         fadeOut()
                         $("#modalSelesai").modal('show');
